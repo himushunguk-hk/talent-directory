@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Landor — Talent Directory</title>
+  <style>
+    /* ─── Reset ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    a { text-decoration: none; color: inherit; }
+    button { font: inherit; cursor: pointer; background: none; border: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ─── Tokens ─────────────────────────────────────────────── */
+    :root {
+      --blue:       #0e1ae0;
+      --volt:       #ecfd01;
+      --black:      #1d1d21;
+      --white:      #fcfcfc;
+      --shore:      #dbd1c8;
+      --neutral:    #ececec;
+      --muted:      #b3b3b3;
+      --font:       "Landor Sans Beta", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --sidebar-w:  280px;
+      --card-w:     300px;
+      --card-h:     401px;
+    }
+
+    /* ─── Body ───────────────────────────────────────────────── */
+    html, body {
+      font-family: var(--font);
+      background: var(--white);
+      color: var(--black);
+      height: 100%;
+    }
+    body { overflow-x: hidden; }
+
+    /* ─── Scrollbar ──────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+
+    /* ════════════════════════════════════════════════════════════
+       TIMEZONE BAR — scrolling marquee
+    ════════════════════════════════════════════════════════════ */
+    .timezone-bar {
+      background: var(--blue);
+      color: #fff;
+      overflow: hidden;
+      padding: 11px 0;
+      width: 100%;
+    }
+    @keyframes tz-scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .timezone-track {
+      display: flex;
+      gap: 44px;
+      align-items: center;
+      width: max-content;
+      animation: tz-scroll 30s linear infinite;
+      will-change: transform;
+    }
+    .tz-item { display: flex; flex-direction: column; gap: 3px; flex-shrink: 0; }
+    .tz-city { font-size: 12px; font-weight: 600; line-height: 1.1; white-space: nowrap; }
+    .tz-time { font-size: 16px; font-weight: 700; line-height: 1.1; white-space: nowrap; }
+
+    /* ════════════════════════════════════════════════════════════
+       LAYOUT SHELL
+    ════════════════════════════════════════════════════════════ */
+    .page {
+      display: flex;
+      min-height: calc(100vh - 42px); /* subtract tz bar height */
+    }
+
+    /* ════════════════════════════════════════════════════════════
+       SIDEBAR
+    ════════════════════════════════════════════════════════════ */
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      background: var(--white);
+      border-right: 1px solid var(--neutral);
+      padding: clamp(40px, 5vw, 80px) clamp(20px, 3vw, 44px);
+      display: flex;
+      flex-direction: column;
+      gap: clamp(32px, 4vw, 60px);
+      position: relative;
+      min-height: 100%;
+    }
+
+    .sidebar-brand { display: flex; flex-direction: column; gap: 8px; }
+    .sidebar-logo  { width: min(196px, 100%); height: auto; }
+    .sidebar-subtitle { font-size: clamp(16px, 1.4vw, 20px); line-height: 1.1; color: #000; }
+
+    .search-bar {
+      background: var(--volt);
+      border-radius: 100px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: text;
+    }
+    .search-bar span {
+      font-size: clamp(12px, 1vw, 14px);
+      letter-spacing: 0.14px; color: #000;
+      white-space: nowrap; line-height: 17px;
+      flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis;
+    }
+    .search-icon { width: 16px; height: 16.8px; flex-shrink: 0; }
+
+    .welcome-copy { display: flex; flex-direction: column; gap: 24px; }
+    .welcome-greeting { font-size: clamp(22px, 2vw, 28px); line-height: 1.15; color: #000; }
+    .welcome-greeting .highlight { color: var(--blue); }
+    .welcome-body { font-size: clamp(13px, 1.1vw, 16px); line-height: 20px; }
+    .welcome-body p + p { margin-top: 4px; }
+
+    .user-pill {
+      position: absolute;
+      bottom: 34px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 0.5px solid var(--shore);
+      border-radius: 1000px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+    }
+    .user-pill-inner { display: flex; align-items: center; gap: 4px; }
+    .user-avatar  { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; }
+    .user-name    { font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--black); line-height: 1.1; }
+    .settings-icon { width: 14px; height: 14px; object-fit: cover; }
+
+    /* ════════════════════════════════════════════════════════════
+       MAIN CONTENT
+    ════════════════════════════════════════════════════════════ */
+    .main {
+      flex: 1;
+      min-width: 0;
+      padding: clamp(24px, 3vw, 44px) clamp(20px, 3vw, 44px) clamp(24px, 3vw, 44px) clamp(16px, 2vw, 24px);
+      display: flex;
+      flex-direction: column;
+      gap: clamp(28px, 3vw, 44px);
+    }
+
+    /* ─── TOP NAV ────────────────────────────────────────────── */
+    .top-nav {
+      display: flex;
+      gap: clamp(20px, 3vw, 44px);
+      align-items: flex-start;
+      border-bottom: 1px solid #d8d8d8;
+      height: 60px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .top-nav::-webkit-scrollbar { display: none; }
+    .nav-item {
+      display: flex; align-items: center; gap: 8px;
+      height: 100%;
+      font-size: clamp(15px, 1.4vw, 20px);
+      line-height: 1.1;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .nav-item.active { border-bottom: 1.5px solid var(--blue); font-weight: 700; }
+    .nav-item .count { color: var(--muted); }
+
+    /* ─── SECTION HEADER ─────────────────────────────────────── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .section-title    { font-size: clamp(22px, 2.5vw, 32px); line-height: 1.1; }
+    .section-subtitle { font-size: clamp(15px, 1.4vw, 20px); line-height: 1.1; color: var(--muted); margin-top: 8px; }
+
+    .btn-group { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+
+    .btn-arrow {
+      background: var(--blue);
+      border-radius: 100px;
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; flex-shrink: 0;
+      transition: opacity 0.2s;
+    }
+    .btn-arrow:hover { opacity: 0.8; }
+    .btn-arrow img { width: 12px; height: 12px; }
+
+    .btn-pill {
+      border: 0.5px solid #000;
+      border-radius: 100px;
+      padding: 8px 12px;
+      display: flex; align-items: center; gap: 4px;
+      font-size: 12px; letter-spacing: 0.12px; text-transform: uppercase;
+      opacity: 0.8; cursor: pointer; white-space: nowrap;
+      transition: opacity 0.2s, background 0.2s;
+    }
+    .btn-pill:hover { opacity: 1; background: rgba(0,0,0,0.05); }
+    .btn-pill img { width: 12px; height: 12px; }
+
+    /* ════════════════════════════════════════════════════════════
+       TALENT CAROUSEL
+    ════════════════════════════════════════════════════════════ */
+    .talent-section { display: flex; flex-direction: column; gap: 24px; }
+
+    /* Scrollable track — cards stay fixed size, container is fluid */
+    .talent-carousel-wrap {
+      overflow: hidden;           /* clip — JS handles scroll */
+      position: relative;
+    }
+    .talent-grid {
+      display: flex;
+      gap: 24px;
+      /* no flex-wrap: cards maintain fixed width, container scrolls */
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform;
+    }
+
+    /* Every talent card is a fixed size */
+    .talent-card {
+      width: var(--card-w);
+      height: var(--card-h);
+      flex-shrink: 0;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
+    /* Hover overlay */
+    .talent-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(255,255,255,0.12);
+      border-radius: 20px;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .talent-card:hover::after { opacity: 1; }
+
+    .talent-card-bg { position: absolute; inset: 0; border-radius: 20px; }
+    .talent-card-bg-color { position: absolute; inset: 0; background: #f1f1f1; border-radius: 20px; }
+    .talent-card-bg img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; border-radius: 20px;
+    }
+
+    .talent-tag { position: relative; z-index: 1; padding: 19px 16px 0; }
+    .tag-pill {
+      display: inline-flex; align-items: center;
+      background: rgba(255,255,255,0.66);
+      backdrop-filter: blur(2px);
+      border-radius: 100px;
+      padding: 8px 16px;
+      font-size: 12px; font-weight: 600;
+      text-transform: uppercase; line-height: 1.1;
+    }
+
+    .talent-info {
+      position: relative; z-index: 1;
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 73.944%);
+      padding: 24px;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .talent-name { font-size: 28px; color: #fff; line-height: 31px; }
+    .talent-meta {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 4px;
+      font-size: 14px; color: #ececec; text-transform: uppercase;
+      letter-spacing: 0.1px; line-height: 14px;
+    }
+    .dot { width: 4px; height: 4px; border-radius: 50%; background: #ececec; flex-shrink: 0; }
+
+    /* ════════════════════════════════════════════════════════════
+       PROJECTS SECTION
+    ════════════════════════════════════════════════════════════ */
+    .projects-section {
+      display: flex; flex-direction: column; gap: 24px;
+      padding-bottom: 40px;
+    }
+
+    .projects-row {
+      display: flex; gap: 12px;
+      align-items: stretch;
+      flex-wrap: wrap;
+    }
+
+    .project-card {
+      flex: 1 1 300px;
+      min-width: 260px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+      position: relative;
+      display: flex; flex-direction: column; justify-content: space-between;
+      cursor: pointer;
+      height: 408px;
+    }
+
+    /* Hover overlay */
+    .project-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(255,255,255,0.12);
+      border-radius: 20px;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .project-card:hover::after { opacity: 1; }
+
+    .project-card-bg { position: absolute; inset: 0; overflow: hidden; border-radius: 20px; }
+    .project-card-bg img {
+      position: absolute;
+      width: 101%; height: 174.63%;
+      left: -0.3%; top: -13.1%;
+      object-fit: cover;
+    }
+    .project-card-bg-cover img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .project-card-top {
+      position: relative; z-index: 1;
+      padding: 16px;
+      display: flex; align-items: flex-start; justify-content: space-between;
+    }
+
+    .people-tag {
+      background: rgba(255,255,255,0.77);
+      backdrop-filter: blur(2px);
+      border-radius: 1000px;
+      padding: 6px 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .people-avatars { display: flex; align-items: center; }
+    .people-avatars img {
+      width: 24px; height: 24px;
+      border-radius: 50%; object-fit: cover;
+      margin-right: -4px;
+      border: 1.5px solid #fff;
+    }
+    .people-avatars img:last-child { margin-right: 0; }
+    .people-count { font-size: 12px; line-height: 13.8px; letter-spacing: 0.12px; color: #000; }
+
+    .project-info {
+      position: relative; z-index: 1;
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 73.944%);
+      padding: 24px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .project-title-block { display: flex; flex-direction: column; gap: 6px; }
+    .project-title { font-size: 28px; color: #fff; line-height: 31px; }
+    .project-meta {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 4px;
+      font-size: 14px; color: #fff; text-transform: uppercase;
+      letter-spacing: 0.1px; line-height: 14px;
+    }
+    .dot-white { width: 4px; height: 4px; border-radius: 50%; background: #fff; flex-shrink: 0; }
+
+    .project-details { display: flex; flex-direction: column; gap: 14px; }
+    .project-detail-row {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      font-size: 12px; color: #fff;
+    }
+    .project-detail-row .label { text-transform: uppercase; letter-spacing: 0.1px; line-height: 14px; white-space: nowrap; }
+    .project-detail-row .value { letter-spacing: 0.12px; line-height: 13.8px; text-align: right; max-width: 60%; }
+
+    /* ════════════════════════════════════════════════════════════
+       RESPONSIVE BREAKPOINTS
+    ════════════════════════════════════════════════════════════ */
+
+    /* Tablet: sidebar collapses a bit, card widths shrink */
+    @media (max-width: 1100px) {
+      :root { --sidebar-w: 240px; --card-w: 260px; }
+    }
+
+    /* Tablet portrait / large mobile */
+    @media (max-width: 860px) {
+      .page { flex-direction: column; }
+      .sidebar {
+        width: 100%;
+        min-height: auto;
+        padding: 32px 24px 24px;
+        border-right: none;
+        border-bottom: 1px solid var(--neutral);
+        gap: 28px;
+      }
+      .user-pill {
+        position: static;
+        transform: none;
+        align-self: flex-start;
+        margin-top: auto;
+      }
+      .welcome-copy { display: none; } /* collapse on small screens to save space */
+      :root { --card-w: 260px; }
+    }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      :root { --card-w: 220px; --card-h: 340px; }
+      .main { padding: 20px 16px; gap: 24px; }
+      .top-nav { gap: 20px; height: 52px; }
+      .nav-item { font-size: 14px; }
+      .section-title { font-size: 20px; }
+      .section-subtitle { font-size: 15px; }
+      .talent-name { font-size: 22px; }
+      .project-title { font-size: 20px; }
+      .project-card { height: 340px; }
+      .section-header { gap: 12px; }
+      .btn-pill { font-size: 11px; padding: 6px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════
+     TIMEZONE BAR
+════════════════════════════════════════════════════════════ -->
+<div class="timezone-bar">
+  <div class="timezone-track">
+    <!-- first set -->
+    <div class="tz-item"><span class="tz-city">Sydney</span><span class="tz-time">16:42 Sat</span></div>
+    <div class="tz-item"><span class="tz-city">Hamburg</span><span class="tz-time">9:42 FRI</span></div>
+    <div class="tz-item"><span class="tz-city">London</span><span class="tz-time">8:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Tokyo</span><span class="tz-time">22:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Paris</span><span class="tz-time">8:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Los Angeles</span><span class="tz-time">0:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Mexico City</span><span class="tz-time">2:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Milan</span><span class="tz-time">12:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Geneva</span><span class="tz-time">9:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Sydney</span><span class="tz-time">16:42 Sat</span></div>
+    <div class="tz-item"><span class="tz-city">London</span><span class="tz-time">8:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Hamburg</span><span class="tz-time">9:42 FRI</span></div>
+    <div class="tz-item"><span class="tz-city">Los Angeles</span><span class="tz-time">0:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Tokyo</span><span class="tz-time">22:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Paris</span><span class="tz-time">8:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Milan</span><span class="tz-time">12:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Geneva</span><span class="tz-time">9:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Mexico City</span><span class="tz-time">2:42 Fri</span></div>
+    <!-- duplicate for seamless loop -->
+    <div class="tz-item"><span class="tz-city">Sydney</span><span class="tz-time">16:42 Sat</span></div>
+    <div class="tz-item"><span class="tz-city">Hamburg</span><span class="tz-time">9:42 FRI</span></div>
+    <div class="tz-item"><span class="tz-city">London</span><span class="tz-time">8:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Tokyo</span><span class="tz-time">22:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Paris</span><span class="tz-time">8:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Los Angeles</span><span class="tz-time">0:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Mexico City</span><span class="tz-time">2:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Milan</span><span class="tz-time">12:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Geneva</span><span class="tz-time">9:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Sydney</span><span class="tz-time">16:42 Sat</span></div>
+    <div class="tz-item"><span class="tz-city">London</span><span class="tz-time">8:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Hamburg</span><span class="tz-time">9:42 FRI</span></div>
+    <div class="tz-item"><span class="tz-city">Los Angeles</span><span class="tz-time">0:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Tokyo</span><span class="tz-time">22:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Paris</span><span class="tz-time">8:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Milan</span><span class="tz-time">12:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Geneva</span><span class="tz-time">9:42 Fri</span></div>
+    <div class="tz-item"><span class="tz-city">Mexico City</span><span class="tz-time">2:42 Fri</span></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     PAGE SHELL
+════════════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <!-- ── SIDEBAR ──────────────────────────────────────────────── -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img class="sidebar-logo"
+           src="https://www.figma.com/api/mcp/asset/f559b064-80fc-4b62-bc70-6f557d134bf5"
+           alt="Landor Logo" />
+      <span class="sidebar-subtitle">Talent Directory</span>
+    </div>
+
+    <div class="search-bar">
+      <span>Search for a name, project..</span>
+      <img class="search-icon"
+           src="https://www.figma.com/api/mcp/asset/eb2e79d2-1e9f-45b1-8c31-b3d49dabfd96"
+           alt="Search" />
+    </div>
+
+    <div class="welcome-copy">
+      <p class="welcome-greeting">Hey <span class="highlight">John D</span>,</p>
+      <div class="welcome-body">
+        <p>Welcome to Landor Directory,</p>
+        <p>&nbsp;</p>
+        <p>Lorem ipsum dolor sit amet consectetur. Metus diam mauris risus pulvinar. Nulla pharetra dui sit lorem mauris nibh netus lacus metus. Quis est sem massa amet felis.</p>
+        <p>&nbsp;</p>
+        <p>Any question, please contact john.doe@email.com</p>
+      </div>
+    </div>
+
+    <div class="user-pill">
+      <div class="user-pill-inner">
+        <img class="user-avatar"
+             src="https://www.figma.com/api/mcp/asset/604ea8ee-429b-49f2-bbb2-22e15feaaed4"
+             alt="John D" />
+        <span class="user-name">John D.</span>
+      </div>
+      <img class="settings-icon"
+           src="https://www.figma.com/api/mcp/asset/db52f6a6-6d2a-49b2-ab06-d43076c3c517"
+           alt="Settings" />
+    </div>
+  </aside>
+
+  <!-- ── MAIN ─────────────────────────────────────────────────── -->
+  <main class="main">
+
+    <!-- Top Nav -->
+    <nav class="top-nav">
+      <div class="nav-item active">Home</div>
+      <a class="nav-item" href="#"><span>Talents</span><span class="count">2 324</span></a>
+      <a class="nav-item" href="#"><span>Projects</span><span class="count">436</span></a>
+      <a class="nav-item" href="#"><span>Clients</span><span class="count">124</span></a>
+    </nav>
+
+    <!-- ── TALENT SECTION ──────────────────────────────────────── -->
+    <section class="talent-section">
+      <div class="section-header">
+        <h2 class="section-title">Welcome to our new Landor talents</h2>
+        <div class="btn-group">
+          <button class="btn-arrow" id="prevBtn" aria-label="Previous">
+            <img src="https://www.figma.com/api/mcp/asset/9b2782b9-eeda-4c87-9cb5-67c5a6c78757"
+                 alt="←" style="transform:rotate(180deg) scaleY(-1);" />
+          </button>
+          <button class="btn-arrow" id="nextBtn" aria-label="Next">
+            <img src="https://www.figma.com/api/mcp/asset/e4210cd0-8a24-448a-b673-5704c1c8eb75" alt="→" />
+          </button>
+          <button class="btn-pill">
+            SEE ALL TALENTS
+            <img src="https://www.figma.com/api/mcp/asset/0a77b0ed-ce49-41b6-a38d-c0de09be47d4" alt="→" />
+          </button>
+        </div>
+      </div>
+
+      <!-- Carousel: container clips, track translates -->
+      <div class="talent-carousel-wrap" id="carouselWrap">
+        <div class="talent-grid" id="talentGrid">
+
+          <!-- Card 1 — Louisa Doe -->
+          <div class="talent-card">
+            <div class="talent-card-bg">
+              <div class="talent-card-bg-color"></div>
+              <img src="https://www.figma.com/api/mcp/asset/14126eb1-b6a9-4f3f-99af-8632f9b5fda7" alt="Louisa Doe" />
+            </div>
+            <div class="talent-tag"><span class="tag-pill">New</span></div>
+            <div class="talent-info">
+              <p class="talent-name">Louisa Doe</p>
+              <div class="talent-meta">
+                <span>Junior 3d designer</span><span class="dot"></span><span>Hamburg</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 — Mike Walker -->
+          <div class="talent-card">
+            <div class="talent-card-bg">
+              <div class="talent-card-bg-color"></div>
+              <img src="https://www.figma.com/api/mcp/asset/c044a360-9215-45a8-95ce-0be5d2e21451" alt="Mike Walker" />
+            </div>
+            <div class="talent-tag"><span class="tag-pill">New</span></div>
+            <div class="talent-info">
+              <p class="talent-name">Mike Walker</p>
+              <div class="talent-meta">
+                <span>Sr digital producer</span><span class="dot"></span><span>New-York</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 — Joseph Lowe -->
+          <div class="talent-card">
+            <div class="talent-card-bg">
+              <div class="talent-card-bg-color"></div>
+              <img src="https://www.figma.com/api/mcp/asset/03b6175d-b269-4886-81d3-0293f13602d3" alt="Joseph Lowe" />
+            </div>
+            <div class="talent-tag"><span class="tag-pill">New</span></div>
+            <div class="talent-info">
+              <p class="talent-name">Joseph Lowe</p>
+              <div class="talent-meta">
+                <span>Experience strategist</span><span class="dot"></span><span>Paris</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4 — Joseph Lowe (2) -->
+          <div class="talent-card">
+            <div class="talent-card-bg">
+              <div class="talent-card-bg-color"></div>
+              <img src="https://www.figma.com/api/mcp/asset/12b39e32-637b-4e48-ae6d-0fdb57c636f7" alt="Joseph Lowe" />
+            </div>
+            <div class="talent-tag"><span class="tag-pill">New</span></div>
+            <div class="talent-info">
+              <p class="talent-name">Joseph Lowe</p>
+              <div class="talent-meta">
+                <span>Experience strategist</span><span class="dot"></span><span>Paris</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 5 — Extra card to demonstrate overflow -->
+          <div class="talent-card">
+            <div class="talent-card-bg">
+              <div class="talent-card-bg-color"></div>
+              <img src="https://www.figma.com/api/mcp/asset/14126eb1-b6a9-4f3f-99af-8632f9b5fda7" alt="Louisa Doe" />
+            </div>
+            <div class="talent-tag"><span class="tag-pill">New</span></div>
+            <div class="talent-info">
+              <p class="talent-name">Anna Smith</p>
+              <div class="talent-meta">
+                <span>Brand strategist</span><span class="dot"></span><span>London</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PROJECTS SECTION ────────────────────────────────────── -->
+    <section class="projects-section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Projects Highlights</h2>
+          <p class="section-subtitle">"LGBT History Month"</p>
+        </div>
+        <div class="btn-group">
+          <button class="btn-pill">
+            EDIT HIGHLIGHTS
+            <img src="https://www.figma.com/api/mcp/asset/0a77b0ed-ce49-41b6-a38d-c0de09be47d4" alt="→" />
+          </button>
+          <button class="btn-pill">
+            SEE ALL PROJECTS
+            <img src="https://www.figma.com/api/mcp/asset/0a77b0ed-ce49-41b6-a38d-c0de09be47d4" alt="→" />
+          </button>
+        </div>
+      </div>
+
+      <div class="projects-row">
+
+        <!-- Project 1 -->
+        <div class="project-card">
+          <div class="project-card-bg">
+            <img src="https://www.figma.com/api/mcp/asset/81548a12-c7cd-410e-a133-e1fbc5a7ac2f" alt="Enter the bubbleverse" />
+          </div>
+          <div class="project-card-top">
+            <div class="people-tag">
+              <div class="people-avatars">
+                <img src="https://www.figma.com/api/mcp/asset/be12409f-1854-4672-a7e2-0f3ce7ca5bf1" alt="" />
+                <img src="https://www.figma.com/api/mcp/asset/5043a589-fd33-40a6-9b1a-b56f4c147616" alt="" />
+                <img src="https://www.figma.com/api/mcp/asset/657f3faf-bc28-4b92-bb1c-7340cdb7ed05" alt="" />
+                <img src="https://www.figma.com/api/mcp/asset/8bc284f7-098f-42b9-a63d-76ef9776342d" alt="" />
+              </div>
+              <span class="people-count">+12</span>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-title-block">
+              <p class="project-title">Enter the bubbleverse</p>
+              <div class="project-meta">
+                <span>NIKE KIDS</span><span class="dot-white"></span>
+                <span>FASHION</span><span class="dot-white"></span>
+                <span>2024</span>
+              </div>
+            </div>
+            <div class="project-details">
+              <div class="project-detail-row">
+                <span class="label">MARKET</span><span class="value">US, Europe</span>
+              </div>
+              <div class="project-detail-row">
+                <span class="label">SKILLSET</span><span class="value">Illustration, UX/UI, Branding</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card">
+          <div class="project-card-bg project-card-bg-cover">
+            <img src="https://www.figma.com/api/mcp/asset/37ed6550-de68-4342-b2f5-ffe6c5d1ac01" alt="Explosive. Emotive. Evocative." />
+          </div>
+          <div class="project-card-top">
+            <div class="people-tag">
+              <div class="people-avatars">
+                <img src="https://www.figma.com/api/mcp/asset/e8098b4e-cc7e-4858-8fe3-0d4622930fdd" alt="" />
+                <img src="https://www.figma.com/api/mcp/asset/f1fa61e2-3c67-45b4-8648-065c86843b8f" alt="" />
+                <img src="https://www.figma.com/api/mcp/asset/7c7695e1-6211-45fa-9e96-1b849d6a0db9" alt="" />
+                <img src="https://www.figma.com/api/mcp/asset/b583cbd6-e702-4d70-8a58-025345ec14e3" alt="" />
+              </div>
+              <span class="people-count">+7</span>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-title-block">
+              <p class="project-title">Explosive. Emotive. Evocative.</p>
+              <div class="project-meta">
+                <span>Milan symphony orchestra</span><span class="dot-white"></span>
+                <span>CULTURE</span><span class="dot-white"></span>
+                <span>2024</span>
+              </div>
+            </div>
+            <div class="project-details">
+              <div class="project-detail-row">
+                <span class="label">MARKET</span><span class="value">US, Europe</span>
+              </div>
+              <div class="project-detail-row">
+                <span class="label">SKILLSET</span><span class="value">Illustration, UX/UI, Branding</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  /* ── Live clocks ─────────────────────────────────────────── */
+  const cities = [
+    { name: 'Sydney',      tz: 'Australia/Sydney' },
+    { name: 'Hamburg',     tz: 'Europe/Berlin' },
+    { name: 'London',      tz: 'Europe/London' },
+    { name: 'Tokyo',       tz: 'Asia/Tokyo' },
+    { name: 'Paris',       tz: 'Europe/Paris' },
+    { name: 'Los Angeles', tz: 'America/Los_Angeles' },
+    { name: 'Mexico City', tz: 'America/Mexico_City' },
+    { name: 'Milan',       tz: 'Europe/Rome' },
+    { name: 'Geneva',      tz: 'Europe/Zurich' },
+  ];
+  function fmtTime(tz) {
+    const now = new Date();
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: tz, hour: '2-digit', minute: '2-digit', weekday: 'short', hour12: false
+    }).formatToParts(now);
+    const get = t => parts.find(p => p.type === t)?.value ?? '';
+    return `${get('hour')}:${get('minute')} ${get('weekday').toUpperCase()}`;
+  }
+  function updateClocks() {
+    document.querySelectorAll('.tz-item').forEach((el, i) => {
+      const city = cities[i % cities.length];
+      el.querySelector('.tz-city').textContent = city.name;
+      el.querySelector('.tz-time').textContent = fmtTime(city.tz);
+    });
+  }
+  updateClocks();
+  setInterval(updateClocks, 60000);
+
+  /* ── Talent Carousel ─────────────────────────────────────── */
+  const wrap   = document.getElementById('carouselWrap');
+  const grid   = document.getElementById('talentGrid');
+  const prev   = document.getElementById('prevBtn');
+  const next   = document.getElementById('nextBtn');
+
+  let offset = 0;
+
+  function getCardStep() {
+    // card width + gap (24px)
+    const card = grid.querySelector('.talent-card');
+    return card ? card.offsetWidth + 24 : 324;
+  }
+
+  function getMaxOffset() {
+    return Math.max(0, grid.scrollWidth - wrap.offsetWidth);
+  }
+
+  function slide(dir) {
+    const step = getCardStep();
+    offset = Math.min(Math.max(0, offset + dir * step), getMaxOffset());
+    grid.style.transform = `translateX(-${offset}px)`;
+    prev.style.opacity = offset <= 0 ? '0.4' : '1';
+    next.style.opacity = offset >= getMaxOffset() ? '0.4' : '1';
+  }
+
+  prev.addEventListener('click', () => slide(-1));
+  next.addEventListener('click', () => slide(1));
+
+  // Touch swipe support
+  let touchStartX = 0;
+  wrap.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  wrap.addEventListener('touchend',   e => {
+    const dx = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(dx) > 40) slide(dx > 0 ? 1 : -1);
+  }, { passive: true });
+
+  // Reset on resize so offset doesn't go out of bounds
+  window.addEventListener('resize', () => {
+    offset = Math.min(offset, getMaxOffset());
+    grid.style.transform = `translateX(-${offset}px)`;
+  });
+
+  // Init state
+  prev.style.opacity = '0.4';
+</script>
+
+</body>
+</html>
