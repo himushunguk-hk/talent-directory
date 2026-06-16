@@ -167,8 +167,12 @@
       line-height: 1.1;
       cursor: pointer;
       flex-shrink: 0;
+      transition: color var(--ds-transition), border-color var(--ds-transition);
+      border-bottom: 1.5px solid transparent;
+      color: #000;
     }
-    .nav-item.active { border-bottom: 1.5px solid var(--blue); font-weight: 700; }
+    .nav-item:hover { color: var(--blue); border-bottom-color: rgba(0, 39, 215, 0.3); }
+    .nav-item.active { border-bottom-color: var(--blue); font-weight: 700; color: #000; }
     .nav-item .count { color: var(--muted); }
 
     /* ─── SECTION HEADER ─────────────────────────────────────── */
