@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Landor — Amie Ochoa</title>
+  <link rel="stylesheet" href="design_handoff_landor_design_system/tokens.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    a { text-decoration: none; color: inherit; }
+    button { font: inherit; cursor: pointer; background: none; border: none; }
+    img { display: block; max-width: 100%; }
+
+    :root {
+      --blue:     var(--ds-interactive-default);   /* #0027D7 */
+      --volt:     var(--ds-volt);                  /* #ECFD01 */
+      --neutral:  var(--ds-border);                /* #ECEAEE */
+      --muted:    var(--ds-text-muted);            /* #898989 */
+      --font:     var(--ds-font-display);
+      --sidebar-w: 280px;
+    }
+
+    html, body { font-family: var(--font); background: var(--ds-bg-page); color: #000; height: 100%; }
+    body { overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+
+    /* ── Timezone bar ── */
+    .timezone-bar { background: var(--blue); color: #fff; overflow: hidden; padding: 11px 0; }
+    @keyframes tz-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .timezone-track { display: flex; gap: 44px; align-items: center; width: max-content; animation: tz-scroll 30s linear infinite; will-change: transform; }
+    .tz-item { display: flex; flex-direction: column; gap: 3px; flex-shrink: 0; }
+    .tz-city { font-size: 12px; font-weight: 600; white-space: nowrap; }
+    .tz-time  { font-size: 16px; font-weight: 700; white-space: nowrap; }
+
+    /* ── Page shell ── */
+    .page { display: flex; min-height: calc(100vh - 42px); }
+
+    /* ══════════════════════════════════════════
+       SIDEBAR — talent portrait panel
+    ══════════════════════════════════════════ */
+    .sidebar {
+      width: var(--sidebar-w); flex-shrink: 0;
+      position: sticky; top: 0; height: calc(100vh - 42px);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Floating header (logo + search) over the photo */
+    .sidebar-header {
+      position: absolute; top: 0; left: 0; right: 0; z-index: 3;
+      padding: clamp(24px, 3vw, 40px) clamp(16px, 2.5vw, 28px) 0;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .sidebar-brand { display: flex; flex-direction: column; gap: 6px; }
+    .sidebar-logo  { width: min(160px, 80%); filter: brightness(0) invert(1); }
+    .sidebar-subtitle { font-size: 16px; color: rgba(255,255,255,0.85); line-height: 1.1; }
+    .search-bar {
+      background: var(--volt); border-radius: 100px; padding: 9px 14px;
+      display: flex; align-items: center; gap: 10px; cursor: text;
+    }
+    .search-bar span { font-size: 13px; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .search-icon { width: 16px; height: 16px; flex-shrink: 0; }
+
+    /* Portrait fills the sidebar */
+    .portrait-fill { position: absolute; inset: 0; }
+    .portrait-fill img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+    /* gradient overlay: dark top for readability of logo, darker bottom for talent info */
+    .portrait-fill::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.55) 0%,
+        rgba(0,0,0,0)    35%,
+        rgba(0,0,0,0)    50%,
+        rgba(0,0,0,0.70) 100%
+      );
+    }
+
+    /* Talent info at the bottom of the sidebar */
+    .sidebar-talent-info {
+      position: absolute; bottom: 64px; left: 0; right: 0; z-index: 3;
+      padding: 0 clamp(16px, 2.5vw, 24px);
+    }
+    .talent-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.15); backdrop-filter: blur(4px);
+      border-radius: 100px; padding: 5px 12px; margin-bottom: 10px;
+      font-size: 11px; font-weight: 600; color: #fff; text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .talent-name { font-size: clamp(20px, 2vw, 26px); font-weight: 700; color: #fff; line-height: 1.15; }
+    .talent-meta { font-size: 13px; color: rgba(255,255,255,0.78); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; }
+
+    /* User pill */
+    .user-pill {
+      position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); z-index: 3;
+      background: rgba(255,255,255,0.92); border: 0.5px solid rgba(219,209,200,0.6);
+      border-radius: 1000px; padding: 7px 10px;
+      display: flex; align-items: center; gap: 10px; white-space: nowrap;
+    }
+    .user-pill-inner { display: flex; align-items: center; gap: 6px; }
+    .user-avatar  { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; }
+    .user-name    { font-size: 12px; font-weight: 600; text-transform: uppercase; }
+    .settings-icon { width: 14px; height: 14px; }
+
+    /* ══════════════════════════════════════════
+       MAIN content
+    ══════════════════════════════════════════ */
+    .main {
+      flex: 1; min-width: 0; overflow-y: auto;
+      padding: clamp(24px, 3vw, 44px) clamp(20px, 3vw, 48px) 60px clamp(16px, 2vw, 24px);
+      display: flex; flex-direction: column; gap: clamp(32px, 4vw, 52px);
+    }
+
+    /* Top nav */
+    .top-nav {
+      display: flex; gap: clamp(16px, 2.5vw, 40px); align-items: flex-start;
+      border-bottom: 1px solid #d8d8d8; height: 60px;
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .top-nav::-webkit-scrollbar { display: none; }
+    .nav-item {
+      display: flex; align-items: center; gap: 8px; height: 100%;
+      font-size: clamp(15px, 1.4vw, 20px); cursor: pointer; flex-shrink: 0; color: inherit;
+    }
+    .nav-item.active { border-bottom: 1.5px solid var(--blue); font-weight: 700; }
+    .nav-item .count { color: var(--muted); }
+
+    /* ── Action bar: BACK + tags + EDIT PROFILE ── */
+    .action-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; flex-wrap: wrap;
+    }
+    .action-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+    .btn-back {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1.5px solid #000; border-radius: 100px;
+      padding: 10px 20px; font-size: 13px; font-weight: 600; font-family: var(--font);
+      text-transform: uppercase; letter-spacing: 0.04em; background: #fff; cursor: pointer;
+      transition: background 150ms ease, color 150ms ease;
+    }
+    .btn-back:hover { background: #000; color: #fff; }
+    .btn-back:hover svg { stroke: #fff; }
+
+    .role-tag {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: #2E2E2E; color: #fff; border-radius: 100px;
+      padding: 10px 16px; font-size: 13px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap;
+    }
+
+    .btn-edit {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--blue); color: #fff; border-radius: 100px;
+      padding: 10px 22px; font-size: 13px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.04em; font-family: var(--font); cursor: pointer;
+      transition: background 150ms ease;
+    }
+    .btn-edit:hover { background: #0e1adf; }
+
+    /* ── Section heading ── */
+    .section-heading {
+      font-size: clamp(20px, 2vw, 28px); font-weight: 700; line-height: 1.1;
+    }
+    .section-heading-row {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; flex-wrap: wrap;
+    }
+
+    /* ── Overview grid ── */
+    .overview-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    }
+    .overview-col {
+      background: #fff; border-radius: 16px; border: 1px solid var(--neutral);
+      padding: 24px; display: flex; flex-direction: column; gap: 20px;
+    }
+    .col-title {
+      font-size: 18px; font-weight: 700; padding-bottom: 16px;
+      border-bottom: 1px solid var(--neutral);
+    }
+    .info-block { display: flex; flex-direction: column; gap: 8px; }
+    .info-label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.05em; color: var(--blue);
+    }
+    .info-text { font-size: 14px; line-height: 1.6; }
+    .skill-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 7px 0; border-bottom: 1px solid #f0eef2; font-size: 13px;
+    }
+    .skill-row:last-child { border-bottom: none; }
+    .skill-level { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+
+    .contact-block { display: flex; flex-direction: column; gap: 0; }
+    .contact-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 0; border-bottom: 1px solid var(--neutral);
+    }
+    .contact-row:last-child { border-bottom: none; }
+    .contact-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); margin-bottom: 3px; }
+    .contact-name  { font-size: 14px; font-weight: 600; }
+    .contact-name .sub { font-weight: 400; color: var(--muted); font-size: 13px; }
+    .contact-icons { display: flex; gap: 6px; }
+    .icon-btn {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: #f4f3f5; border: 1px solid var(--neutral);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 15px; color: #000;
+      transition: background 150ms ease;
+    }
+    .icon-btn:hover { background: #e2dfe6; }
+
+    /* Tertiary link-style button */
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 6px;
+      border: 1px solid #000; border-radius: 100px;
+      padding: 7px 14px; font-size: 12px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.04em;
+      font-family: var(--font); cursor: pointer; background: none;
+      transition: background 150ms ease, color 150ms ease;
+    }
+    .btn-outline:hover { background: #000; color: #fff; }
+
+    /* ── Projects grid ── */
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    }
+    .pcard {
+      border-radius: 16px; overflow: hidden; position: relative;
+      aspect-ratio: 328 / 411; cursor: pointer;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.10);
+      transition: transform 150ms ease, box-shadow 150ms ease;
+    }
+    .pcard:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.16); }
+    .pcard-bg { position: absolute; inset: 0; }
+    .pcard-bg img { width: 100%; height: 100%; object-fit: cover; }
+    .pcard-info {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.82) 100%);
+      padding: 40px 16px 16px; z-index: 1;
+    }
+    .pcard-title { font-size: 16px; font-weight: 700; color: #fff; line-height: 1.2; }
+    .pcard-meta  { font-size: 11px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 4px; }
+
+    /* ── Experience grid ── */
+    .experience-grid {
+      display: grid; grid-template-columns: 2fr 1fr; gap: 16px;
+    }
+    .exp-col {
+      background: #fff; border-radius: 16px; border: 1px solid var(--neutral);
+      padding: 24px; display: flex; flex-direction: column; gap: 24px;
+    }
+    .exp-sub { display: flex; flex-direction: column; gap: 10px; }
+    .socials-row { display: flex; gap: 10px; }
+    .social-btn {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: #f4f3f5; border: 1px solid var(--neutral);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; cursor: pointer; text-decoration: none; color: #000;
+      transition: background 150ms ease;
+    }
+    .social-btn:hover { background: #e2dfe6; }
+    .links-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    /* ── Responsive ── */
+    @media (max-width: 1100px) { :root { --sidebar-w: 240px; } }
+    @media (max-width: 900px) {
+      .overview-grid   { grid-template-columns: 1fr; }
+      .projects-grid   { grid-template-columns: repeat(2, 1fr); }
+      .experience-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 860px) {
+      .page { flex-direction: column; }
+      .sidebar { position: static; height: 360px; width: 100%; }
+    }
+    @media (max-width: 600px) {
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Timezone bar -->
+<div class="timezone-bar">
+  <div class="timezone-track">
+    <div class="tz-item"><span class="tz-city">Sydney</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Hamburg</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">London</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Tokyo</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Paris</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Los Angeles</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Mexico City</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Milan</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Geneva</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Sydney</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Hamburg</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">London</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Tokyo</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Paris</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Los Angeles</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Mexico City</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Milan</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Geneva</span><span class="tz-time">—</span></div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- ══ SIDEBAR — Portrait ══ -->
+  <aside class="sidebar">
+    <!-- Portrait photo (fills entire sidebar) -->
+    <div class="portrait-fill">
+      <img src="https://www.figma.com/api/mcp/asset/14126eb1-b6a9-4f3f-99af-8632f9b5fda7" alt="Amie Ochoa" />
+    </div>
+
+    <!-- Logo + search floating on top -->
+    <div class="sidebar-header">
+      <div class="sidebar-brand">
+        <img class="sidebar-logo"
+             src="https://www.figma.com/api/mcp/asset/f559b064-80fc-4b62-bc70-6f557d134bf5"
+             alt="Landor" />
+        <span class="sidebar-subtitle">Talent Directory</span>
+      </div>
+      <div class="search-bar">
+        <span>Search for a name, project..</span>
+        <img class="search-icon"
+             src="https://www.figma.com/api/mcp/asset/eb2e79d2-1e9f-45b1-8c31-b3d49dabfd96"
+             alt="Search" />
+      </div>
+    </div>
+
+    <!-- Talent info -->
+    <div class="sidebar-talent-info">
+      <div class="talent-badge">✦ Senior Designer</div>
+      <div class="talent-name">Amie Ochoa</div>
+      <div class="talent-meta">Creative Director · Paris</div>
+    </div>
+
+    <!-- User pill -->
+    <div class="user-pill">
+      <div class="user-pill-inner">
+        <img class="user-avatar"
+             src="https://www.figma.com/api/mcp/asset/604ea8ee-429b-49f2-bbb2-22e15feaaed4"
+             alt="John D" />
+        <span class="user-name">John D.</span>
+      </div>
+      <img class="settings-icon"
+           src="https://www.figma.com/api/mcp/asset/db52f6a6-6d2a-49b2-ab06-d43076c3c517"
+           alt="Settings" />
+    </div>
+  </aside>
+
+  <!-- ══ MAIN ══ -->
+  <main class="main">
+
+    <!-- Nav -->
+    <nav class="top-nav">
+      <a class="nav-item" href="index.html">Home</a>
+      <a class="nav-item active" href="index.html#talents"><span>Talents</span><span class="count">2 324</span></a>
+      <a class="nav-item" href="#"><span>Projects</span><span class="count">436</span></a>
+      <a class="nav-item" href="#"><span>Clients</span><span class="count">124</span></a>
+    </nav>
+
+    <!-- Action bar -->
+    <div class="action-bar">
+      <div class="action-left">
+        <a class="btn-back" href="javascript:history.back()">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 2L4 6.5l4.5 4.5"/></svg>
+          Back
+        </a>
+        <span class="role-tag">✦ London RE&amp;HI HIRE</span>
+        <span class="role-tag">✦ Senior Designer</span>
+      </div>
+      <button class="btn-edit">Edit Profile →</button>
+    </div>
+
+    <!-- ── Overview ── -->
+    <div>
+      <div class="section-heading" style="margin-bottom:20px;">Overview</div>
+      <div class="overview-grid">
+
+        <!-- About -->
+        <div class="overview-col">
+          <div class="col-title">About Alexandra</div>
+          <div class="info-block">
+            <div class="info-text">Lorem ipsum dolor sit amet consectetur. Massa sem tristique ac sed. Lacus elementum ultrices egestas morbi a sapien proin viverra. Nulla enim ultrices mi nunc. Morbi vestibulum diam morbi urna in.</div>
+          </div>
+          <div class="info-block">
+            <div class="info-label">Links</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button class="btn-outline">
+                <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2H2a1 1 0 00-1 1v7a1 1 0 001 1h7a1 1 0 001-1V7M7 1h4m0 0v4m0-4L5 7"/></svg>
+                Portfolio
+              </button>
+              <button class="btn-outline">
+                <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2H2a1 1 0 00-1 1v7a1 1 0 001 1h7a1 1 0 001-1V7M7 1h4m0 0v4m0-4L5 7"/></svg>
+                Resume
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skills & Aspirations -->
+        <div class="overview-col">
+          <div class="col-title">Skills &amp; aspirations</div>
+          <div class="info-block">
+            <div class="info-label">Skillset</div>
+            <div class="skill-row"><span>Art Direction</span><span class="skill-level">Pro</span></div>
+            <div class="skill-row"><span>Illustration</span><span class="skill-level">Pro</span></div>
+            <div class="skill-row"><span>Product Design</span><span class="skill-level">Pro</span></div>
+            <div class="skill-row"><span>3D</span><span class="skill-level">Novice</span></div>
+          </div>
+          <div class="info-block">
+            <div class="info-label">Spoken Languages</div>
+            <div class="info-text">French &nbsp;·&nbsp; English &nbsp;·&nbsp; German</div>
+          </div>
+          <div class="info-block">
+            <div class="info-label">Software</div>
+            <div class="info-text">Cinema 4D (Pro) &nbsp;·&nbsp; Figma (Pro) &nbsp;·&nbsp; After Effects (Novice)</div>
+          </div>
+          <div class="info-block">
+            <div class="info-label">Interests</div>
+            <div class="info-text">Pottery &nbsp;·&nbsp; Automotive &nbsp;·&nbsp; Modern Art</div>
+          </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="overview-col">
+          <div class="col-title">Contact</div>
+          <div class="contact-block">
+            <div class="contact-row">
+              <div>
+                <div class="contact-label">Alexandra's contact</div>
+                <div class="contact-name">alexandra.ochoa@landor.com</div>
+              </div>
+              <div class="contact-icons">
+                <div class="icon-btn" title="Outlook">✉️</div>
+                <div class="icon-btn" title="Teams">💬</div>
+              </div>
+            </div>
+            <div class="contact-row">
+              <div>
+                <div class="contact-label">Line Manager</div>
+                <div class="contact-name">John Doe <span class="sub">(Creative Director)</span></div>
+              </div>
+              <div class="contact-icons">
+                <div class="icon-btn" title="Outlook">✉️</div>
+                <div class="icon-btn" title="Teams">💬</div>
+              </div>
+            </div>
+            <div class="contact-row">
+              <div>
+                <div class="contact-label">Resources Manager</div>
+                <div class="contact-name">Jane Smith <span class="sub">(Resources Manager)</span></div>
+              </div>
+              <div class="contact-icons">
+                <div class="icon-btn" title="Outlook">✉️</div>
+                <div class="icon-btn" title="Teams">💬</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Projects & Clients ── -->
+    <div>
+      <div class="section-heading-row" style="margin-bottom:20px;">
+        <div class="section-heading">Alexandra's Projects &amp; Clients</div>
+        <button class="btn-outline">Load more images →</button>
+      </div>
+      <div class="projects-grid">
+        <div class="pcard">
+          <div class="pcard-bg" style="background:#e8452a;">
+            <img src="https://www.figma.com/api/mcp/asset/81548a12-c7cd-410e-a133-e1fbc5a7ac2f" alt="Enter the bubbleverse" />
+          </div>
+          <div class="pcard-info">
+            <div class="pcard-title">Enter the bubbleverse</div>
+            <div class="pcard-meta">Nike Kids · Fashion · 2024</div>
+          </div>
+        </div>
+        <div class="pcard">
+          <div class="pcard-bg" style="background:#3db856;">
+            <img src="https://www.figma.com/api/mcp/asset/37ed6550-de68-4342-b2f5-ffe6c5d1ac01" alt="Swipe Rewards" />
+          </div>
+          <div class="pcard-info">
+            <div class="pcard-title">Swipe Rewards</div>
+            <div class="pcard-meta">Societe Generale · Finance · 2023</div>
+          </div>
+        </div>
+        <div class="pcard">
+          <div class="pcard-bg" style="background:#f0c000;">
+            <img src="https://www.figma.com/api/mcp/asset/657f3faf-bc28-4b92-bb1c-7340cdb7ed05" alt="Social Gardens" />
+          </div>
+          <div class="pcard-info">
+            <div class="pcard-title">Social Gardens</div>
+            <div class="pcard-meta">Johnnie Walker · Luxury · 2024</div>
+          </div>
+        </div>
+        <div class="pcard">
+          <div class="pcard-bg" style="background:#111;">
+            <img src="https://www.figma.com/api/mcp/asset/8bc284f7-098f-42b9-a63d-76ef9776342d" alt="Showcase Attitude" />
+          </div>
+          <div class="pcard-info">
+            <div class="pcard-title">Showcase Attitude</div>
+            <div class="pcard-meta">Pernod Ricard · Spirits · 2023</div>
+          </div>
+        </div>
+        <div class="pcard">
+          <div class="pcard-bg" style="background:#e6e0e9;">
+            <img src="https://www.figma.com/api/mcp/asset/be12409f-1854-4672-a7e2-0f3ce7ca5bf1" alt="Photography" />
+          </div>
+          <div class="pcard-info">
+            <div class="pcard-title">Photography</div>
+            <div class="pcard-meta">Landor Internal · Art · 2024</div>
+          </div>
+        </div>
+        <div class="pcard">
+          <div class="pcard-bg" style="background:#232323;">
+            <img src="https://www.figma.com/api/mcp/asset/b583cbd6-e702-4d70-8a58-025345ec14e3" alt="Brand Identity" />
+          </div>
+          <div class="pcard-info">
+            <div class="pcard-title">Brand Identity</div>
+            <div class="pcard-meta">Diageo · FMCG · 2023</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Experience ── -->
+    <div>
+      <div class="section-heading" style="margin-bottom:20px;">Experience</div>
+      <div class="experience-grid">
+
+        <div class="exp-col">
+          <div class="col-title" style="padding-bottom:16px;border-bottom:1px solid var(--neutral);">Objectives</div>
+          <div class="exp-sub">
+            <div class="info-label">What I would like to achieve</div>
+            <div class="info-text">Lorem ipsum dolor sit amet consectetur. Massa sem tristique ac sed. Lacus elementum ultrices egestas morbi a sapien proin viverra. Nulla enim ultrices mi nunc. Morbi vestibulum diam morbi urna in.</div>
+          </div>
+          <div class="exp-sub">
+            <div class="info-label">What I would like to be involved in</div>
+            <div class="info-text">Lorem ipsum dolor sit amet consectetur. Massa sem tristique ac sed. Lacus elementum ultrices egestas morbi a sapien proin viverra. Nulla enim ultrices mi nunc. Morbi vestibulum diam morbi urna in.</div>
+          </div>
+        </div>
+
+        <div class="exp-col">
+          <div class="col-title" style="padding-bottom:16px;border-bottom:1px solid var(--neutral);">More about Alexandra</div>
+          <div class="exp-sub">
+            <div class="info-label">Socials</div>
+            <div class="socials-row">
+              <a class="social-btn" href="#" title="Instagram">📷</a>
+              <a class="social-btn" href="#" title="X / Twitter">𝕏</a>
+              <a class="social-btn" href="#" title="Behance">Bē</a>
+              <a class="social-btn" href="#" title="LinkedIn">in</a>
+            </div>
+          </div>
+          <div class="exp-sub">
+            <div class="info-label">Useful links</div>
+            <div class="links-row">
+              <button class="btn-outline">Portfolio →</button>
+              <button class="btn-outline">Resume →</button>
+              <button class="btn-outline">Case Study →</button>
+              <button class="btn-outline">Awards →</button>
+            </div>
+          </div>
+          <div class="exp-sub">
+            <div class="info-label">Previous Company</div>
+            <div class="info-text">Name of the company (2019)</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  // Live clocks
+  const cities = [
+    { name: 'Sydney', tz: 'Australia/Sydney' }, { name: 'Hamburg', tz: 'Europe/Berlin' },
+    { name: 'London', tz: 'Europe/London' },    { name: 'Tokyo', tz: 'Asia/Tokyo' },
+    { name: 'Paris', tz: 'Europe/Paris' },      { name: 'Los Angeles', tz: 'America/Los_Angeles' },
+    { name: 'Mexico City', tz: 'America/Mexico_City' }, { name: 'Milan', tz: 'Europe/Rome' },
+    { name: 'Geneva', tz: 'Europe/Zurich' },
+  ];
+  function fmtTime(tz) {
+    const parts = new Intl.DateTimeFormat('en-US', { timeZone: tz, hour: '2-digit', minute: '2-digit', weekday: 'short', hour12: false }).formatToParts(new Date());
+    const get = t => parts.find(p => p.type === t)?.value ?? '';
+    return `${get('hour')}:${get('minute')} ${get('weekday').toUpperCase()}`;
+  }
+  function updateClocks() {
+    document.querySelectorAll('.tz-item').forEach((el, i) => {
+      const c = cities[i % cities.length];
+      el.querySelector('.tz-city').textContent = c.name;
+      el.querySelector('.tz-time').textContent = fmtTime(c.tz);
+    });
+  }
+  updateClocks();
+  setInterval(updateClocks, 60000);
+</script>
+</body>
+</html>
