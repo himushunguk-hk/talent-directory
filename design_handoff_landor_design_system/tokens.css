@@ -1,109 +1,119 @@
 /* ============================================================
    LANDOR Design System — Design Tokens
    Internal Tool / Talent Directory
-   Drop-in CSS custom properties. Import once at app root:
-     @import "./tokens.css";
+   v1.2 — Added: Navigation, Cards, Filters, Timezone tokens + new component sections
    ============================================================ */
 
-/* ── Landor Sans Beta — licensed custom font ─────────────── */
+/* Font faces — Landor Sans Beta (licensed), Archivo as fallback */
 @font-face {
   font-family: "Landor Sans Beta";
   src: url("../Fonts/20230912_Landor Sans Beta Regular.woff2") format("woff2"),
        url("../Fonts/20230912_Landor Sans Beta Regular.woff")  format("woff");
   font-weight: 400;
-  font-style: normal;
-  font-display: swap;
 }
-
 @font-face {
   font-family: "Landor Sans Beta";
   src: url("../Fonts/20230912_Landor Sans Beta Bold.woff2") format("woff2"),
        url("../Fonts/20230912_Landor Sans Beta Bold.woff")  format("woff");
   font-weight: 700;
-  font-style: normal;
-  font-display: swap;
 }
 
 :root {
-  /* ---------- Brand colours ---------- */
-  --ds-ultramarine: #0E1ADF;   /* primary brand — RAL 5002, PMS 072 C */
-  --ds-volt:        #ECFD01;   /* accent (use sparingly) — PMS 395 C */
-  --ds-shore:       #DBD1C8;   /* warm neutral surface */
-  --ds-black:       #000000;   /* Signal Black — RAL 9004, PMS 419 C */
-  --ds-white:       #FFFFFF;   /* Signal White — RAL 9003 */
+  /* Brand colours */
+  --ds-ultramarine: #0E1ADF;
+  --ds-volt:        #ECFD01;
+  --ds-shore:       #DBD1C8;
+  --ds-black:       #000000;
+  --ds-white:       #FFFFFF;
 
-  /* ---------- Semantic roles ---------- */
+  /* Semantic roles */
   --ds-primary: var(--ds-ultramarine);
   --ds-accent:  var(--ds-volt);
 
-  /* ---------- Interaction blues (primary button / interactive) ---------- */
+  /* Interactive blues */
   --ds-interactive-default:  #0027D7;
   --ds-interactive-hover:    #0E1ADF;
   --ds-interactive-pressed:  #081086;
   --ds-interactive-disabled: #DCDCDC;
 
-  /* ---------- Surfaces & lines ---------- */
-  --ds-bg-page:        #ECEAEE;  /* app background */
-  --ds-bg-header:      #E6E0E9;  /* lavender section header band */
-  --ds-bg-surface:     #FFFFFF;  /* cards / panels */
-  --ds-bg-field:       #E8E6EA;  /* soft grey input fill */
-  --ds-bg-row-hover:   #F4F3F5;  /* list / option hover */
-  --ds-border:         #ECEAEE;  /* hairline / card border */
-  --ds-border-strong:  #232323;  /* outlined fields & secondary buttons */
-  --ds-border-panel:   #E0DEE3;  /* dropdown panel border */
+  /* Surfaces & lines */
+  --ds-bg-page:        #ECEAEE;
+  --ds-bg-header:      #E6E0E9;
+  --ds-bg-surface:     #FFFFFF;
+  --ds-bg-field:       #E8E6EA;
+  --ds-bg-row-hover:   #F4F3F5;
+  --ds-border:         #ECEAEE;
+  --ds-border-strong:  #232323;
+  --ds-border-panel:   #E0DEE3;
 
-  /* ---------- Text ---------- */
-  --ds-text:           #000000;  /* primary text */
-  --ds-text-secondary: #606161;  /* secondary text */
-  --ds-text-muted:     #898989;  /* placeholders / meta */
+  /* Text */
+  --ds-text:           #000000;
+  --ds-text-secondary: #606161;
+  --ds-text-muted:     #898989;
   --ds-text-on-dark:   #FFFFFF;
 
-  /* ---------- Avatar palette (initials fallback) ---------- */
+  /* Navigation */
+  --ds-nav-text:        #1D1D21;
+  --ds-nav-count:       #B3B3B3;
+  --ds-nav-border:      #D8D8D8;
+  --ds-nav-active:      #0027D7;
+
+  /* Cards */
+  --ds-shadow-card:     0px 2px 12px rgba(0, 0, 0, 0.12);
+  --ds-shadow-card-sm:  0px 2px 6px rgba(0, 0, 0, 0.12);
+  --ds-frosted:         rgba(255, 255, 255, 0.77);
+
+  /* Filter panel */
+  --ds-filter-divider:      #D9DADA;
+  --ds-filter-search-bg:    #D9DADA;
+  --ds-filter-dropdown-bg:  #FBFBFB;
+  --ds-text-deselected:     #A0A2A2;
+  --ds-neutral-100:         #ECECEC;
+
+  /* Avatar palette (initials fallback) */
   --ds-avatar-1: #0E1ADF;  /* white text */
   --ds-avatar-2: #DBD1C8;  /* black text */
   --ds-avatar-3: #C9B8E0;  /* #3A2A52 text */
   --ds-avatar-4: #232323;  /* white text */
 
-  /* ---------- Typography ---------- */
-  /* Register the licensed Landor Sans Beta via @font-face; Archivo is the fallback. */
+  /* Typography */
   --ds-font-display: "Landor Sans Beta", "Archivo", "Helvetica Neue", Arial, sans-serif;
   --ds-font-body:    "Landor Sans Beta", "Archivo", "Helvetica Neue", Arial, sans-serif;
-
   --ds-weight-regular:  400;
   --ds-weight-medium:   500;
   --ds-weight-semibold: 600;
   --ds-weight-bold:     700;
   --ds-weight-black:    800;
 
-  /* size / line-height pairs (px) */
-  --ds-display-lg:    64px;   --ds-display-lg-lh:    64px;
-  --ds-display-md:    32px;   --ds-display-md-lh:    35px;
-  --ds-display-sm:    24px;   --ds-display-sm-lh:    24px;
-  --ds-headline-lg:   32px;   --ds-headline-lg-lh:   32px;
-  --ds-headline-md:   28px;   --ds-headline-md-lh:   31px;
-  --ds-headline-sm:   20px;   --ds-headline-sm-lh:   20px;
-  --ds-body-lg:       16px;   --ds-body-lg-lh:       20px;
-  --ds-body-md:       14px;   --ds-body-md-lh:       14px;
-  --ds-body-sm:       12px;   --ds-body-sm-lh:       17px;
-  --ds-label-lg:      14px;   --ds-label-lg-lh:      14px;
-  --ds-label-sm:      12px;   --ds-label-sm-lh:      12px;
-  --ds-button-lg:     20px;   --ds-button-lg-lh:     19.7px;
-  --ds-button-sm:     12px;   --ds-button-sm-lh:     11.8px;
+  /* Size / line-height pairs */
+  --ds-display-lg: 64px;    --ds-display-lg-lh: 64px;
+  --ds-display-md: 32px;    --ds-display-md-lh: 35px;
+  --ds-display-sm: 24px;    --ds-display-sm-lh: 24px;
+  --ds-headline-lg: 32px;   --ds-headline-lg-lh: 32px;
+  --ds-headline-md: 28px;   --ds-headline-md-lh: 31px;
+  --ds-headline-sm: 20px;   --ds-headline-sm-lh: 20px;
+  --ds-body-lg: 16px;       --ds-body-lg-lh: 20px;
+  --ds-body-md: 14px;       --ds-body-md-lh: 14px;
+  --ds-body-sm: 12px;       --ds-body-sm-lh: 17px;
+  --ds-label-lg: 14px;      --ds-label-lg-lh: 14px;
+  --ds-label-sm: 12px;      --ds-label-sm-lh: 12px;
+  --ds-button-lg: 20px;     --ds-button-lg-lh: 19.7px;
+  --ds-button-sm: 12px;     --ds-button-sm-lh: 11.8px;
 
-  /* tracking */
+  /* Tracking */
   --ds-track-display: -0.02em;
   --ds-track-label:   0.04em;
   --ds-track-button:  0.02em;
 
-  /* ---------- Radii ---------- */
-  --ds-radius-pill:   1000px;        /* buttons, tags */
-  --ds-radius-frame:  40px 40px 16px 16px; /* signature section frame */
-  --ds-radius-card:   20px;          /* swatch / content cards */
-  --ds-radius-tile:   14px;          /* icon tiles */
-  --ds-radius-field:  8px;           /* dropdowns */
-  --ds-radius-input:  6px;           /* text areas */
+  /* Radii */
+  --ds-radius-pill:   1000px;
+  --ds-radius-frame:  40px 40px 16px 16px;
+  --ds-radius-card:   20px;
+  --ds-radius-tile:   14px;
+  --ds-radius-field:  8px;
+  --ds-radius-input:  6px;
 
-  /* ---------- Spacing (8px base) ---------- */
+  /* Spacing (8px base) */
   --ds-space-1: 4px;
   --ds-space-2: 8px;
   --ds-space-3: 12px;
@@ -111,19 +121,16 @@
   --ds-space-5: 20px;
   --ds-space-6: 24px;
   --ds-space-8: 32px;
-  --ds-space-card:   56px;  /* card content padding */
-  --ds-space-header: 52px;  /* header band padding (top) */
+  --ds-space-card:   56px;
+  --ds-space-header: 52px;
 
-  /* ---------- Motion ---------- */
+  /* Motion */
   --ds-transition: 150ms ease;
 }
 
-/* ============================================================
-   Optional utility classes — delete if you prefer pure tokens.
-   ============================================================ */
-
-.ds-display-lg { font: var(--ds-weight-black) var(--ds-display-lg)/var(--ds-display-lg-lh) var(--ds-font-display); letter-spacing: var(--ds-track-display); text-transform: uppercase; }
-.ds-display-md { font: var(--ds-weight-black) var(--ds-display-md)/var(--ds-display-md-lh) var(--ds-font-display); text-transform: uppercase; }
-.ds-headline-lg { font: var(--ds-weight-bold) var(--ds-headline-lg)/var(--ds-headline-lg-lh) var(--ds-font-display); }
-.ds-body-lg { font: var(--ds-weight-regular) var(--ds-body-lg)/var(--ds-body-lg-lh) var(--ds-font-body); }
-.ds-label-lg { font: var(--ds-weight-semibold) var(--ds-label-lg)/var(--ds-label-lg-lh) var(--ds-font-body); letter-spacing: var(--ds-track-label); text-transform: uppercase; color: var(--ds-primary); }
+/* ── Utility classes ── */
+.ds-display-lg  { font: var(--ds-weight-black) var(--ds-display-lg)/var(--ds-display-lg-lh) var(--ds-font-display); letter-spacing: var(--ds-track-display); text-transform: uppercase; }
+.ds-display-md  { font: var(--ds-weight-black) var(--ds-display-md)/var(--ds-display-md-lh) var(--ds-font-display); text-transform: uppercase; }
+.ds-headline-lg { font: var(--ds-weight-bold)  var(--ds-headline-lg)/var(--ds-headline-lg-lh) var(--ds-font-display); }
+.ds-body-lg     { font: var(--ds-weight-regular) var(--ds-body-lg)/var(--ds-body-lg-lh) var(--ds-font-body); }
+.ds-label-lg    { font: var(--ds-weight-semibold) var(--ds-label-lg)/var(--ds-label-lg-lh) var(--ds-font-body); letter-spacing: var(--ds-track-label); text-transform: uppercase; color: var(--ds-primary); }
