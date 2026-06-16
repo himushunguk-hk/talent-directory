@@ -25,13 +25,13 @@
     <div style="padding: 80px 64px 64px; display: flex; flex-direction: column; gap: 48px;">
       <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 24px;">
         <span style="font-size: 14px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.7;">Internal Tool</span>
-        <span style="font-size: 14px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.7;">v1.0 — 2026</span>
+        <span style="font-size: 14px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.7;">v1.2 — 2026</span>
       </div>
       <div style="display: flex; flex-direction: column; gap: 4px;">
         <h1 style="margin: 0; font-size: clamp(72px, 13vw, 184px); font-weight: 900; line-height: 0.86; letter-spacing: -0.03em; text-transform: uppercase;">Landor</h1>
         <h1 style="margin: 0; font-size: clamp(72px, 13vw, 184px); font-weight: 900; line-height: 0.86; letter-spacing: -0.03em; text-transform: uppercase; color: var(--ds-accent, #ECFD01);">System</h1>
       </div>
-      <p style="margin: 0; max-width: 640px; font-size: 20px; line-height: 1.5; font-weight: 400; opacity: 0.85;">The component library and foundations for the Talent Directory — colour, type, iconography and interface components in one place.</p>
+      <p style="margin: 0; max-width: 640px; font-size: 20px; line-height: 1.5; font-weight: 400; opacity: 0.85;">The component library and foundations for the Talent Directory — colour, type, iconography, cards, navigation, filters, and timezone in one place.</p>
       <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px;">
         <span style="padding: 8px 16px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.4); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">Colours</span>
         <span style="padding: 8px 16px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.4); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">Typography</span>
@@ -39,6 +39,10 @@
         <span style="padding: 8px 16px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.4); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">Buttons</span>
         <span style="padding: 8px 16px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.4); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">Inputs</span>
         <span style="padding: 8px 16px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.4); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">Tags</span>
+        <span style="padding: 8px 16px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.4); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">Cards</span>
+        <span style="padding: 8px 16px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.4); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">Navigation</span>
+        <span style="padding: 8px 16px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.4); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">Filters</span>
+        <span style="padding: 8px 16px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.4); font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;">Timezone</span>
       </div>
     </div>
     <div style="display: flex; height: 14px;">
@@ -422,6 +426,727 @@
           <div style="display: flex; gap: 22px; align-items: center; flex-wrap: wrap;">
             <span style="display: inline-flex; align-items: center; gap: 7px; color: #000; font-size: 14px; font-weight: 500;"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.2 5.6L20 6l-3.5 5L20 16l-5.8-1.6L12 22l-2.2-7.6L4 16l3.5-5L4 6l5.8 1.6z"/></svg>Director <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></span>
             <span style="display: inline-flex; align-items: center; gap: 9px; color: #000; font-size: 18px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em;"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.2 5.6L20 6l-3.5 5L20 16l-5.8-1.6L12 22l-2.2-7.6L4 16l3.5-5L4 6l5.8 1.6z"/></svg>Director <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ CARDS — EMPLOYEE THUMBNAIL ============ -->
+  <section data-screen-label="Cards" style="width: 100%; max-width: 1160px; border-radius: 40px 40px 16px 16px; overflow: hidden; background: #fff;">
+    <div style="background: #E6E0E9; padding: 52px 56px 56px;">
+      <h2 style="margin: 0; font-size: 88px; font-weight: 800; line-height: 0.9; letter-spacing: -0.02em; text-transform: uppercase;">Cards</h2>
+      <p style="margin: 20px 0 0; font-size: 18px; line-height: 1.5; max-width: 560px;">The Employee Thumbnail is the primary surface for talent in grid and list views — photo-led with a gradient info bar and frosted-glass status chips.</p>
+    </div>
+    <div style="padding: 56px; display: flex; flex-direction: column; gap: 56px;">
+
+      <!-- ── ANATOMY ── -->
+      <div>
+        <div style="padding-bottom: 14px; margin-bottom: 28px; border-bottom: 2px solid #232323;">
+          <span style="font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ds-primary, #0E1ADF);">Anatomy</span>
+        </div>
+        <div style="display: grid; grid-template-columns: 320px 1fr; gap: 40px; align-items: start;">
+
+          <!-- Live card -->
+          <div style="width: 320px; height: 438px; border-radius: 20px; overflow: hidden; box-shadow: 0px 2px 12px rgba(0,0,0,0.12); position: relative; background: #C8B89A; flex-shrink: 0;">
+            <!-- Photo placeholder — warm portrait tone -->
+            <div style="position: absolute; inset: 0; background: linear-gradient(160deg, #D4C5A8 0%, #A8906C 50%, #7A6040 100%);"></div>
+            <!-- Bottom gradient overlay -->
+            <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 73.944%);"></div>
+            <!-- Top row: chips + online -->
+            <div style="position: absolute; top: 0; left: 0; right: 0; height: 61px;">
+              <div style="position: absolute; left: 16px; top: 19px; display: flex; gap: 8px;">
+                <span style="background: rgba(255,255,255,0.66); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); border-radius: 100px; padding: 8px 16px; font-size: 12px; font-weight: 600; text-transform: uppercase; color: #000; white-space: nowrap;">New</span>
+              </div>
+            </div>
+            <!-- Bottom info -->
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 24px; display: flex; flex-direction: column; gap: 6px;">
+              <span style="font-size: 28px; font-weight: 400; line-height: 31px; color: #fff;">John Doe</span>
+              <div style="display: flex; align-items: center; gap: 4px; flex-wrap: wrap;">
+                <span style="font-size: 14px; font-weight: 400; letter-spacing: 0.1px; text-transform: uppercase; color: #ECECEC; line-height: 14px;">Role</span>
+                <span style="width: 4px; height: 4px; border-radius: 50%; background: #ECECEC; flex-shrink: 0;"></span>
+                <span style="font-size: 14px; font-weight: 400; letter-spacing: 0.1px; text-transform: uppercase; color: #ECECEC; line-height: 14px;">Studio Name</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Annotation table -->
+          <div style="display: flex; flex-direction: column; gap: 0; align-self: center;">
+            <div style="display: grid; grid-template-columns: 28px 1fr; gap: 0 16px; align-items: start; padding: 18px 0; border-bottom: 1px solid #ECEAEE;">
+              <span style="width: 28px; height: 28px; border-radius: 50%; background: var(--ds-primary, #0E1ADF); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">A</span>
+              <div>
+                <p style="margin: 0 0 4px; font-size: 14px; font-weight: 700;">Photo background</p>
+                <p style="margin: 0; font-size: 13px; color: #606161; line-height: 1.5;">Full-bleed portrait. <code style="background: #F4F3F5; padding: 1px 5px; border-radius: 4px; font-size: 12px;">object-fit: cover</code> · <code style="background: #F4F3F5; padding: 1px 5px; border-radius: 4px; font-size: 12px;">border-radius: 20px</code> · fallback bg <code style="background: #F4F3F5; padding: 1px 5px; border-radius: 4px; font-size: 12px;">#F1F1F1</code></p>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 28px 1fr; gap: 0 16px; align-items: start; padding: 18px 0; border-bottom: 1px solid #ECEAEE;">
+              <span style="width: 28px; height: 28px; border-radius: 50%; background: var(--ds-primary, #0E1ADF); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">B</span>
+              <div>
+                <p style="margin: 0 0 4px; font-size: 14px; font-weight: 700;">Status chips (top-left)</p>
+                <p style="margin: 0; font-size: 13px; color: #606161; line-height: 1.5;">Frosted glass pills — <strong>New</strong> and/or <strong>Available</strong>. Background <code style="background: #F4F3F5; padding: 1px 5px; border-radius: 4px; font-size: 12px;">rgba(255,255,255,0.66)</code> · blur 2px · radius 100px. 12px semibold uppercase.</p>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 28px 1fr; gap: 0 16px; align-items: start; padding: 18px 0; border-bottom: 1px solid #ECEAEE;">
+              <span style="width: 28px; height: 28px; border-radius: 50%; background: var(--ds-primary, #0E1ADF); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">C</span>
+              <div>
+                <p style="margin: 0 0 4px; font-size: 14px; font-weight: 700;">Online indicator (top-right)</p>
+                <p style="margin: 0; font-size: 13px; color: #606161; line-height: 1.5;">11px green dot + "Online" label in 12px semibold uppercase <code style="background: #F4F3F5; padding: 1px 5px; border-radius: 4px; font-size: 12px;">#1D1D21</code>. Hidden by default.</p>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 28px 1fr; gap: 0 16px; align-items: start; padding: 18px 0; border-bottom: 1px solid #ECEAEE;">
+              <span style="width: 28px; height: 28px; border-radius: 50%; background: var(--ds-primary, #0E1ADF); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">D</span>
+              <div>
+                <p style="margin: 0 0 4px; font-size: 14px; font-weight: 700;">Gradient overlay</p>
+                <p style="margin: 0; font-size: 13px; color: #606161; line-height: 1.5;"><code style="background: #F4F3F5; padding: 1px 5px; border-radius: 4px; font-size: 12px;">linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 73.944%)</code> — covers bottom ~74% of the card.</p>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 28px 1fr; gap: 0 16px; align-items: start; padding: 18px 0;">
+              <span style="width: 28px; height: 28px; border-radius: 50%; background: var(--ds-primary, #0E1ADF); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">E</span>
+              <div>
+                <p style="margin: 0 0 4px; font-size: 14px; font-weight: 700;">Info bar (bottom)</p>
+                <p style="margin: 0; font-size: 13px; color: #606161; line-height: 1.5;">Name in Headline/Medium (28 / 31px). Role + separator dot + Studio in Label/Medium (14px uppercase, <code style="background: #F4F3F5; padding: 1px 5px; border-radius: 4px; font-size: 12px;">#ECECEC</code>). Padding 24px.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SPECS ── -->
+      <div>
+        <div style="padding-bottom: 14px; margin-bottom: 28px; border-bottom: 2px solid #232323;">
+          <span style="font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ds-primary, #0E1ADF);">Specs</span>
+        </div>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+          <div style="padding: 14px 20px; border: 1px solid #ECEAEE; border-radius: 14px; display: flex; flex-direction: column; gap: 4px; min-width: 140px;">
+            <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #898989;">Size</span>
+            <span style="font-size: 16px; font-weight: 600;">320 × 438 px</span>
+          </div>
+          <div style="padding: 14px 20px; border: 1px solid #ECEAEE; border-radius: 14px; display: flex; flex-direction: column; gap: 4px; min-width: 140px;">
+            <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #898989;">Radius</span>
+            <span style="font-size: 16px; font-weight: 600;">20 px</span>
+          </div>
+          <div style="padding: 14px 20px; border: 1px solid #ECEAEE; border-radius: 14px; display: flex; flex-direction: column; gap: 4px; min-width: 200px;">
+            <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #898989;">Shadow</span>
+            <span style="font-size: 16px; font-weight: 600;">0 2 12 rgba(0,0,0,.12)</span>
+          </div>
+          <div style="padding: 14px 20px; border: 1px solid #ECEAEE; border-radius: 14px; display: flex; flex-direction: column; gap: 4px; min-width: 140px;">
+            <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #898989;">Top area</span>
+            <span style="font-size: 16px; font-weight: 600;">61 px tall</span>
+          </div>
+          <div style="padding: 14px 20px; border: 1px solid #ECEAEE; border-radius: 14px; display: flex; flex-direction: column; gap: 4px; min-width: 180px;">
+            <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #898989;">Info padding</span>
+            <span style="font-size: 16px; font-weight: 600;">24 px all sides</span>
+          </div>
+          <div style="padding: 14px 20px; border: 1px solid #ECEAEE; border-radius: 14px; display: flex; flex-direction: column; gap: 4px; min-width: 160px;">
+            <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #898989;">Chip gap</span>
+            <span style="font-size: 16px; font-weight: 600;">8 px</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── STATES ── -->
+      <div>
+        <div style="padding-bottom: 14px; margin-bottom: 32px; border-bottom: 2px solid #232323;">
+          <span style="font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ds-primary, #0E1ADF);">States</span>
+        </div>
+        <div style="display: flex; gap: 32px; flex-wrap: wrap; align-items: flex-start;">
+
+          <!-- Default — New chip -->
+          <div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
+            <div style="width: 260px; height: 356px; border-radius: 20px; overflow: hidden; box-shadow: 0px 2px 12px rgba(0,0,0,0.12); position: relative; background: #C8B89A;">
+              <div style="position: absolute; inset: 0; background: linear-gradient(160deg, #D4C5A8 0%, #A8906C 50%, #7A6040 100%);"></div>
+              <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 73.944%);"></div>
+              <div style="position: absolute; top: 0; left: 0; right: 0; height: 61px;">
+                <div style="position: absolute; left: 16px; top: 19px; display: flex; gap: 8px;">
+                  <span style="background: rgba(255,255,255,0.66); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); border-radius: 100px; padding: 8px 16px; font-size: 12px; font-weight: 600; text-transform: uppercase; color: #000;">New</span>
+                </div>
+              </div>
+              <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 20px; display: flex; flex-direction: column; gap: 6px;">
+                <span style="font-size: 28px; font-weight: 400; line-height: 31px; color: #fff;">John Doe</span>
+                <div style="display: flex; align-items: center; gap: 4px;">
+                  <span style="font-size: 14px; font-weight: 400; letter-spacing: 0.1px; text-transform: uppercase; color: #ECECEC; line-height: 14px;">Role</span>
+                  <span style="width: 4px; height: 4px; border-radius: 50%; background: #ECECEC; flex-shrink: 0;"></span>
+                  <span style="font-size: 14px; font-weight: 400; letter-spacing: 0.1px; text-transform: uppercase; color: #ECECEC; line-height: 14px;">Studio Name</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <p style="margin: 0 0 4px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">Default</p>
+              <p style="margin: 0; font-size: 13px; color: #606161;">showNew = true<br>showAvailable = false<br>showOnline = false</p>
+            </div>
+          </div>
+
+          <!-- Available — New + Available chips -->
+          <div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
+            <div style="width: 260px; height: 356px; border-radius: 20px; overflow: hidden; box-shadow: 0px 2px 12px rgba(0,0,0,0.12); position: relative; background: #B0C8B4;">
+              <div style="position: absolute; inset: 0; background: linear-gradient(160deg, #C8DFC8 0%, #8EB89A 50%, #5A8A6A 100%);"></div>
+              <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 73.944%);"></div>
+              <div style="position: absolute; top: 0; left: 0; right: 0; height: 61px;">
+                <div style="position: absolute; left: 16px; top: 19px; display: flex; gap: 8px;">
+                  <span style="background: rgba(255,255,255,0.66); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); border-radius: 100px; padding: 8px 16px; font-size: 12px; font-weight: 600; text-transform: uppercase; color: #000;">New</span>
+                  <span style="background: rgba(255,255,255,0.66); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); border-radius: 100px; padding: 8px 16px; font-size: 12px; font-weight: 600; text-transform: uppercase; color: #000;">Available</span>
+                </div>
+              </div>
+              <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 20px; display: flex; flex-direction: column; gap: 6px;">
+                <span style="font-size: 28px; font-weight: 400; line-height: 31px; color: #fff;">Jane Smith</span>
+                <div style="display: flex; align-items: center; gap: 4px;">
+                  <span style="font-size: 14px; font-weight: 400; letter-spacing: 0.1px; text-transform: uppercase; color: #ECECEC; line-height: 14px;">Senior Designer</span>
+                  <span style="width: 4px; height: 4px; border-radius: 50%; background: #ECECEC; flex-shrink: 0;"></span>
+                  <span style="font-size: 14px; font-weight: 400; letter-spacing: 0.1px; text-transform: uppercase; color: #ECECEC; line-height: 14px;">London</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <p style="margin: 0 0 4px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">New + Available</p>
+              <p style="margin: 0; font-size: 13px; color: #606161;">showNew = true<br>showAvailable = true<br>showOnline = false</p>
+            </div>
+          </div>
+
+          <!-- Online indicator -->
+          <div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
+            <div style="width: 260px; height: 356px; border-radius: 20px; overflow: hidden; box-shadow: 0px 2px 12px rgba(0,0,0,0.12); position: relative; background: #B8B4C8;">
+              <div style="position: absolute; inset: 0; background: linear-gradient(160deg, #C8C4DE 0%, #9890B8 50%, #605A88 100%);"></div>
+              <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 73.944%);"></div>
+              <div style="position: absolute; top: 0; left: 0; right: 0; height: 61px;">
+                <div style="position: absolute; left: 16px; top: 19px; display: flex; gap: 8px;">
+                  <span style="background: rgba(255,255,255,0.66); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); border-radius: 100px; padding: 8px 16px; font-size: 12px; font-weight: 600; text-transform: uppercase; color: #000;">New</span>
+                </div>
+                <div style="position: absolute; right: 16px; top: 24px; display: flex; align-items: center; gap: 6px;">
+                  <span style="width: 11px; height: 11px; border-radius: 50%; background: #3CB371; flex-shrink: 0;"></span>
+                  <span style="font-size: 12px; font-weight: 600; text-transform: uppercase; color: #1D1D21; white-space: nowrap;">Online</span>
+                </div>
+              </div>
+              <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 20px; display: flex; flex-direction: column; gap: 6px;">
+                <span style="font-size: 28px; font-weight: 400; line-height: 31px; color: #fff;">Alex Chen</span>
+                <div style="display: flex; align-items: center; gap: 4px;">
+                  <span style="font-size: 14px; font-weight: 400; letter-spacing: 0.1px; text-transform: uppercase; color: #ECECEC; line-height: 14px;">Art Director</span>
+                  <span style="width: 4px; height: 4px; border-radius: 50%; background: #ECECEC; flex-shrink: 0;"></span>
+                  <span style="font-size: 14px; font-weight: 400; letter-spacing: 0.1px; text-transform: uppercase; color: #ECECEC; line-height: 14px;">NYC</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <p style="margin: 0 0 4px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">Online</p>
+              <p style="margin: 0; font-size: 13px; color: #606161;">showNew = true<br>showAvailable = false<br>showOnline = true</p>
+            </div>
+          </div>
+
+          <!-- No chips -->
+          <div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
+            <div style="width: 260px; height: 356px; border-radius: 20px; overflow: hidden; box-shadow: 0px 2px 12px rgba(0,0,0,0.12); position: relative; background: #C4B0A8;">
+              <div style="position: absolute; inset: 0; background: linear-gradient(160deg, #D4C4BE 0%, #A8908A 50%, #786058 100%);"></div>
+              <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 73.944%);"></div>
+              <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 20px; display: flex; flex-direction: column; gap: 6px;">
+                <span style="font-size: 28px; font-weight: 400; line-height: 31px; color: #fff;">Mia Torres</span>
+                <div style="display: flex; align-items: center; gap: 4px;">
+                  <span style="font-size: 14px; font-weight: 400; letter-spacing: 0.1px; text-transform: uppercase; color: #ECECEC; line-height: 14px;">Creative Director</span>
+                  <span style="width: 4px; height: 4px; border-radius: 50%; background: #ECECEC; flex-shrink: 0;"></span>
+                  <span style="font-size: 14px; font-weight: 400; letter-spacing: 0.1px; text-transform: uppercase; color: #ECECEC; line-height: 14px;">Berlin</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <p style="margin: 0 0 4px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">No chips</p>
+              <p style="margin: 0; font-size: 13px; color: #606161;">showNew = false<br>showAvailable = false<br>showOnline = false</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── TOKENS ── -->
+      <div>
+        <div style="padding-bottom: 14px; margin-bottom: 28px; border-bottom: 2px solid #232323;">
+          <span style="font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ds-primary, #0E1ADF);">Tokens used</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 0;">
+          <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 0 24px; padding: 14px 0; border-bottom: 1px solid #ECEAEE; font-size: 14px;">
+            <span style="font-weight: 600; color: var(--ds-primary, #0E1ADF); font-family: monospace; font-size: 13px;">--ds-radius-card</span>
+            <span style="color: #606161;">Border radius</span>
+            <code style="font-size: 13px; background: #F4F3F5; padding: 2px 8px; border-radius: 4px;">20px</code>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 0 24px; padding: 14px 0; border-bottom: 1px solid #ECEAEE; font-size: 14px;">
+            <span style="font-weight: 600; color: var(--ds-primary, #0E1ADF); font-family: monospace; font-size: 13px;">--ds-shadow-card</span>
+            <span style="color: #606161;">Box shadow</span>
+            <code style="font-size: 13px; background: #F4F3F5; padding: 2px 8px; border-radius: 4px;">0 2 12 rgba(0,0,0,.12)</code>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 0 24px; padding: 14px 0; border-bottom: 1px solid #ECEAEE; font-size: 14px;">
+            <span style="font-weight: 600; color: var(--ds-primary, #0E1ADF); font-family: monospace; font-size: 13px;">--ds-frosted</span>
+            <span style="color: #606161;">Chip background</span>
+            <code style="font-size: 13px; background: #F4F3F5; padding: 2px 8px; border-radius: 4px;">rgba(255,255,255,0.66)</code>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 0 24px; padding: 14px 0; border-bottom: 1px solid #ECEAEE; font-size: 14px;">
+            <span style="font-weight: 600; color: var(--ds-primary, #0E1ADF); font-family: monospace; font-size: 13px;">--ds-neutral-100</span>
+            <span style="color: #606161;">Role / studio text</span>
+            <code style="font-size: 13px; background: #F4F3F5; padding: 2px 8px; border-radius: 4px;">#ECECEC</code>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 0 24px; padding: 14px 0; border-bottom: 1px solid #ECEAEE; font-size: 14px;">
+            <span style="font-weight: 600; color: var(--ds-primary, #0E1ADF); font-family: monospace; font-size: 13px;">--ds-headline-md</span>
+            <span style="color: #606161;">Name text size</span>
+            <code style="font-size: 13px; background: #F4F3F5; padding: 2px 8px; border-radius: 4px;">28px / 31px</code>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 0 24px; padding: 14px 0; font-size: 14px;">
+            <span style="font-weight: 600; color: var(--ds-primary, #0E1ADF); font-family: monospace; font-size: 13px;">--ds-label-lg</span>
+            <span style="color: #606161;">Role / studio text size</span>
+            <code style="font-size: 13px; background: #F4F3F5; padding: 2px 8px; border-radius: 4px;">14px / 14px · +0.1em</code>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ NAVIGATION ============ -->
+  <section data-screen-label="Navigation" style="width: 100%; max-width: 1160px; border-radius: 16px; overflow: hidden; background: #fff; box-shadow: 0px 2px 12px rgba(0,0,0,0.08);">
+    <div style="background: #E6E0E9; padding: 20px 40px;">
+      <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #606161;">Navigation</span>
+    </div>
+    <div style="padding: 48px 40px; display: flex; flex-direction: column; gap: 56px;">
+
+      <!-- ── TOP NAVIGATION TABS ── -->
+      <div>
+        <div style="padding-bottom: 14px; margin-bottom: 28px; border-bottom: 2px solid #232323;">
+          <span style="font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ds-primary, #0E1ADF);">Top Navigation Tabs</span>
+        </div>
+        <p style="margin: 0 0 32px; font-size: 14px; color: #606161; line-height: 1.6; max-width: 600px;">Horizontal tab bar pinned below the page header. One tab is active at a time; count badges show live record totals. Active tab renders in Ultramarine with a 2px underline.</p>
+
+        <!-- Live component -->
+        <div style="background: #fff; border: 1px solid #ECEAEE; border-radius: 12px; padding: 24px; display: inline-flex; flex-direction: column; gap: 0; min-width: 480px; margin-bottom: 32px;">
+          <!-- tab row -->
+          <div style="display: flex; align-items: stretch; border-bottom: 1px solid #D8D8D8;">
+            <!-- Active tab -->
+            <div style="display: flex; align-items: center; gap: 8px; padding: 14px 20px 12px; border-bottom: 2px solid #0027D7; margin-bottom: -1px; cursor: default;">
+              <span style="font-size: 14px; font-weight: 600; color: #0027D7; letter-spacing: 0.02em;">Home</span>
+            </div>
+            <!-- Inactive tabs -->
+            <div style="display: flex; align-items: center; gap: 8px; padding: 14px 20px; cursor: pointer;">
+              <span style="font-size: 14px; font-weight: 400; color: #1D1D21;">Talents</span>
+              <span style="font-size: 12px; font-weight: 600; color: #B3B3B3; min-width: 20px; text-align: center;">247</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; padding: 14px 20px; cursor: pointer;">
+              <span style="font-size: 14px; font-weight: 400; color: #1D1D21;">Projects</span>
+              <span style="font-size: 12px; font-weight: 600; color: #B3B3B3; min-width: 20px; text-align: center;">83</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; padding: 14px 20px; cursor: pointer;">
+              <span style="font-size: 14px; font-weight: 400; color: #1D1D21;">Clients</span>
+              <span style="font-size: 12px; font-weight: 600; color: #B3B3B3; min-width: 20px; text-align: center;">41</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- States side by side -->
+        <p style="margin: 0 0 16px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #232323;">Tab states</p>
+        <div style="display: flex; gap: 40px; flex-wrap: wrap; align-items: flex-start; margin-bottom: 32px;">
+          <!-- Active -->
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="background: #fff; border: 1px solid #ECEAEE; border-radius: 8px; padding: 14px 20px 12px; border-bottom: 3px solid #0027D7;">
+              <span style="font-size: 14px; font-weight: 600; color: #0027D7;">Talents</span>
+            </div>
+            <p style="margin: 0; font-size: 12px; color: #606161;">Active<br>color: #0027D7<br>border-bottom: 2px #0027D7<br>weight: 600</p>
+          </div>
+          <!-- Inactive -->
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="background: #fff; border: 1px solid #ECEAEE; border-radius: 8px; padding: 14px 20px; display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 14px; font-weight: 400; color: #1D1D21;">Projects</span>
+              <span style="font-size: 12px; font-weight: 600; color: #B3B3B3;">83</span>
+            </div>
+            <p style="margin: 0; font-size: 12px; color: #606161;">Inactive<br>color: #1D1D21<br>count: #B3B3B3<br>weight: 400</p>
+          </div>
+          <!-- Hover -->
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="background: #F4F3F5; border: 1px solid #ECEAEE; border-radius: 8px; padding: 14px 20px; display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 14px; font-weight: 400; color: #1D1D21;">Clients</span>
+              <span style="font-size: 12px; font-weight: 600; color: #B3B3B3;">41</span>
+            </div>
+            <p style="margin: 0; font-size: 12px; color: #606161;">Hover<br>bg: #F4F3F5<br>color: #1D1D21</p>
+          </div>
+        </div>
+
+        <!-- Tokens -->
+        <div style="display: flex; flex-direction: column; gap: 0;">
+          <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 0 24px; padding: 12px 0; border-bottom: 1px solid #ECEAEE; font-size: 13px;">
+            <code style="color: var(--ds-primary,#0E1ADF); font-size: 12px;">--ds-nav-active</code>
+            <span style="color: #606161;">Active tab colour + underline</span>
+            <code style="background:#F4F3F5;padding:2px 8px;border-radius:4px;font-size:12px;">#0027D7</code>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 0 24px; padding: 12px 0; border-bottom: 1px solid #ECEAEE; font-size: 13px;">
+            <code style="color: var(--ds-primary,#0E1ADF); font-size: 12px;">--ds-nav-text</code>
+            <span style="color: #606161;">Inactive tab label</span>
+            <code style="background:#F4F3F5;padding:2px 8px;border-radius:4px;font-size:12px;">#1D1D21</code>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 0 24px; padding: 12px 0; border-bottom: 1px solid #ECEAEE; font-size: 13px;">
+            <code style="color: var(--ds-primary,#0E1ADF); font-size: 12px;">--ds-nav-count</code>
+            <span style="color: #606161;">Count badge</span>
+            <code style="background:#F4F3F5;padding:2px 8px;border-radius:4px;font-size:12px;">#B3B3B3</code>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 0 24px; padding: 12px 0; font-size: 13px;">
+            <code style="color: var(--ds-primary,#0E1ADF); font-size: 12px;">--ds-nav-border</code>
+            <span style="color: #606161;">Tab strip underline</span>
+            <code style="background:#F4F3F5;padding:2px 8px;border-radius:4px;font-size:12px;">#D8D8D8</code>
+          </div>
+        </div>
+      </div>
+
+      <!-- divider -->
+      <div style="border-top: 1px solid #ECEAEE;"></div>
+
+      <!-- ── SIDE MENU ── -->
+      <div>
+        <div style="padding-bottom: 14px; margin-bottom: 28px; border-bottom: 2px solid #232323;">
+          <span style="font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ds-primary, #0E1ADF);">Side Menu</span>
+        </div>
+        <p style="margin: 0 0 32px; font-size: 14px; color: #606161; line-height: 1.6; max-width: 600px;">Collapsible left sidebar grouping pages by Landor office. Each row shows a page thumbnail, label, and a chevron/count. Active page is highlighted in Ultramarine. The menu also carries filter shortcut buttons and a user account footer.</p>
+
+        <!-- Live side menu mock -->
+        <div style="display: flex; gap: 32px; flex-wrap: wrap; align-items: flex-start;">
+          <div style="width: 260px; border: 1px solid #E0DEE3; border-radius: 14px; overflow: hidden; background: #fff; box-shadow: 0px 2px 12px rgba(0,0,0,0.08);">
+            <!-- Header -->
+            <div style="padding: 16px 20px; border-bottom: 1px solid #E0DEE3; display: flex; align-items: center; justify-content: space-between;">
+              <span style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #1D1D21;">Pages</span>
+              <div style="display: flex; gap: 8px;">
+                <div style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid #ECEAEE; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke="#606161" stroke-width="1.5"/><line x1="10.5" y1="10.5" x2="14" y2="14" stroke="#606161" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </div>
+                <div style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid #ECEAEE; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><line x1="2" y1="5" x2="14" y2="5" stroke="#606161" stroke-width="1.5" stroke-linecap="round"/><line x1="2" y1="8" x2="14" y2="8" stroke="#606161" stroke-width="1.5" stroke-linecap="round"/><line x1="2" y1="11" x2="14" y2="11" stroke="#606161" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </div>
+              </div>
+            </div>
+            <!-- Nav items -->
+            <!-- Active -->
+            <div style="display: flex; align-items: center; gap: 12px; padding: 10px 20px; background: rgba(0,39,215,0.06); border-left: 3px solid #0027D7; cursor: pointer;">
+              <div style="width: 36px; height: 28px; border-radius: 6px; background: linear-gradient(135deg, #0E1ADF 0%, #4A5CE8 100%); flex-shrink: 0;"></div>
+              <span style="font-size: 13px; font-weight: 600; color: #0027D7; flex: 1;">Landor &amp; Fitch</span>
+              <span style="font-size: 11px; font-weight: 600; color: #B3B3B3;">24</span>
+            </div>
+            <!-- Inactive items -->
+            <div style="display: flex; align-items: center; gap: 12px; padding: 10px 20px; border-left: 3px solid transparent; cursor: pointer;">
+              <div style="width: 36px; height: 28px; border-radius: 6px; background: linear-gradient(135deg, #DBD1C8 0%, #C0B0A4 100%); flex-shrink: 0;"></div>
+              <span style="font-size: 13px; font-weight: 400; color: #1D1D21; flex: 1;">WPP Group</span>
+              <span style="font-size: 11px; font-weight: 600; color: #B3B3B3;">12</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; padding: 10px 20px; border-left: 3px solid transparent; cursor: pointer;">
+              <div style="width: 36px; height: 28px; border-radius: 6px; background: linear-gradient(135deg, #232323 0%, #555 100%); flex-shrink: 0;"></div>
+              <span style="font-size: 13px; font-weight: 400; color: #1D1D21; flex: 1;">Ogilvy</span>
+              <span style="font-size: 11px; font-weight: 600; color: #B3B3B3;">8</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; padding: 10px 20px; border-left: 3px solid transparent; cursor: pointer;">
+              <div style="width: 36px; height: 28px; border-radius: 6px; background: linear-gradient(135deg, #ECFD01 0%, #C8D800 100%); flex-shrink: 0;"></div>
+              <span style="font-size: 13px; font-weight: 400; color: #1D1D21; flex: 1;">VMLY&amp;R</span>
+              <span style="font-size: 11px; font-weight: 600; color: #B3B3B3;">19</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; padding: 10px 20px; border-left: 3px solid transparent; cursor: pointer; border-bottom: 1px solid #E0DEE3;">
+              <div style="width: 36px; height: 28px; border-radius: 6px; background: linear-gradient(135deg, #C9B8E0 0%, #9A80C0 100%); flex-shrink: 0;"></div>
+              <span style="font-size: 13px; font-weight: 400; color: #1D1D21; flex: 1;">Hogarth</span>
+              <span style="font-size: 11px; font-weight: 600; color: #B3B3B3;">6</span>
+            </div>
+            <!-- User footer -->
+            <div style="padding: 12px 20px; display: flex; align-items: center; gap: 10px;">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: #0E1ADF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <span style="font-size: 11px; font-weight: 700; color: #fff;">HH</span>
+              </div>
+              <div>
+                <p style="margin: 0; font-size: 12px; font-weight: 600; color: #1D1D21; line-height: 1.2;">Himus Hung</p>
+                <p style="margin: 0; font-size: 11px; color: #898989; line-height: 1.4;">himus@landor.com</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Anatomy table -->
+          <div style="display: flex; flex-direction: column; gap: 0; flex: 1; min-width: 300px;">
+            <div style="display: grid; grid-template-columns: 28px 120px 1fr; gap: 0 16px; padding: 12px 0; border-bottom: 1px solid #ECEAEE; font-size: 13px; font-weight: 700; color: #232323; text-transform: uppercase; letter-spacing: 0.06em;">
+              <span></span><span>Part</span><span>Notes</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 28px 120px 1fr; gap: 0 16px; padding: 12px 0; border-bottom: 1px solid #ECEAEE; font-size: 13px; align-items: center;">
+              <span style="width: 22px; height: 22px; border-radius: 50%; background: var(--ds-primary,#0E1ADF); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center;">A</span>
+              <span style="font-weight: 600;">Page thumbnail</span>
+              <span style="color: #606161;">36×28px, 6px radius, brand gradient</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 28px 120px 1fr; gap: 0 16px; padding: 12px 0; border-bottom: 1px solid #ECEAEE; font-size: 13px; align-items: center;">
+              <span style="width: 22px; height: 22px; border-radius: 50%; background: var(--ds-primary,#0E1ADF); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center;">B</span>
+              <span style="font-weight: 600;">Page label</span>
+              <span style="color: #606161;">13px, 400 inactive · 600 active #0027D7</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 28px 120px 1fr; gap: 0 16px; padding: 12px 0; border-bottom: 1px solid #ECEAEE; font-size: 13px; align-items: center;">
+              <span style="width: 22px; height: 22px; border-radius: 50%; background: var(--ds-primary,#0E1ADF); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center;">C</span>
+              <span style="font-weight: 600;">Count badge</span>
+              <span style="color: #606161;">11px, #B3B3B3 — live record total</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 28px 120px 1fr; gap: 0 16px; padding: 12px 0; border-bottom: 1px solid #ECEAEE; font-size: 13px; align-items: center;">
+              <span style="width: 22px; height: 22px; border-radius: 50%; background: var(--ds-primary,#0E1ADF); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center;">D</span>
+              <span style="font-weight: 600;">Active indicator</span>
+              <span style="color: #606161;">3px left border #0027D7 + 6% blue bg tint</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 28px 120px 1fr; gap: 0 16px; padding: 12px 0; font-size: 13px; align-items: center;">
+              <span style="width: 22px; height: 22px; border-radius: 50%; background: var(--ds-primary,#0E1ADF); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center;">E</span>
+              <span style="font-weight: 600;">User footer</span>
+              <span style="color: #606161;">Avatar + name + email, 32px pill avatar</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ FILTERS ============ -->
+  <section data-screen-label="Filters" style="width: 100%; max-width: 1160px; border-radius: 16px; overflow: hidden; background: #fff; box-shadow: 0px 2px 12px rgba(0,0,0,0.08);">
+    <div style="background: #E6E0E9; padding: 20px 40px;">
+      <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #606161;">Filters</span>
+    </div>
+    <div style="padding: 48px 40px; display: flex; flex-direction: column; gap: 56px;">
+
+      <div>
+        <div style="padding-bottom: 14px; margin-bottom: 28px; border-bottom: 2px solid #232323;">
+          <span style="font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ds-primary, #0E1ADF);">Filter Panel</span>
+        </div>
+        <p style="margin: 0 0 32px; font-size: 14px; color: #606161; line-height: 1.6; max-width: 600px;">Vertical accordion panel. Each filter group collapses/expands independently. Search input, colour swatches, checkboxes, and multi-select dropdowns are used depending on filter type. A range slider handles numeric ranges (Year). Active filter count is shown inline on each group header.</p>
+
+        <div style="display: flex; gap: 32px; flex-wrap: wrap; align-items: flex-start;">
+
+          <!-- Roles filter (expanded) -->
+          <div style="width: 286px; border: 1px solid #E0DEE3; border-radius: 12px; overflow: hidden; background: #fff;">
+            <!-- Group header -->
+            <div style="padding: 14px 16px; border-bottom: 1px solid #D9DADA; display: flex; align-items: center; justify-content: space-between; cursor: pointer;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #1D1D21;">Roles</span>
+                <span style="font-size: 11px; font-weight: 700; background: #0027D7; color: #fff; border-radius: 100px; padding: 2px 7px;">3</span>
+              </div>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 10L8 6L12 10" stroke="#606161" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <!-- Search input -->
+            <div style="padding: 10px 12px; border-bottom: 1px solid #D9DADA;">
+              <div style="background: #D9DADA; border-radius: 6px; padding: 8px 12px; display: flex; align-items: center; gap: 8px;">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4" stroke="#606161" stroke-width="1.3"/><line x1="9.2" y1="9.2" x2="12" y2="12" stroke="#606161" stroke-width="1.3" stroke-linecap="round"/></svg>
+                <span style="font-size: 12px; color: #A0A2A2;">Search roles...</span>
+              </div>
+            </div>
+            <!-- Options -->
+            <div style="display: flex; flex-direction: column;">
+              <div style="padding: 11px 16px; border-bottom: 1px solid #ECEAEE; display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                <div style="width: 16px; height: 16px; border-radius: 4px; background: #0027D7; border: 1.5px solid #0027D7; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                  <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <span style="font-size: 13px; color: #1D1D21;">Creative Director</span>
+              </div>
+              <div style="padding: 11px 16px; border-bottom: 1px solid #ECEAEE; display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                <div style="width: 16px; height: 16px; border-radius: 4px; background: #0027D7; border: 1.5px solid #0027D7; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                  <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <span style="font-size: 13px; color: #1D1D21;">Art Director</span>
+              </div>
+              <div style="padding: 11px 16px; border-bottom: 1px solid #ECEAEE; display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                <div style="width: 16px; height: 16px; border-radius: 4px; border: 1.5px solid #D9DADA; flex-shrink: 0;"></div>
+                <span style="font-size: 13px; color: #1D1D21;">Senior Designer</span>
+              </div>
+              <div style="padding: 11px 16px; border-bottom: 1px solid #ECEAEE; display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                <div style="width: 16px; height: 16px; border-radius: 4px; background: #0027D7; border: 1.5px solid #0027D7; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                  <svg width="9" height="7" viewBox="0 0 9 7" fill="none"><path d="M1 3.5L3.5 6L8 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <span style="font-size: 13px; color: #1D1D21;">Motion Designer</span>
+              </div>
+              <div style="padding: 11px 16px; display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                <div style="width: 16px; height: 16px; border-radius: 4px; border: 1.5px solid #D9DADA; flex-shrink: 0;"></div>
+                <span style="font-size: 13px; color: #A0A2A2;">Strategist</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Year filter (range slider) + Colour filter + collapsed -->
+          <div style="display: flex; flex-direction: column; gap: 12px; flex: 1; min-width: 220px;">
+
+            <!-- Year (expanded with range) -->
+            <div style="border: 1px solid #E0DEE3; border-radius: 12px; overflow: hidden; background: #fff;">
+              <div style="padding: 14px 16px; border-bottom: 1px solid #D9DADA; display: flex; align-items: center; justify-content: space-between; cursor: pointer;">
+                <span style="font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #1D1D21;">Year</span>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 10L8 6L12 10" stroke="#606161" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div style="padding: 16px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                  <span style="font-size: 12px; font-weight: 600; color: #1D1D21;">2019</span>
+                  <span style="font-size: 12px; font-weight: 600; color: #1D1D21;">2025</span>
+                </div>
+                <div style="position: relative; height: 4px; background: #D9DADA; border-radius: 2px; margin: 0 4px;">
+                  <div style="position: absolute; left: 30%; right: 10%; height: 4px; background: #0027D7; border-radius: 2px;"></div>
+                  <div style="position: absolute; left: calc(30% - 8px); top: -6px; width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 2px solid #0027D7; cursor: pointer;"></div>
+                  <div style="position: absolute; right: calc(10% - 8px); top: -6px; width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 2px solid #0027D7; cursor: pointer;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Colour (swatch grid) -->
+            <div style="border: 1px solid #E0DEE3; border-radius: 12px; overflow: hidden; background: #fff;">
+              <div style="padding: 14px 16px; border-bottom: 1px solid #D9DADA; display: flex; align-items: center; justify-content: space-between; cursor: pointer;">
+                <span style="font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #1D1D21;">Colour</span>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 10L8 6L12 10" stroke="#606161" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div style="padding: 14px 16px; display: flex; flex-wrap: wrap; gap: 8px;">
+                <div style="width: 28px; height: 28px; border-radius: 50%; background: #E63946; cursor: pointer; box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px #0027D7;"></div>
+                <div style="width: 28px; height: 28px; border-radius: 50%; background: #F4A261; cursor: pointer;"></div>
+                <div style="width: 28px; height: 28px; border-radius: 50%; background: #ECFD01; cursor: pointer;"></div>
+                <div style="width: 28px; height: 28px; border-radius: 50%; background: #57CC99; cursor: pointer;"></div>
+                <div style="width: 28px; height: 28px; border-radius: 50%; background: #0E1ADF; cursor: pointer;"></div>
+                <div style="width: 28px; height: 28px; border-radius: 50%; background: #C9B8E0; cursor: pointer;"></div>
+                <div style="width: 28px; height: 28px; border-radius: 50%; background: #232323; cursor: pointer;"></div>
+                <div style="width: 28px; height: 28px; border-radius: 50%; background: #DBD1C8; cursor: pointer; border: 1px solid #D0C8C0;"></div>
+              </div>
+            </div>
+
+            <!-- Industry (collapsed) -->
+            <div style="border: 1px solid #E0DEE3; border-radius: 12px; overflow: hidden; background: #fff;">
+              <div style="padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer;">
+                <span style="font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #1D1D21;">Industry</span>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="#606161" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+
+            <!-- Office / Project Location (collapsed) -->
+            <div style="border: 1px solid #E0DEE3; border-radius: 12px; overflow: hidden; background: #fff;">
+              <div style="padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer;">
+                <span style="font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #1D1D21;">Office / Location</span>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="#606161" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+
+            <!-- Skillset (collapsed) -->
+            <div style="border: 1px solid #E0DEE3; border-radius: 12px; overflow: hidden; background: #fff;">
+              <div style="padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer;">
+                <span style="font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #1D1D21;">Skillset</span>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="#606161" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Filter tokens -->
+        <div style="margin-top: 40px; display: flex; flex-direction: column; gap: 0;">
+          <div style="padding-bottom: 14px; margin-bottom: 20px; border-bottom: 2px solid #232323;">
+            <span style="font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ds-primary, #0E1ADF);">Tokens used</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 220px 1fr 200px; gap: 0 24px; padding: 12px 0; border-bottom: 1px solid #ECEAEE; font-size: 13px;">
+            <code style="color: var(--ds-primary,#0E1ADF); font-size: 12px;">--ds-filter-divider</code>
+            <span style="color: #606161;">Group divider + checkbox border</span>
+            <code style="background:#F4F3F5;padding:2px 8px;border-radius:4px;font-size:12px;">#D9DADA</code>
+          </div>
+          <div style="display: grid; grid-template-columns: 220px 1fr 200px; gap: 0 24px; padding: 12px 0; border-bottom: 1px solid #ECEAEE; font-size: 13px;">
+            <code style="color: var(--ds-primary,#0E1ADF); font-size: 12px;">--ds-filter-search-bg</code>
+            <span style="color: #606161;">Search input background</span>
+            <code style="background:#F4F3F5;padding:2px 8px;border-radius:4px;font-size:12px;">#D9DADA</code>
+          </div>
+          <div style="display: grid; grid-template-columns: 220px 1fr 200px; gap: 0 24px; padding: 12px 0; border-bottom: 1px solid #ECEAEE; font-size: 13px;">
+            <code style="color: var(--ds-primary,#0E1ADF); font-size: 12px;">--ds-filter-dropdown-bg</code>
+            <span style="color: #606161;">Expanded dropdown area</span>
+            <code style="background:#F4F3F5;padding:2px 8px;border-radius:4px;font-size:12px;">#FBFBFB</code>
+          </div>
+          <div style="display: grid; grid-template-columns: 220px 1fr 200px; gap: 0 24px; padding: 12px 0; font-size: 13px;">
+            <code style="color: var(--ds-primary,#0E1ADF); font-size: 12px;">--ds-text-deselected</code>
+            <span style="color: #606161;">Deselected / muted option label</span>
+            <code style="background:#F4F3F5;padding:2px 8px;border-radius:4px;font-size:12px;">#A0A2A2</code>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ TIMEZONE ============ -->
+  <section data-screen-label="Timezone" style="width: 100%; max-width: 1160px; border-radius: 16px; overflow: hidden; background: #fff; box-shadow: 0px 2px 12px rgba(0,0,0,0.08);">
+    <div style="background: #E6E0E9; padding: 20px 40px;">
+      <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #606161;">Timezone</span>
+    </div>
+    <div style="padding: 48px 40px; display: flex; flex-direction: column; gap: 48px;">
+
+      <div>
+        <div style="padding-bottom: 14px; margin-bottom: 28px; border-bottom: 2px solid #232323;">
+          <span style="font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ds-primary, #0E1ADF);">Timezone Bar</span>
+        </div>
+        <p style="margin: 0 0 32px; font-size: 14px; color: #606161; line-height: 1.6; max-width: 640px;">A full-width strip in Ultramarine that displays the current local time across key studio offices. City name in uppercase label style, live time in headline style. Appears at the top of the main view on desktop; collapses to a horizontal scroll on mobile.</p>
+
+        <!-- Desktop variant -->
+        <p style="margin: 0 0 12px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">Desktop</p>
+        <div style="background: #0027D7; border-radius: 12px; padding: 20px 32px; display: flex; align-items: center; gap: 0; overflow: hidden; margin-bottom: 32px; flex-wrap: wrap;">
+          <!-- City 1 -->
+          <div style="display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 100px; padding: 0 20px 0 0;">
+            <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.6);">London</span>
+            <span style="font-size: 20px; font-weight: 400; color: #fff; line-height: 1.2;">09:41</span>
+          </div>
+          <div style="width: 1px; height: 36px; background: rgba(255,255,255,0.2); margin-right: 20px; flex-shrink: 0;"></div>
+          <!-- City 2 -->
+          <div style="display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 100px; padding: 0 20px 0 0;">
+            <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.6);">New York</span>
+            <span style="font-size: 20px; font-weight: 400; color: #fff; line-height: 1.2;">04:41</span>
+          </div>
+          <div style="width: 1px; height: 36px; background: rgba(255,255,255,0.2); margin-right: 20px; flex-shrink: 0;"></div>
+          <!-- City 3 -->
+          <div style="display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 100px; padding: 0 20px 0 0;">
+            <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.6);">São Paulo</span>
+            <span style="font-size: 20px; font-weight: 400; color: #fff; line-height: 1.2;">05:41</span>
+          </div>
+          <div style="width: 1px; height: 36px; background: rgba(255,255,255,0.2); margin-right: 20px; flex-shrink: 0;"></div>
+          <!-- City 4 -->
+          <div style="display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 100px; padding: 0 20px 0 0;">
+            <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.6);">Dubai</span>
+            <span style="font-size: 20px; font-weight: 400; color: #fff; line-height: 1.2;">13:41</span>
+          </div>
+          <div style="width: 1px; height: 36px; background: rgba(255,255,255,0.2); margin-right: 20px; flex-shrink: 0;"></div>
+          <!-- City 5 -->
+          <div style="display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 100px; padding: 0 20px 0 0;">
+            <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.6);">Singapore</span>
+            <span style="font-size: 20px; font-weight: 400; color: #fff; line-height: 1.2;">17:41</span>
+          </div>
+          <div style="width: 1px; height: 36px; background: rgba(255,255,255,0.2); margin-right: 20px; flex-shrink: 0;"></div>
+          <!-- City 6 -->
+          <div style="display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 100px;">
+            <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.6);">Sydney</span>
+            <span style="font-size: 20px; font-weight: 400; color: #fff; line-height: 1.2;">20:41</span>
+          </div>
+        </div>
+
+        <!-- Mobile variant -->
+        <p style="margin: 0 0 12px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">Mobile (horizontal scroll)</p>
+        <div style="max-width: 375px; background: #0027D7; border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 0; overflow: hidden; margin-bottom: 40px;">
+          <div style="display: flex; flex-direction: column; gap: 3px; min-width: 80px; padding-right: 16px;">
+            <span style="font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.6);">London</span>
+            <span style="font-size: 16px; font-weight: 400; color: #fff; line-height: 1.2;">09:41</span>
+          </div>
+          <div style="width: 1px; height: 28px; background: rgba(255,255,255,0.2); margin-right: 16px; flex-shrink: 0;"></div>
+          <div style="display: flex; flex-direction: column; gap: 3px; min-width: 80px; padding-right: 16px;">
+            <span style="font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.6);">New York</span>
+            <span style="font-size: 16px; font-weight: 400; color: #fff; line-height: 1.2;">04:41</span>
+          </div>
+          <div style="width: 1px; height: 28px; background: rgba(255,255,255,0.2); margin-right: 16px; flex-shrink: 0;"></div>
+          <div style="display: flex; flex-direction: column; gap: 3px; min-width: 80px;">
+            <span style="font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.6);">Dubai →</span>
+            <span style="font-size: 16px; font-weight: 400; color: #fff; line-height: 1.2;">13:41</span>
+          </div>
+        </div>
+
+        <!-- Anatomy -->
+        <div style="display: flex; flex-direction: column; gap: 0;">
+          <div style="padding-bottom: 14px; margin-bottom: 20px; border-bottom: 2px solid #232323;">
+            <span style="font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ds-primary, #0E1ADF);">Tokens used</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 0 24px; padding: 12px 0; border-bottom: 1px solid #ECEAEE; font-size: 13px;">
+            <code style="color: var(--ds-primary,#0E1ADF); font-size: 12px;">--ds-primary</code>
+            <span style="color: #606161;">Bar background (Ultramarine)</span>
+            <code style="background:#F4F3F5;padding:2px 8px;border-radius:4px;font-size:12px;">#0027D7</code>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 0 24px; padding: 12px 0; border-bottom: 1px solid #ECEAEE; font-size: 13px;">
+            <code style="color: var(--ds-primary,#0E1ADF); font-size: 12px;">--ds-label-sm</code>
+            <span style="color: #606161;">City name — 11px uppercase 0.12em</span>
+            <code style="background:#F4F3F5;padding:2px 8px;border-radius:4px;font-size:12px;">11px / 60% white</code>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 0 24px; padding: 12px 0; border-bottom: 1px solid #ECEAEE; font-size: 13px;">
+            <code style="color: var(--ds-primary,#0E1ADF); font-size: 12px;">--ds-headline-sm</code>
+            <span style="color: #606161;">Time display — 20px / 400</span>
+            <code style="background:#F4F3F5;padding:2px 8px;border-radius:4px;font-size:12px;">20px / #fff</code>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 0 24px; padding: 12px 0; font-size: 13px;">
+            <code style="color: var(--ds-primary,#0E1ADF); font-size: 12px;">--ds-text-on-dark</code>
+            <span style="color: #606161;">Time text colour</span>
+            <code style="background:#F4F3F5;padding:2px 8px;border-radius:4px;font-size:12px;">#FFFFFF</code>
           </div>
         </div>
       </div>
