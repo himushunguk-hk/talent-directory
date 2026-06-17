@@ -358,13 +358,17 @@
   .proj-toolbar {
     display: flex;
     align-items: center;
-    justify-content: flex-end;   /* both count + buttons flush right */
+    justify-content: space-between;
     gap: 12px;
-    flex-wrap: wrap;
   }
   .proj-count {
     font-size: clamp(22px, 2.5vw, 32px); line-height: 32px; color: var(--ds-nav-text);
-    margin-right: auto;          /* pushes buttons to far right */
+  }
+  .proj-toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0; /* never wrap — always pinned to the right */
   }
 
   /* Year group */
@@ -1323,14 +1327,16 @@
     <!-- Toolbar -->
     <div class="proj-toolbar">
       <span class="proj-count" id="projCount">436 projects</span>
-      <button class="btn-secondary">
-        Most recent
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M7 12h10M11 18h2"/></svg>
-      </button>
-      <button class="btn-primary">
-        Add new project
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
-      </button>
+      <div class="proj-toolbar-actions">
+        <button class="btn-secondary">
+          Most recent
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M7 12h10M11 18h2"/></svg>
+        </button>
+        <button class="btn-primary">
+          Add new project
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+      </div>
     </div>
 
     <!-- Projects grid (grouped by year) -->
