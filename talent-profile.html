@@ -312,7 +312,7 @@
   <aside class="sidebar">
     <!-- Portrait photo (fills entire sidebar) -->
     <div class="portrait-fill">
-      <img src="https://www.figma.com/api/mcp/asset/14126eb1-b6a9-4f3f-99af-8632f9b5fda7" alt="Amie Ochoa" />
+      <img class="sidebar-photo" src="https://www.figma.com/api/mcp/asset/14126eb1-b6a9-4f3f-99af-8632f9b5fda7" alt="Amie Ochoa" />
     </div>
 
     <!-- Logo + search floating on top -->
@@ -334,8 +334,8 @@
     <!-- Talent info -->
     <div class="sidebar-talent-info">
       <div class="talent-badge">✦ Senior Designer</div>
-      <div class="talent-name">Amie Ochoa</div>
-      <div class="talent-meta">Creative Director · Paris</div>
+      <div class="talent-name profile-name">Amie Ochoa</div>
+      <div class="talent-meta profile-role">Creative Director · Paris</div>
     </div>
 
     <!-- User pill -->
@@ -385,15 +385,15 @@
         <div class="overview-col">
           <div class="col-title">About Alexandra</div>
           <div class="info-block">
-            <div class="info-text">Lorem ipsum dolor sit amet consectetur. Massa sem tristique ac sed. Lacus elementum ultrices egestas morbi a sapien proin viverra. Nulla enim ultrices mi nunc. Morbi vestibulum diam morbi urna in.</div>
+            <div class="info-text profile-bio">Lorem ipsum dolor sit amet consectetur. Massa sem tristique ac sed. Lacus elementum ultrices egestas morbi a sapien proin viverra. Nulla enim ultrices mi nunc. Morbi vestibulum diam morbi urna in.</div>
           </div>
           <div class="info-block">
             <div class="info-label">Links</div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
-              <button class="btn-outline">
+              <a class="btn-outline portfolio-link" href="#" target="_blank" rel="noopener">
                 <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2H2a1 1 0 00-1 1v7a1 1 0 001 1h7a1 1 0 001-1V7M7 1h4m0 0v4m0-4L5 7"/></svg>
                 Portfolio
-              </button>
+              </a>
               <button class="btn-outline">
                 <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2H2a1 1 0 00-1 1v7a1 1 0 001 1h7a1 1 0 001-1V7M7 1h4m0 0v4m0-4L5 7"/></svg>
                 Resume
@@ -432,8 +432,8 @@
           <div class="contact-block">
             <div class="contact-row">
               <div>
-                <div class="contact-label">Alexandra's contact</div>
-                <div class="contact-name">alexandra.ochoa@landor.com</div>
+                <div class="contact-label">Contact</div>
+                <div class="contact-name"><a class="contact-email" href="mailto:alexandra.ochoa@landor.com">alexandra.ochoa@landor.com</a></div>
               </div>
               <div class="contact-icons">
                 <div class="icon-btn" title="Outlook">✉️</div>
@@ -602,6 +602,68 @@
   }
   updateClocks();
   setInterval(updateClocks, 60000);
+
+  /* ── Supabase — load talent profile ────────────────────── */
+  const SB_URL = 'https://iynxaaxpjtlwhhjfaolc.supabase.co';
+  const SB_KEY = 'sb_publishable_99PXDwxMUeJG0t_K7K76Jw_TKfnzI5s';
+
+  function setText(sel, val) {
+    const el = document.querySelector(sel);
+    if (el && val != null) el.textContent = val;
+  }
+  function setAttr(sel, attr, val) {
+    const el = document.querySelector(sel);
+    if (el && val) el[attr] = val;
+  }
+
+  async function loadProfile() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    if (!id) return; // no id = keep static design
+
+    const res  = await fetch(`${SB_URL}/rest/v1/talents?id=eq.${id}&select=*,studios(name)&limit=1`, {
+      headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }
+    });
+    const data = await res.json();
+    if (!Array.isArray(data) || !data[0]) return;
+    const t = data[0];
+
+    // Sidebar photo / initials
+    if (t.profile_photo_url) {
+      const img = document.querySelector('.sidebar-photo');
+      if (img) { img.src = t.profile_photo_url; img.alt = t.full_name; }
+    }
+
+    // Name, role, seniority
+    setText('.profile-name', t.full_name);
+    setText('.profile-role', `${t.seniority ?? ''} ${t.role_title ?? ''}`.trim());
+
+    // Bio / about
+    setText('.profile-bio', t.bio);
+
+    // Objectives
+    setText('.profile-objectives', t.objectives);
+
+    // More about me
+    setText('.profile-more', t.more_about_me);
+
+    // Contact email
+    if (t.email) {
+      const emailLink = document.querySelector('.contact-email');
+      if (emailLink) { emailLink.textContent = t.email; emailLink.href = `mailto:${t.email}`; }
+    }
+
+    // Portfolio link
+    if (t.portfolio_url) {
+      const link = document.querySelector('.portfolio-link');
+      if (link) { link.textContent = t.portfolio_url; link.href = t.portfolio_url.startsWith('http') ? t.portfolio_url : `https://${t.portfolio_url}`; }
+    }
+
+    // Page title
+    document.title = `${t.full_name} — Landor Talent Directory`;
+  }
+
+  loadProfile();
 </script>
 </body>
 </html>
