@@ -357,7 +357,7 @@
           </div>
           <div class="info-block">
             <div class="info-label">Interests</div>
-            <div class="info-text">Pottery &nbsp;·&nbsp; Automotive &nbsp;·&nbsp; Modern Art</div>
+            <div class="info-text profile-interests">Pottery &nbsp;·&nbsp; Automotive &nbsp;·&nbsp; Modern Art</div>
           </div>
         </div>
 
@@ -560,15 +560,16 @@
       if (link) { link.textContent = t.portfolio_url; link.href = t.portfolio_url.startsWith('http') ? t.portfolio_url : `https://${t.portfolio_url}`; }
     }
 
-    // Load projects
+    // Load projects and interests
     await loadProjects(id);
+    await loadInterests(id);
 
     // Page title
     document.title = `${t.full_name} — Landor Talent Directory`;
   }
 
   async function loadProjects(talentId) {
-    const res = await fetch(`${SB_URL}/rest/v1/talent_projects?talent_id=eq.${talentId}&order=created_at.desc`, {
+    const res = await fetch(`${SB_URL}/rest/v1/talent_projects?talent_id=eq.${talentId}`, {
       headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }
     });
     const projects = await res.json();
@@ -597,6 +598,19 @@
       `;
       grid.appendChild(card);
     });
+  }
+
+  async function loadInterests(talentId) {
+    const res = await fetch(`${SB_URL}/rest/v1/talent_interests?talent_id=eq.${talentId}`, {
+      headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }
+    });
+    const interests = await res.json();
+    if (!Array.isArray(interests) || interests.length === 0) return;
+
+    const interestNames = interests.map(i => i.interest_name || i.name).filter(Boolean);
+    if (interestNames.length > 0) {
+      setText('.profile-interests', interestNames.join(' · '));
+    }
   }
 
   loadProfile();
