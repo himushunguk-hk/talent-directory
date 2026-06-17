@@ -269,19 +269,24 @@
       <div style="display: flex; flex-direction: column; gap: 22px;">
         <span style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ds-primary, #0E1ADF);">Primary · State</span>
         <div style="display: flex; gap: 28px; align-items: flex-end; flex-wrap: wrap;">
-          <!-- Default — static label -->
-          <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px;">
-            <span style="border-radius: 100px; background: #0027D7; color: #fff; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 12px 20px; display: inline-flex; align-items: center; gap: 9px; pointer-events: none;">Label <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span>
-            <span style="font-size: 12px; color: #898989;">Default</span>
-          </div>
-          <!-- Live interactive — hover + press to feel it -->
+          <!-- Default -->
           <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px;">
             <button style="border: none; cursor: pointer; border-radius: 100px; background: #0027D7; color: #fff; font-family: inherit; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 12px 20px; display: inline-flex; align-items: center; gap: 9px; transition: background 200ms ease, opacity 200ms ease;" style-hover="background: #0E1ADF; opacity: 0.85;" style-active="background: #081086; opacity: 1;">Label <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></button>
-            <span style="font-size: 12px; color: #0027D7; font-weight: 600;">↑ Try it — hover &amp; press</span>
+            <span style="font-size: 12px; color: #898989;">Default</span>
           </div>
-          <!-- Disabled — static label -->
+          <!-- Hover — pinned visually, fully interactive -->
           <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px;">
-            <span style="border-radius: 100px; background: #DCDCDC; color: #fff; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 12px 20px; display: inline-flex; align-items: center; gap: 9px; pointer-events: none;">Label <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></span>
+            <button style="border: none; cursor: pointer; border-radius: 100px; background: #0E1ADF; opacity: 0.85; color: #fff; font-family: inherit; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 12px 20px; display: inline-flex; align-items: center; gap: 9px; transition: background 200ms ease, opacity 200ms ease;" style-hover="background: #0E1ADF; opacity: 0.85;" style-active="background: #081086; opacity: 1;">Label <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></button>
+            <span style="font-size: 12px; color: #898989;">Hover</span>
+          </div>
+          <!-- Pressed — pinned visually, fully interactive -->
+          <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px;">
+            <button style="border: none; cursor: pointer; border-radius: 100px; background: #081086; opacity: 1; color: #fff; font-family: inherit; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 12px 20px; display: inline-flex; align-items: center; gap: 9px; transition: background 200ms ease, opacity 200ms ease;" style-hover="background: #0E1ADF; opacity: 0.85;" style-active="background: #081086; opacity: 1;">Label <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></button>
+            <span style="font-size: 12px; color: #898989;">Pressed</span>
+          </div>
+          <!-- Disabled -->
+          <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px;">
+            <button disabled style="border: none; border-radius: 100px; background: #DCDCDC; color: #fff; font-family: inherit; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 12px 20px; display: inline-flex; align-items: center; gap: 9px; cursor: not-allowed; opacity: 1;">Label <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></button>
             <span style="font-size: 12px; color: #898989;">Disabled</span>
           </div>
         </div>
