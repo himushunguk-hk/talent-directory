@@ -355,3 +355,96 @@ body { overflow-x: hidden; }
    NAV INDICATOR JS HELPER  (injected via shared script)
    Add data-nav-indicator="true" to any .top-nav to auto-init
    ============================================================ */
+
+/* ============================================================
+   CLIENT CARD COMPONENT
+   Usage:
+     <div class="client-card">
+       <img src="…" alt="Client name" />
+       <div class="client-card-info">
+         <div class="client-card-name">Nike</div>
+         <div class="client-card-meta">
+           <span>13 projects</span>
+           <span class="dot"></span>
+           <span>FASHION</span>
+           <span class="dot"></span>
+           <span>Since 2024</span>
+         </div>
+       </div>
+     </div>
+   ============================================================ */
+
+.client-card {
+  position: relative;
+  border-radius: var(--ds-radius-card);   /* 20px */
+  overflow: hidden;
+  height: 336px;
+  cursor: pointer;
+  box-shadow: var(--ds-shadow-card);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  transition: transform var(--ds-transition), box-shadow var(--ds-transition);
+}
+.client-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.18);
+}
+
+/* Full-bleed background image */
+.client-card > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--ds-radius-card);
+  pointer-events: none;
+}
+
+/* Gradient info panel — bottom */
+.client-card-info {
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.92) 74%);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.client-card-name {
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 31px;
+  color: #fff;
+  white-space: nowrap;
+}
+.client-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.1px;
+  line-height: 14px;
+}
+.client-card-meta .dot {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/* 3-column client grid */
+.client-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 1100px) {
+  .client-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 700px) {
+  .client-grid { grid-template-columns: 1fr; }
+  .client-card  { height: 260px; }
+}
