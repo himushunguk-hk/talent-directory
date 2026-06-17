@@ -204,6 +204,35 @@ body { overflow-x: hidden; }
 .btn-back:hover svg    { stroke: #fff; }
 .btn-back:active       { background: #081086; border-color: #081086; opacity: 1; }
 
+/* Primary button — filled Ultramarine, three sizes (DS spec) */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 9px;
+  background: var(--ds-interactive-default); color: #fff;
+  border: none; border-radius: var(--ds-radius-pill);
+  padding: 12px 20px; font-size: 14px; font-weight: 600;
+  font-family: var(--font); text-transform: uppercase;
+  letter-spacing: var(--ds-track-button); cursor: pointer;
+  transition: background var(--ds-transition);
+}
+.btn-primary:hover   { background: var(--ds-interactive-hover); }
+.btn-primary:active  { background: var(--ds-interactive-pressed); }
+.btn-primary:disabled { background: var(--ds-interactive-disabled); cursor: not-allowed; }
+.btn-primary svg     { flex-shrink: 0; }
+
+/* Secondary button — outline, three sizes (DS spec) */
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 9px;
+  background: #fff; color: #000;
+  border: 1.5px solid #000; border-radius: var(--ds-radius-pill);
+  padding: 12px 20px; font-size: 14px; font-weight: 600;
+  font-family: var(--font); text-transform: uppercase;
+  letter-spacing: var(--ds-track-button); cursor: pointer;
+  transition: background var(--ds-transition), color var(--ds-transition), border-color var(--ds-transition);
+}
+.btn-secondary:hover  { background: #000; color: #fff; }
+.btn-secondary:active { background: #232323; color: #fff; }
+.btn-secondary svg    { flex-shrink: 0; }
+
 .btn-edit {
   display: inline-flex; align-items: center; gap: 8px;
   background: var(--blue); color: #fff; border-radius: 100px;
