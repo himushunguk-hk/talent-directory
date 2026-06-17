@@ -318,7 +318,7 @@
 
         <!-- About -->
         <div class="overview-col">
-          <div class="col-title">About Alexandra</div>
+          <div class="col-title"><span class="profile-about-title">About Alexandra</span></div>
           <div class="info-block">
             <div class="info-text profile-bio">Lorem ipsum dolor sit amet consectetur. Massa sem tristique ac sed. Lacus elementum ultrices egestas morbi a sapien proin viverra. Nulla enim ultrices mi nunc. Morbi vestibulum diam morbi urna in.</div>
           </div>
@@ -404,64 +404,11 @@
     <!-- ── Projects & Clients ── -->
     <div>
       <div class="section-heading-row" style="margin-bottom:20px;">
-        <div class="section-heading">Alexandra's Projects &amp; Clients</div>
+        <div class="section-heading"><span class="profile-projects-title">Alexandra's Projects &amp; Clients</span></div>
         <button class="btn-outline">Load more images →</button>
       </div>
-      <div class="projects-grid">
-        <div class="pcard">
-          <div class="pcard-bg" style="background:#e8452a;">
-            <img src="https://www.figma.com/api/mcp/asset/81548a12-c7cd-410e-a133-e1fbc5a7ac2f" alt="Enter the bubbleverse" />
-          </div>
-          <div class="pcard-info">
-            <div class="pcard-title">Enter the bubbleverse</div>
-            <div class="pcard-meta">Nike Kids · Fashion · 2024</div>
-          </div>
-        </div>
-        <div class="pcard">
-          <div class="pcard-bg" style="background:#3db856;">
-            <img src="https://www.figma.com/api/mcp/asset/37ed6550-de68-4342-b2f5-ffe6c5d1ac01" alt="Swipe Rewards" />
-          </div>
-          <div class="pcard-info">
-            <div class="pcard-title">Swipe Rewards</div>
-            <div class="pcard-meta">Societe Generale · Finance · 2023</div>
-          </div>
-        </div>
-        <div class="pcard">
-          <div class="pcard-bg" style="background:#f0c000;">
-            <img src="https://www.figma.com/api/mcp/asset/657f3faf-bc28-4b92-bb1c-7340cdb7ed05" alt="Social Gardens" />
-          </div>
-          <div class="pcard-info">
-            <div class="pcard-title">Social Gardens</div>
-            <div class="pcard-meta">Johnnie Walker · Luxury · 2024</div>
-          </div>
-        </div>
-        <div class="pcard">
-          <div class="pcard-bg" style="background:#111;">
-            <img src="https://www.figma.com/api/mcp/asset/8bc284f7-098f-42b9-a63d-76ef9776342d" alt="Showcase Attitude" />
-          </div>
-          <div class="pcard-info">
-            <div class="pcard-title">Showcase Attitude</div>
-            <div class="pcard-meta">Pernod Ricard · Spirits · 2023</div>
-          </div>
-        </div>
-        <div class="pcard">
-          <div class="pcard-bg" style="background:#e6e0e9;">
-            <img src="https://www.figma.com/api/mcp/asset/be12409f-1854-4672-a7e2-0f3ce7ca5bf1" alt="Photography" />
-          </div>
-          <div class="pcard-info">
-            <div class="pcard-title">Photography</div>
-            <div class="pcard-meta">Landor Internal · Art · 2024</div>
-          </div>
-        </div>
-        <div class="pcard">
-          <div class="pcard-bg" style="background:#232323;">
-            <img src="https://www.figma.com/api/mcp/asset/b583cbd6-e702-4d70-8a58-025345ec14e3" alt="Brand Identity" />
-          </div>
-          <div class="pcard-info">
-            <div class="pcard-title">Brand Identity</div>
-            <div class="pcard-meta">Diageo · FMCG · 2023</div>
-          </div>
-        </div>
+      <div class="projects-grid" id="projects-grid">
+        <!-- Projects will be populated here -->
       </div>
     </div>
 
@@ -483,7 +430,7 @@
         </div>
 
         <div class="exp-col">
-          <div class="col-title" style="padding-bottom:16px;border-bottom:1px solid var(--neutral);">More about Alexandra</div>
+          <div class="col-title" style="padding-bottom:16px;border-bottom:1px solid var(--neutral);"><span class="profile-more-title">More about Alexandra</span></div>
           <div class="exp-sub">
             <div class="info-label">Socials</div>
             <div class="socials-row">
@@ -586,6 +533,12 @@
     setText('.profile-name', t.full_name);
     setText('.profile-role', `${t.seniority ?? ''} ${t.role_title ?? ''}`.trim());
 
+    // Dynamic headings with preferred_name
+    const displayName = t.preferred_name || t.full_name;
+    setText('.profile-about-title', `About ${displayName}`);
+    setText('.profile-projects-title', `${displayName}'s Projects & Clients`);
+    setText('.profile-more-title', `More about ${displayName}`);
+
     // Bio / about
     setText('.profile-bio', t.bio);
 
@@ -607,8 +560,43 @@
       if (link) { link.textContent = t.portfolio_url; link.href = t.portfolio_url.startsWith('http') ? t.portfolio_url : `https://${t.portfolio_url}`; }
     }
 
+    // Load projects
+    await loadProjects(id);
+
     // Page title
     document.title = `${t.full_name} — Landor Talent Directory`;
+  }
+
+  async function loadProjects(talentId) {
+    const res = await fetch(`${SB_URL}/rest/v1/talent_projects?talent_id=eq.${talentId}&order=created_at.desc`, {
+      headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }
+    });
+    const projects = await res.json();
+    if (!Array.isArray(projects)) return;
+
+    const grid = document.getElementById('projects-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    projects.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'pcard';
+      const bgColor = p.bg_color || '#232323';
+      const imgSrc = p.image_url || '';
+      const title = p.project_name || 'Untitled';
+      const meta = [p.client_name, p.category, p.year].filter(Boolean).join(' · ');
+
+      card.innerHTML = `
+        <div class="pcard-bg" style="background:${bgColor};">
+          ${imgSrc ? `<img src="${imgSrc}" alt="${title}" />` : ''}
+        </div>
+        <div class="pcard-info">
+          <div class="pcard-title">${title}</div>
+          ${meta ? `<div class="pcard-meta">${meta}</div>` : ''}
+        </div>
+      `;
+      grid.appendChild(card);
+    });
   }
 
   loadProfile();
