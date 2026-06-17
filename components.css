@@ -197,7 +197,7 @@ body { overflow-x: hidden; }
   border: 1.5px solid #000; border-radius: 100px;
   padding: 10px 20px; font-size: 13px; font-weight: 600;
   font-family: var(--font); text-transform: uppercase; letter-spacing: 0.04em;
-  background: #fff; cursor: pointer;
+  background: transparent; cursor: pointer;
   transition: background 200ms ease, border-color 200ms ease, color 200ms ease, opacity 200ms ease;
 }
 .btn-back:hover        { background: #0027D7; border-color: #0027D7; color: #fff; opacity: 0.85; }
