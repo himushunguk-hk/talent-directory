@@ -356,23 +356,16 @@
 
   /* Toolbar */
   .proj-toolbar {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 16px; flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;   /* both count + buttons flush right */
+    gap: 12px;
+    flex-wrap: wrap;
   }
   .proj-count {
     font-size: clamp(22px, 2.5vw, 32px); line-height: 32px; color: var(--ds-nav-text);
+    margin-right: auto;          /* pushes buttons to far right */
   }
-
-  /* Sort button overrides */
-  .proj-sort-btn {
-    display: inline-flex; align-items: center; gap: 4px;
-    padding: 8px 12px; font-size: 12px; font-weight: 400;
-    text-transform: uppercase; letter-spacing: 0.12px;
-    border: 0.5px solid #000; border-radius: var(--ds-radius-pill);
-    background: none; color: #000; cursor: pointer;
-    opacity: 0.8; transition: opacity var(--ds-transition);
-  }
-  .proj-sort-btn:hover { opacity: 1; }
 
   /* Year group */
   .proj-grid-wrap { display: flex; flex-direction: column; gap: 40px; padding-bottom: 60px; }
@@ -1330,16 +1323,14 @@
     <!-- Toolbar -->
     <div class="proj-toolbar">
       <span class="proj-count" id="projCount">436 projects</span>
-      <div style="display:flex;gap:10px;align-items:center;">
-        <button class="btn-secondary btn-sm proj-sort-btn">
-          Most recent
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M7 12h10M11 18h2"/></svg>
-        </button>
-        <button class="btn-primary btn-sm">
-          Add new project
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
-        </button>
-      </div>
+      <button class="btn-pill">
+        Most recent
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M7 12h10M11 18h2"/></svg>
+      </button>
+      <button class="btn-arrow">
+        Add new project
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
     </div>
 
     <!-- Projects grid (grouped by year) -->
