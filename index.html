@@ -5,74 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Landor — Talent Directory</title>
   <link rel="stylesheet" href="design_handoff_landor_design_system/tokens.css" />
+  <link rel="stylesheet" href="components.css" />
   <style>
-    /* ─── Reset ─────────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    a { text-decoration: none; color: inherit; }
-    button { font: inherit; cursor: pointer; background: none; border: none; }
-    img { display: block; max-width: 100%; }
-
-    /* ─── Local aliases → design system tokens ───────────────── */
+    /* ─── Page-level variables ───────────────────────────────── */
     :root {
-      --blue:       var(--ds-interactive-default);   /* #0027D7 */
-      --volt:       var(--ds-volt);                  /* #ECFD01 */
-      --black:      var(--ds-black);                 /* #000000 */
-      --white:      var(--ds-bg-surface);            /* #FFFFFF */
-      --shore:      var(--ds-shore);                 /* #DBD1C8 */
-      --neutral:    var(--ds-border);                /* #ECEAEE */
-      --muted:      var(--ds-text-muted);            /* #898989 */
-      --font:       var(--ds-font-display);
-      --sidebar-w:  280px;
-      --card-w:     300px;
-      --card-h:     401px;
-    }
-
-    /* ─── Body ───────────────────────────────────────────────── */
-    html, body {
-      font-family: var(--font);
-      background: var(--ds-bg-page);   /* #ECEAEE — design system page bg */
-      color: var(--ds-text);           /* #000000 */
-      height: 100%;
-    }
-    body { overflow-x: hidden; }
-
-    /* ─── Scrollbar ──────────────────────────────────────────── */
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
-
-    /* ════════════════════════════════════════════════════════════
-       TIMEZONE BAR — scrolling marquee
-    ════════════════════════════════════════════════════════════ */
-    .timezone-bar {
-      background: var(--blue);
-      color: #fff;
-      overflow: hidden;
-      padding: 11px 0;
-      width: 100%;
-    }
-    @keyframes tz-scroll {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    .timezone-track {
-      display: flex;
-      gap: 44px;
-      align-items: center;
-      width: max-content;
-      animation: tz-scroll 30s linear infinite;
-      will-change: transform;
-    }
-    .tz-item { display: flex; flex-direction: column; gap: 3px; flex-shrink: 0; }
-    .tz-city { font-size: 12px; font-weight: 600; line-height: 1.1; white-space: nowrap; }
-    .tz-time { font-size: 16px; font-weight: 700; line-height: 1.1; white-space: nowrap; }
-
-    /* ════════════════════════════════════════════════════════════
-       LAYOUT SHELL
-    ════════════════════════════════════════════════════════════ */
-    .page {
-      display: flex;
-      min-height: calc(100vh - 42px);
-      width: 100%;
+      --sidebar-w: 280px;
+      --card-w:    300px;
+      --card-h:    401px;
     }
 
     /* ════════════════════════════════════════════════════════════
@@ -91,52 +30,14 @@
       min-height: 100%;
     }
 
-    .sidebar-brand { display: flex; flex-direction: column; gap: 8px; }
-    .sidebar-logo  { width: min(196px, 100%); height: auto; }
-    .sidebar-subtitle { font-size: clamp(16px, 1.4vw, 20px); line-height: 1.1; color: #000; }
-
-    .search-bar {
-      background: var(--volt);
-      border-radius: 100px;
-      padding: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      cursor: text;
-    }
-    .search-bar span {
-      font-size: clamp(12px, 1vw, 14px);
-      letter-spacing: 0.14px; color: #000;
-      white-space: nowrap; line-height: 17px;
-      flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis;
-    }
-    .search-icon { width: 16px; height: 16.8px; flex-shrink: 0; }
-
     .welcome-copy { display: flex; flex-direction: column; gap: 24px; }
     .welcome-greeting { font-size: clamp(22px, 2vw, 28px); line-height: 1.15; color: #000; }
     .welcome-greeting .highlight { color: var(--blue); }
     .welcome-body { font-size: clamp(13px, 1.1vw, 16px); line-height: 20px; }
     .welcome-body p + p { margin-top: 4px; }
 
-    .user-pill {
-      position: absolute;
-      bottom: 34px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #fff;
-      border: 0.5px solid var(--shore);
-      border-radius: 1000px;
-      padding: 8px 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      white-space: nowrap;
-    }
-    .user-pill-inner { display: flex; align-items: center; gap: 4px; }
-    .user-avatar  { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; }
-    .user-name    { font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--black); line-height: 1.1; }
-    .settings-icon { width: 14px; height: 14px; object-fit: cover; }
+    /* User pill — positioned absolutely in the sidebar */
+    .user-pill { position: absolute; bottom: 34px; left: 50%; transform: translateX(-50%); }
 
     /* ════════════════════════════════════════════════════════════
        MAIN CONTENT
@@ -152,33 +53,6 @@
       gap: clamp(28px, 3vw, 44px);
     }
 
-    /* ─── TOP NAV ────────────────────────────────────────────── */
-    .top-nav {
-      display: flex;
-      gap: 0;
-      align-items: flex-start;
-      border-bottom: 1px solid #d8d8d8;
-      height: 60px;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-    .top-nav::-webkit-scrollbar { display: none; }
-    .nav-item {
-      display: flex; align-items: center; gap: 8px;
-      height: 100%;
-      padding: 0 16px;
-      font-size: clamp(15px, 1.4vw, 20px);
-      line-height: 1.1;
-      cursor: pointer;
-      flex-shrink: 0;
-      transition: color var(--ds-transition), border-color var(--ds-transition);
-      border-bottom: 1.5px solid transparent;
-      color: #000;
-    }
-    .nav-item:hover { color: var(--blue); border-bottom-color: rgba(0, 39, 215, 0.3); }
-    .nav-item.active { border-bottom-color: var(--blue); font-weight: 700; color: #000; }
-    .nav-item .count { color: var(--muted); }
-
     /* ─── SECTION HEADER ─────────────────────────────────────── */
     .section-header {
       display: flex;
@@ -191,32 +65,6 @@
     .section-subtitle { font-size: clamp(15px, 1.4vw, 20px); line-height: 1.1; color: var(--muted); margin-top: 8px; }
 
     .btn-group { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
-
-    .btn-arrow {
-      background: var(--blue);
-      border-radius: 100px;
-      width: 28px; height: 28px;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; flex-shrink: 0;
-      transition: opacity 0.2s;
-    }
-    .btn-arrow { transition: opacity var(--ds-transition), background var(--ds-transition); }
-    .btn-arrow:hover { opacity: 0.8; }
-    .btn-arrow:active { background: var(--ds-interactive-pressed); }
-    .btn-arrow img { width: 12px; height: 12px; }
-
-    .btn-pill {
-      border: 0.5px solid #000;
-      border-radius: 100px;
-      padding: 8px 12px;
-      display: flex; align-items: center; gap: 4px;
-      font-size: 12px; letter-spacing: 0.12px; text-transform: uppercase;
-      opacity: 0.8; cursor: pointer; white-space: nowrap;
-      transition: opacity 0.2s, background 0.2s;
-    }
-    .btn-pill { transition: opacity var(--ds-transition), background var(--ds-transition); }
-    .btn-pill:hover { opacity: 1; background: rgba(0,0,0,0.05); }
-    .btn-pill img { width: 12px; height: 12px; }
 
     /* ════════════════════════════════════════════════════════════
        TALENT CAROUSEL
@@ -273,15 +121,6 @@
     }
 
     .talent-tag { position: relative; z-index: 1; padding: 19px 16px 0; }
-    .tag-pill {
-      display: inline-flex; align-items: center;
-      background: rgba(255,255,255,0.66);
-      backdrop-filter: blur(2px);
-      border-radius: 100px;
-      padding: 8px 16px;
-      font-size: 12px; font-weight: 600;
-      text-transform: uppercase; line-height: 1.1;
-    }
 
     .talent-info {
       position: relative; z-index: 1;
@@ -295,7 +134,7 @@
       font-size: 14px; color: #ececec; text-transform: uppercase;
       letter-spacing: 0.1px; line-height: 14px;
     }
-    .dot { width: 4px; height: 4px; border-radius: 50%; background: #ececec; flex-shrink: 0; }
+    .dot { color: #ececec; }
 
     /* ════════════════════════════════════════════════════════════
        PROJECTS SECTION
@@ -694,11 +533,12 @@
   <main class="main">
 
     <!-- Top Nav -->
-    <nav class="top-nav">
+    <nav class="top-nav" id="navHome">
+      <div class="nav-indicator" id="navHomeIndicator"></div>
       <div class="nav-item active" onclick="showView('home')">Home</div>
       <div class="nav-item" onclick="showView('talents')"><span>Talents</span><span class="count">2 324</span></div>
-      <div class="nav-item" href="#"><span>Projects</span><span class="count">436</span></div>
-      <div class="nav-item" href="#"><span>Clients</span><span class="count">124</span></div>
+      <div class="nav-item"><span>Projects</span><span class="count">436</span></div>
+      <div class="nav-item"><span>Clients</span><span class="count">124</span></div>
     </nav>
 
     <!-- ── TALENT SECTION ──────────────────────────────────────── -->
@@ -999,7 +839,8 @@
   <!-- Main -->
   <main class="main">
 
-    <nav class="top-nav">
+    <nav class="top-nav" id="navTalents">
+      <div class="nav-indicator" id="navTalentsIndicator"></div>
       <div class="nav-item" onclick="showView('home')">Home</div>
       <div class="nav-item active"><span>Talents</span><span class="count">2 324</span></div>
       <div class="nav-item"><span>Projects</span><span class="count">436</span></div>
@@ -1137,6 +978,20 @@
 
 
 <script>
+  /* ── Nav indicator helper ────────────────────────────────── */
+  function moveIndicator(nav, indicator) {
+    const active = nav.querySelector('.nav-item.active');
+    if (!active || !indicator) return;
+    indicator.style.left  = active.offsetLeft + 'px';
+    indicator.style.width = active.offsetWidth + 'px';
+  }
+
+  function initIndicator(nav, indicator) {
+    indicator.style.transition = 'none';
+    moveIndicator(nav, indicator);
+    requestAnimationFrame(() => { indicator.style.transition = ''; });
+  }
+
   /* ── View navigation ─────────────────────────────────────── */
   function showView(name) {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -1145,7 +1000,25 @@
       target.classList.add('active');
       window.scrollTo(0, 0);
     }
+    // Update active state on the visible nav and slide indicator
+    const navMap = { home: 'navHome', talents: 'navTalents' };
+    const navId  = navMap[name];
+    if (!navId) return;
+    const nav  = document.getElementById(navId);
+    const indId = navId + 'Indicator';
+    const ind  = document.getElementById(indId);
+    if (!nav) return;
+    nav.querySelectorAll('.nav-item').forEach((item, i) => {
+      item.classList.toggle('active', i === (name === 'home' ? 0 : 1));
+    });
+    moveIndicator(nav, ind);
   }
+
+  /* ── Init indicators on load ─────────────────────────────── */
+  document.addEventListener('DOMContentLoaded', function () {
+    initIndicator(document.getElementById('navHome'),    document.getElementById('navHomeIndicator'));
+    initIndicator(document.getElementById('navTalents'), document.getElementById('navTalentsIndicator'));
+  });
 
   /* ── Live clocks ─────────────────────────────────────────── */
   const cities = [
