@@ -198,10 +198,11 @@ body { overflow-x: hidden; }
   padding: 10px 20px; font-size: 13px; font-weight: 600;
   font-family: var(--font); text-transform: uppercase; letter-spacing: 0.04em;
   background: #fff; cursor: pointer;
-  transition: background 150ms ease, color 150ms ease;
+  transition: background 200ms ease, border-color 200ms ease, color 200ms ease, opacity 200ms ease;
 }
-.btn-back:hover       { background: #000; color: #fff; }
-.btn-back:hover svg   { stroke: #fff; }
+.btn-back:hover        { background: #0027D7; border-color: #0027D7; color: #fff; opacity: 0.85; }
+.btn-back:hover svg    { stroke: #fff; }
+.btn-back:active       { background: #081086; border-color: #081086; opacity: 1; }
 
 .btn-edit {
   display: inline-flex; align-items: center; gap: 8px;
