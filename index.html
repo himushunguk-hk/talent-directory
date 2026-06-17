@@ -91,7 +91,6 @@
       flex-shrink: 0;
       border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
       position: relative;
       display: flex;
       flex-direction: column;
@@ -124,7 +123,6 @@
 
     .talent-info {
       position: relative; z-index: 1;
-      background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 73.944%);
       padding: 20px;
       display: flex; flex-direction: column; gap: 6px;
     }
@@ -565,11 +563,12 @@
         <div class="talent-grid" id="talentGrid">
 
           <!-- Card 1 — Louisa Doe -->
-          <div class="talent-card">
+          <div class="talent-card card-shadow">
             <div class="talent-card-bg">
               <div class="talent-card-bg-color"></div>
               <img src="https://www.figma.com/api/mcp/asset/14126eb1-b6a9-4f3f-99af-8632f9b5fda7" alt="Louisa Doe" />
             </div>
+            <div class="card-overlay"></div>
             <div class="talent-tag"><span class="tag-pill">New</span></div>
             <div class="talent-info">
               <p class="talent-name">Louisa Doe</p>
@@ -580,11 +579,12 @@
           </div>
 
           <!-- Card 2 — Mike Walker -->
-          <div class="talent-card">
+          <div class="talent-card card-shadow">
             <div class="talent-card-bg">
               <div class="talent-card-bg-color"></div>
               <img src="https://www.figma.com/api/mcp/asset/c044a360-9215-45a8-95ce-0be5d2e21451" alt="Mike Walker" />
             </div>
+            <div class="card-overlay"></div>
             <div class="talent-tag"><span class="tag-pill">New</span></div>
             <div class="talent-info">
               <p class="talent-name">Mike Walker</p>
@@ -595,11 +595,12 @@
           </div>
 
           <!-- Card 3 — Joseph Lowe -->
-          <div class="talent-card">
+          <div class="talent-card card-shadow">
             <div class="talent-card-bg">
               <div class="talent-card-bg-color"></div>
               <img src="https://www.figma.com/api/mcp/asset/03b6175d-b269-4886-81d3-0293f13602d3" alt="Joseph Lowe" />
             </div>
+            <div class="card-overlay"></div>
             <div class="talent-tag"><span class="tag-pill">New</span></div>
             <div class="talent-info">
               <p class="talent-name">Joseph Lowe</p>
@@ -610,11 +611,12 @@
           </div>
 
           <!-- Card 4 — Joseph Lowe (2) -->
-          <div class="talent-card">
+          <div class="talent-card card-shadow">
             <div class="talent-card-bg">
               <div class="talent-card-bg-color"></div>
               <img src="https://www.figma.com/api/mcp/asset/12b39e32-637b-4e48-ae6d-0fdb57c636f7" alt="Joseph Lowe" />
             </div>
+            <div class="card-overlay"></div>
             <div class="talent-tag"><span class="tag-pill">New</span></div>
             <div class="talent-info">
               <p class="talent-name">Joseph Lowe</p>
@@ -625,11 +627,12 @@
           </div>
 
           <!-- Card 5 — Extra card to demonstrate overflow -->
-          <div class="talent-card">
+          <div class="talent-card card-shadow">
             <div class="talent-card-bg">
               <div class="talent-card-bg-color"></div>
               <img src="https://www.figma.com/api/mcp/asset/14126eb1-b6a9-4f3f-99af-8632f9b5fda7" alt="Louisa Doe" />
             </div>
+            <div class="card-overlay"></div>
             <div class="talent-tag"><span class="tag-pill">New</span></div>
             <div class="talent-info">
               <p class="talent-name">Anna Smith</p>
