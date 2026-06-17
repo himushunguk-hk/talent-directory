@@ -541,7 +541,7 @@
             <!-- Photo placeholder — warm portrait tone -->
             <div style="position: absolute; inset: 0; background: linear-gradient(160deg, #D4C5A8 0%, #A8906C 50%, #7A6040 100%);"></div>
             <!-- Bottom gradient overlay -->
-            <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 73.944%);"></div>
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 40%; background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 100%);"></div>
             <!-- Top row: chips + online -->
             <div style="position: absolute; top: 0; left: 0; right: 0; height: 61px;">
               <div style="position: absolute; left: 16px; top: 19px; display: flex; gap: 8px;">
@@ -585,8 +585,8 @@
             <div style="display: grid; grid-template-columns: 28px 1fr; gap: 0 16px; align-items: start; padding: 18px 0; border-bottom: 1px solid #ECEAEE;">
               <span style="width: 28px; height: 28px; border-radius: 50%; background: var(--ds-primary, #0E1ADF); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">D</span>
               <div>
-                <p style="margin: 0 0 4px; font-size: 14px; font-weight: 700;">Gradient overlay</p>
-                <p style="margin: 0; font-size: 13px; color: #606161; line-height: 1.5;"><code style="background: #F4F3F5; padding: 1px 5px; border-radius: 4px; font-size: 12px;">linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 73.944%)</code> — covers bottom ~74% of the card.</p>
+                <p style="margin: 0 0 4px; font-size: 14px; font-weight: 700;">Gradient overlay <code style="background: #F4F3F5; padding: 1px 5px; border-radius: 4px; font-size: 11px; font-weight: 400;">.card-overlay</code></p>
+                <p style="margin: 0; font-size: 13px; color: #606161; line-height: 1.5;">Anchored to the bottom, <code style="background: #F4F3F5; padding: 1px 5px; border-radius: 4px; font-size: 12px;">height: 40%</code> — covers only the name + title area. Gradient: <code style="background: #F4F3F5; padding: 1px 5px; border-radius: 4px; font-size: 12px;">rgba(0,0,0,0) → #000</code>.</p>
               </div>
             </div>
             <div style="display: grid; grid-template-columns: 28px 1fr; gap: 0 16px; align-items: start; padding: 18px 0;">
@@ -644,7 +644,7 @@
           <div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
             <div style="width: 260px; height: 356px; border-radius: 20px; overflow: hidden; box-shadow: 0px 2px 12px rgba(0,0,0,0.12); position: relative; background: #C8B89A;">
               <div style="position: absolute; inset: 0; background: linear-gradient(160deg, #D4C5A8 0%, #A8906C 50%, #7A6040 100%);"></div>
-              <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 73.944%);"></div>
+              <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 40%; background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 100%);"></div>
               <div style="position: absolute; top: 0; left: 0; right: 0; height: 61px;">
                 <div style="position: absolute; left: 16px; top: 19px; display: flex; gap: 8px;">
                   <span style="background: rgba(255,255,255,0.66); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); border-radius: 100px; padding: 8px 16px; font-size: 12px; font-weight: 600; text-transform: uppercase; color: #000;">New</span>
@@ -669,7 +669,7 @@
           <div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
             <div style="width: 260px; height: 356px; border-radius: 20px; overflow: hidden; box-shadow: 0px 2px 12px rgba(0,0,0,0.12); position: relative; background: #B0C8B4;">
               <div style="position: absolute; inset: 0; background: linear-gradient(160deg, #C8DFC8 0%, #8EB89A 50%, #5A8A6A 100%);"></div>
-              <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 73.944%);"></div>
+              <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 40%; background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 100%);"></div>
               <div style="position: absolute; top: 0; left: 0; right: 0; height: 61px;">
                 <div style="position: absolute; left: 16px; top: 19px; display: flex; gap: 8px;">
                   <span style="background: rgba(255,255,255,0.66); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); border-radius: 100px; padding: 8px 16px; font-size: 12px; font-weight: 600; text-transform: uppercase; color: #000;">New</span>
@@ -695,7 +695,7 @@
           <div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
             <div style="width: 260px; height: 356px; border-radius: 20px; overflow: hidden; box-shadow: 0px 2px 12px rgba(0,0,0,0.12); position: relative; background: #B8B4C8;">
               <div style="position: absolute; inset: 0; background: linear-gradient(160deg, #C8C4DE 0%, #9890B8 50%, #605A88 100%);"></div>
-              <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 73.944%);"></div>
+              <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 40%; background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 100%);"></div>
               <div style="position: absolute; top: 0; left: 0; right: 0; height: 61px;">
                 <div style="position: absolute; left: 16px; top: 19px; display: flex; gap: 8px;">
                   <span style="background: rgba(255,255,255,0.66); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); border-radius: 100px; padding: 8px 16px; font-size: 12px; font-weight: 600; text-transform: uppercase; color: #000;">New</span>
@@ -724,7 +724,7 @@
           <div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
             <div style="width: 260px; height: 356px; border-radius: 20px; overflow: hidden; box-shadow: 0px 2px 12px rgba(0,0,0,0.12); position: relative; background: #C4B0A8;">
               <div style="position: absolute; inset: 0; background: linear-gradient(160deg, #D4C4BE 0%, #A8908A 50%, #786058 100%);"></div>
-              <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 73.944%);"></div>
+              <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 40%; background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 100%);"></div>
               <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 20px; display: flex; flex-direction: column; gap: 6px;">
                 <span style="font-size: 28px; font-weight: 400; line-height: 31px; color: #fff;">Mia Torres</span>
                 <div style="display: flex; align-items: center; gap: 4px;">
@@ -756,12 +756,22 @@
           </div>
           <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 0 24px; padding: 14px 0; border-bottom: 1px solid #ECEAEE; font-size: 14px;">
             <span style="font-weight: 600; color: var(--ds-primary, #0E1ADF); font-family: monospace; font-size: 13px;">--ds-shadow-card</span>
-            <span style="color: #606161;">Box shadow</span>
+            <span style="color: #606161;">Box shadow · use class <code style="background: #F4F3F5; padding: 1px 5px; border-radius: 4px; font-size: 12px;">.card-shadow</code></span>
             <code style="font-size: 13px; background: #F4F3F5; padding: 2px 8px; border-radius: 4px;">0 2 12 rgba(0,0,0,.12)</code>
           </div>
           <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 0 24px; padding: 14px 0; border-bottom: 1px solid #ECEAEE; font-size: 14px;">
+            <span style="font-weight: 600; color: var(--ds-primary, #0E1ADF); font-family: monospace; font-size: 13px;">.card-overlay</span>
+            <span style="color: #606161;">Gradient overlay — anchored bottom, 40% height</span>
+            <code style="font-size: 13px; background: #F4F3F5; padding: 2px 8px; border-radius: 4px;">rgba(0,0,0,0) → #000</code>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 0 24px; padding: 14px 0; border-bottom: 1px solid #ECEAEE; font-size: 14px;">
+            <span style="font-weight: 600; color: var(--ds-primary, #0E1ADF); font-family: monospace; font-size: 13px;">.tag-pill</span>
+            <span style="color: #606161;">Frosted status chip — New, Available</span>
+            <code style="font-size: 13px; background: #F4F3F5; padding: 2px 8px; border-radius: 4px;">rgba(255,255,255,0.66) · blur 2px</code>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 0 24px; padding: 14px 0; border-bottom: 1px solid #ECEAEE; font-size: 14px;">
             <span style="font-weight: 600; color: var(--ds-primary, #0E1ADF); font-family: monospace; font-size: 13px;">--ds-frosted</span>
-            <span style="color: #606161;">Chip background</span>
+            <span style="color: #606161;">Chip background token</span>
             <code style="font-size: 13px; background: #F4F3F5; padding: 2px 8px; border-radius: 4px;">rgba(255,255,255,0.66)</code>
           </div>
           <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 0 24px; padding: 14px 0; border-bottom: 1px solid #ECEAEE; font-size: 14px;">
