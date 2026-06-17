@@ -795,6 +795,122 @@
     </div>
   </section>
 
+  <!-- ============ PROJECT CARD ============ -->
+  <section data-screen-label="Project Card" style="width: 100%; max-width: 1160px; border-radius: 40px 40px 16px 16px; overflow: hidden; background: #fff;">
+    <div style="background: #E6E0E9; padding: 52px 56px 56px;">
+      <h2 style="margin: 0; font-size: 88px; font-weight: 800; line-height: 0.9; letter-spacing: -0.02em; text-transform: uppercase;">Project Card</h2>
+      <p style="margin: 20px 0 0; font-size: 18px; line-height: 1.5; max-width: 560px;">Full-bleed photo card for project highlights — cover image, frosted people stack, gradient info bar with title, meta tags, and detail rows.</p>
+    </div>
+    <div style="padding: 56px; display: flex; flex-direction: column; gap: 56px;">
+
+      <!-- ANATOMY -->
+      <div>
+        <div style="padding-bottom: 14px; margin-bottom: 28px; border-bottom: 2px solid #232323;">
+          <span style="font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ds-primary, #0E1ADF);">Anatomy</span>
+        </div>
+        <div style="display: grid; grid-template-columns: 320px 1fr; gap: 40px; align-items: start;">
+
+          <!-- Live card preview -->
+          <div style="width: 320px; height: 408px; border-radius: 20px; overflow: hidden; box-shadow: 0px 2px 12px rgba(0,0,0,0.12); position: relative; background: #1a1a2e; flex-shrink: 0;">
+            <div style="position: absolute; inset: 0; background: linear-gradient(160deg, #2a2a4e 0%, #1a1a2e 50%, #0a0a1e 100%);"></div>
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 40%; background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 100%);"></div>
+            <!-- Top: people stack -->
+            <div style="position: absolute; top: 16px; left: 16px;">
+              <div style="background: rgba(255,255,255,0.77); backdrop-filter: blur(2px); border-radius: 1000px; padding: 6px 12px; display: inline-flex; align-items: center; gap: 6px;">
+                <div style="display: flex; align-items: center;">
+                  <div style="width: 24px; height: 24px; border-radius: 50%; background: #0027D7; border: 1.5px solid #fff; margin-right: -4px;"></div>
+                  <div style="width: 24px; height: 24px; border-radius: 50%; background: #DBD1C8; border: 1.5px solid #fff; margin-right: -4px;"></div>
+                  <div style="width: 24px; height: 24px; border-radius: 50%; background: #C9B8E0; border: 1.5px solid #fff; margin-right: 0;"></div>
+                </div>
+                <span style="font-size: 12px; color: #000;">+12</span>
+              </div>
+            </div>
+            <!-- Bottom: info bar -->
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 24px; display: flex; flex-direction: column; gap: 12px;">
+              <div style="display: flex; flex-direction: column; gap: 6px;">
+                <span style="font-size: 28px; color: #fff; line-height: 31px;">Project Title</span>
+                <div style="display: flex; align-items: center; gap: 4px; flex-wrap: wrap;">
+                  <span style="font-size: 14px; color: #fff; text-transform: uppercase; letter-spacing: 0.1px;">Client</span>
+                  <span style="width: 4px; height: 4px; border-radius: 50%; background: #fff;"></span>
+                  <span style="font-size: 14px; color: #fff; text-transform: uppercase; letter-spacing: 0.1px;">Category</span>
+                  <span style="width: 4px; height: 4px; border-radius: 50%; background: #fff;"></span>
+                  <span style="font-size: 14px; color: #fff; text-transform: uppercase; letter-spacing: 0.1px;">Year</span>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                <div style="display: flex; justify-content: space-between; font-size: 12px; color: #fff;">
+                  <span style="text-transform: uppercase; letter-spacing: 0.1px;">Market</span><span>US, Europe</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 12px; color: #fff;">
+                  <span style="text-transform: uppercase; letter-spacing: 0.1px;">Skillset</span><span>Illustration, UX/UI</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Annotation table -->
+          <div style="display: flex; flex-direction: column; gap: 0; align-self: center;">
+            <div style="display: grid; grid-template-columns: 28px 1fr; gap: 0 16px; align-items: start; padding: 18px 0; border-bottom: 1px solid #ECEAEE;">
+              <span style="width: 28px; height: 28px; border-radius: 50%; background: var(--ds-primary, #0E1ADF); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">A</span>
+              <div><p style="margin: 0 0 4px; font-size: 14px; font-weight: 700;">Cover image</p><p style="margin: 0; font-size: 13px; color: #606161; line-height: 1.5;">Full-bleed photo via <code style="background: #F4F3F5; padding: 1px 5px; border-radius: 4px; font-size: 12px;">.project-card-bg</code>. Use <code style="background: #F4F3F5; padding: 1px 5px; border-radius: 4px; font-size: 12px;">.project-card-bg-cover</code> modifier for simple cover-fit images.</p></div>
+            </div>
+            <div style="display: grid; grid-template-columns: 28px 1fr; gap: 0 16px; align-items: start; padding: 18px 0; border-bottom: 1px solid #ECEAEE;">
+              <span style="width: 28px; height: 28px; border-radius: 50%; background: var(--ds-primary, #0E1ADF); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">B</span>
+              <div><p style="margin: 0 0 4px; font-size: 14px; font-weight: 700;">People stack <code style="background: #F4F3F5; padding: 1px 5px; border-radius: 4px; font-size: 11px; font-weight: 400;">.people-tag</code></p><p style="margin: 0; font-size: 13px; color: #606161; line-height: 1.5;">Frosted pill — stacked 24px avatars with −4px overlap, border 1.5px white. Count label in 12px. Background <code style="background: #F4F3F5; padding: 1px 5px; border-radius: 4px; font-size: 12px;">--ds-frosted</code>.</p></div>
+            </div>
+            <div style="display: grid; grid-template-columns: 28px 1fr; gap: 0 16px; align-items: start; padding: 18px 0; border-bottom: 1px solid #ECEAEE;">
+              <span style="width: 28px; height: 28px; border-radius: 50%; background: var(--ds-primary, #0E1ADF); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">C</span>
+              <div><p style="margin: 0 0 4px; font-size: 14px; font-weight: 700;">Gradient overlay <code style="background: #F4F3F5; padding: 1px 5px; border-radius: 4px; font-size: 11px; font-weight: 400;">.card-overlay</code></p><p style="margin: 0; font-size: 13px; color: #606161; line-height: 1.5;">Shared component — anchored bottom, full height, <code style="background: #F4F3F5; padding: 1px 5px; border-radius: 4px; font-size: 12px;">rgba(0,0,0,0) → #000</code>. Project cards use the full overlay (not constrained to 40%).</p></div>
+            </div>
+            <div style="display: grid; grid-template-columns: 28px 1fr; gap: 0 16px; align-items: start; padding: 18px 0; border-bottom: 1px solid #ECEAEE;">
+              <span style="width: 28px; height: 28px; border-radius: 50%; background: var(--ds-primary, #0E1ADF); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">D</span>
+              <div><p style="margin: 0 0 4px; font-size: 14px; font-weight: 700;">Title + meta <code style="background: #F4F3F5; padding: 1px 5px; border-radius: 4px; font-size: 11px; font-weight: 400;">.project-title-block</code></p><p style="margin: 0; font-size: 13px; color: #606161; line-height: 1.5;">28px / 31px white title. Meta row: Client · Category · Year in 14px uppercase white with <code style="background: #F4F3F5; padding: 1px 5px; border-radius: 4px; font-size: 12px;">.dot-white</code> separators.</p></div>
+            </div>
+            <div style="display: grid; grid-template-columns: 28px 1fr; gap: 0 16px; align-items: start; padding: 18px 0;">
+              <span style="width: 28px; height: 28px; border-radius: 50%; background: var(--ds-primary, #0E1ADF); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">E</span>
+              <div><p style="margin: 0 0 4px; font-size: 14px; font-weight: 700;">Detail rows <code style="background: #F4F3F5; padding: 1px 5px; border-radius: 4px; font-size: 11px; font-weight: 400;">.project-detail-row</code></p><p style="margin: 0; font-size: 13px; color: #606161; line-height: 1.5;">12px white. Label (uppercase) left, value right — max-width 60% to prevent overflow. Gap 14px between rows.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOKENS -->
+      <div>
+        <div style="padding-bottom: 14px; margin-bottom: 28px; border-bottom: 2px solid #232323;">
+          <span style="font-size: 15px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ds-primary, #0E1ADF);">Tokens &amp; Classes</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 0;">
+          <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 0 24px; padding: 14px 0; border-bottom: 1px solid #ECEAEE; font-size: 14px;">
+            <span style="font-weight: 600; color: var(--ds-primary, #0E1ADF); font-family: monospace; font-size: 13px;">.project-card</span>
+            <span style="color: #606161;">Base card — border-radius, overflow, flex column, cursor pointer</span>
+            <code style="font-size: 13px; background: #F4F3F5; padding: 2px 8px; border-radius: 4px;">height set per context</code>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 0 24px; padding: 14px 0; border-bottom: 1px solid #ECEAEE; font-size: 14px;">
+            <span style="font-weight: 600; color: var(--ds-primary, #0E1ADF); font-family: monospace; font-size: 13px;">.card-shadow</span>
+            <span style="color: #606161;">Box shadow — shared token</span>
+            <code style="font-size: 13px; background: #F4F3F5; padding: 2px 8px; border-radius: 4px;">--ds-shadow-card</code>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 0 24px; padding: 14px 0; border-bottom: 1px solid #ECEAEE; font-size: 14px;">
+            <span style="font-weight: 600; color: var(--ds-primary, #0E1ADF); font-family: monospace; font-size: 13px;">.card-overlay</span>
+            <span style="color: #606161;">Full gradient overlay — shared component</span>
+            <code style="font-size: 13px; background: #F4F3F5; padding: 2px 8px; border-radius: 4px;">rgba(0,0,0,0) → #000</code>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 0 24px; padding: 14px 0; border-bottom: 1px solid #ECEAEE; font-size: 14px;">
+            <span style="font-weight: 600; color: var(--ds-primary, #0E1ADF); font-family: monospace; font-size: 13px;">.people-tag</span>
+            <span style="color: #606161;">Frosted people stack pill</span>
+            <code style="font-size: 13px; background: #F4F3F5; padding: 2px 8px; border-radius: 4px;">--ds-frosted · blur 2px</code>
+          </div>
+          <div style="display: grid; grid-template-columns: 200px 1fr 200px; gap: 0 24px; padding: 14px 0; font-size: 14px;">
+            <span style="font-weight: 600; color: var(--ds-primary, #0E1ADF); font-family: monospace; font-size: 13px;">--ds-radius-card</span>
+            <span style="color: #606161;">Border radius</span>
+            <code style="font-size: 13px; background: #F4F3F5; padding: 2px 8px; border-radius: 4px;">20px</code>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- ============ NAVIGATION ============ -->
   <section data-screen-label="Navigation" style="width: 100%; max-width: 1160px; border-radius: 16px; overflow: hidden; background: #fff; box-shadow: 0px 2px 12px rgba(0,0,0,0.08);">
     <div style="background: #E6E0E9; padding: 20px 40px;">
