@@ -563,6 +563,7 @@
       display: flex; flex-direction: column; gap: 6px;
     }
     .tcard-name { font-size: 28px; font-weight: 400; color: #fff; line-height: 31px; }
+    .tcard-initials { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 56px; font-weight: 700; }
     .tcard-meta {
       display: flex; flex-wrap: wrap; align-items: center; gap: 4px;
       font-size: 14px; color: #ececec; text-transform: uppercase;
@@ -1221,6 +1222,71 @@
 
   // Init state
   prev.style.opacity = '0.4';
+
+  /* ── Supabase — load talents grid ───────────────────────── */
+  const SB_URL = 'https://iynxaaxpjtlwhhjfaolc.supabase.co';
+  const SB_KEY = 'sb_publishable_99PXDwxMUeJG0t_K7K76Jw_TKfnzI5s';
+
+  const AVATAR_COLORS = ['#0E1ADF', '#DBD1C8', '#C9B8E0', '#232323'];
+  const AVATAR_TEXT   = ['#fff',    '#000',    '#3A2A52', '#fff'  ];
+
+  function initials(name) {
+    if (!name) return '?';
+    const parts = name.trim().split(' ');
+    return (parts[0][0] + (parts[1]?.[0] ?? '')).toUpperCase();
+  }
+
+  function tCardHTML(t, idx) {
+    const colorIdx = idx % AVATAR_COLORS.length;
+    const bgStyle  = t.profile_photo_url
+      ? ''
+      : `style="background:${AVATAR_COLORS[colorIdx]}"`;
+    const photo = t.profile_photo_url
+      ? `<img src="${t.profile_photo_url}" alt="${t.full_name}" loading="lazy" />`
+      : `<div class="tcard-initials" style="color:${AVATAR_TEXT[colorIdx]}">${initials(t.full_name)}</div>`;
+    const badge = t.created_at && (Date.now() - new Date(t.created_at) < 30 * 86400000)
+      ? '<span class="tcard-badge">New</span>' : '';
+    const studio = t.studio_name ? `<span class="dot"></span><span>${t.studio_name}</span>` : '';
+    return `
+      <div class="tcard" onclick="window.location='talent-profile.html?id=${t.id}'">
+        <div class="tcard-bg-color" ${bgStyle}></div>
+        ${photo}
+        <div class="tcard-overlay"></div>
+        <div class="tcard-chips">${badge}</div>
+        <div class="tcard-info">
+          <div class="tcard-name">${t.full_name}</div>
+          <div class="tcard-meta"><span>${t.seniority ?? ''} ${t.role_title ?? ''}</span>${studio}</div>
+        </div>
+      </div>`;
+  }
+
+  async function loadTalents() {
+    const gridWrap = document.querySelector('#viewTalents .talents-grid-wrap');
+    const countEl  = document.querySelector('#viewTalents .talents-count');
+    try {
+      const res  = await fetch(`${SB_URL}/rest/v1/talents?select=*,studios(name)&order=full_name.asc`, {
+        headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }
+      });
+      const data = await res.json();
+      if (!Array.isArray(data) || data.length === 0) return; // keep static placeholders
+
+      // Flatten studio name
+      const talents = data.map(t => ({ ...t, studio_name: t.studios?.name ?? null }));
+
+      // Build rows of 3
+      const rows = [];
+      for (let i = 0; i < talents.length; i += 3) {
+        const chunk = talents.slice(i, i + 3);
+        rows.push(`<div class="talents-row">${chunk.map((t, j) => tCardHTML(t, i + j)).join('')}</div>`);
+      }
+      gridWrap.innerHTML = rows.join('');
+      if (countEl) countEl.textContent = `${talents.length.toLocaleString()} talent${talents.length !== 1 ? 's' : ''}`;
+    } catch (e) {
+      console.warn('Supabase fetch failed, keeping static cards', e);
+    }
+  }
+
+  loadTalents();
 </script>
 
 </body>
