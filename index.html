@@ -288,10 +288,16 @@
     ════════════════════════════════════════════════════════════ */
     .view { display: none; }
     .view.active {
-      display: block;   /* block so .page inside fills 100% width naturally */
+      display: block;
       width: 100%;
       overflow-x: hidden;
     }
+    @keyframes viewFadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    .view.fading-in  main { animation: viewFadeIn 220ms ease forwards; }
+    .view.fading-out main { opacity: 0; transition: opacity 150ms ease; pointer-events: none; }
 
     /* ════════════════════════════════════════════════════════════
        TALENTS LANDING — Sidebar filters
@@ -303,12 +309,7 @@
     .filters-title {
       font-size: 16px; font-weight: 700; line-height: 1.1;
     }
-    .filters-reset {
-      font-size: 11px; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.04em; color: var(--blue); cursor: pointer;
-      white-space: nowrap; border: none; background: none; font-family: var(--font);
-    }
-    .filters-reset:hover { text-decoration: underline; }
+    /* filters-reset now uses .btn-tertiary from components.css */
     .filter-list { display: flex; flex-direction: column; gap: 0; }
     .filter-item {
       display: flex; align-items: center; justify-content: space-between;
@@ -770,7 +771,7 @@
     <div style="display:flex;flex-direction:column;gap:20px;flex:1;min-height:0;overflow-y:auto;">
       <div class="filters-header">
         <span class="filters-title">Filters <span style="color:var(--muted);font-weight:400;">(8)</span></span>
-        <button class="filters-reset">Reset all filters</button>
+        <button class="btn-tertiary">Reset all filters</button>
       </div>
       <div class="filter-list">
         <div class="filter-item">
@@ -994,11 +995,23 @@
 
   /* ── View navigation ─────────────────────────────────────── */
   function showView(name) {
-    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     const target = document.getElementById('view' + name.charAt(0).toUpperCase() + name.slice(1));
-    if (target) {
-      target.classList.add('active');
+    if (!target) return;
+    const current = document.querySelector('.view.active');
+    if (current === target) return;
+
+    function activate() {
+      if (current) { current.classList.remove('active', 'fading-out'); }
+      target.classList.add('active', 'fading-in');
+      target.addEventListener('animationend', () => target.classList.remove('fading-in'), { once: true });
       window.scrollTo(0, 0);
+    }
+
+    if (current) {
+      current.classList.add('fading-out');
+      setTimeout(activate, 150);
+    } else {
+      activate();
     }
     // Update active state on the visible nav and slide indicator
     const navMap = { home: 'navHome', talents: 'navTalents' };

@@ -215,6 +215,18 @@ body { overflow-x: hidden; }
 .btn-edit:hover  { background: #0e1adf; opacity: 0.85; }
 .btn-edit:active { background: var(--ds-interactive-pressed); opacity: 1; }
 
+.btn-tertiary {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: none; border: none; border-radius: 0;
+  padding: 2px 0; font-size: 12px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.04em;
+  font-family: var(--font); cursor: pointer; color: var(--blue);
+  border-bottom: 1px solid transparent;
+  transition: border-color 200ms ease, opacity 200ms ease;
+}
+.btn-tertiary:hover  { border-bottom-color: var(--blue); opacity: 0.85; }
+.btn-tertiary:active { opacity: 1; }
+
 /* ============================================================
    TAG / CHIP PILLS
    ============================================================ */
