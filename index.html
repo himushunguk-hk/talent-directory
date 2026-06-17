@@ -119,6 +119,12 @@
       object-fit: cover; border-radius: 20px;
     }
 
+    /* Constrain card-overlay to the info area only */
+    .talent-card .card-overlay {
+      top: auto;
+      height: 40%;
+    }
+
     .talent-tag { position: relative; z-index: 1; padding: 19px 16px 0; }
 
     .talent-info {
@@ -369,7 +375,6 @@
       border-radius: 20px; overflow: hidden;
       position: relative; aspect-ratio: 325 / 409;
       cursor: pointer;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
     }
     .tcard::after {
       content: ''; position: absolute; inset: 0;
@@ -379,20 +384,12 @@
     .tcard:hover::after { opacity: 1; }
     .tcard img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
     .tcard-bg-color { position: absolute; inset: 0; background: #e0dcd8; }
-    /* Full-card gradient overlay — matches design system spec */
-    .tcard-overlay {
-      position: absolute; inset: 0; z-index: 1;
-      background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 73.944%);
-    }
+    /* Constrain card-overlay to the info area */
+    .tcard .card-overlay { top: auto; height: 40%; }
     /* Frosted chip row — top 61px zone */
     .tcard-chips {
       position: absolute; top: 0; left: 0; right: 0; height: 61px; z-index: 2;
       display: flex; align-items: center; padding: 0 16px; gap: 8px;
-    }
-    .tcard-badge {
-      background: rgba(255,255,255,0.66); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
-      border-radius: 100px; padding: 8px 16px;
-      font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: #000;
     }
     .tcard-info {
       position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
@@ -870,21 +867,21 @@
     <div class="talents-grid-wrap">
       <div class="talents-row">
         <!-- Louisa Doe -->
-        <div class="tcard" onclick="window.location='talent-profile.html'">
+        <div class="tcard card-shadow" onclick="window.location='talent-profile.html'">
           <div class="tcard-bg-color"></div>
           <img src="https://www.figma.com/api/mcp/asset/14126eb1-b6a9-4f3f-99af-8632f9b5fda7" alt="Louisa Doe" />
-          <div class="tcard-overlay"></div>
-          <div class="tcard-chips"><span class="tcard-badge">New</span></div>
+          <div class="card-overlay"></div>
+          <div class="tcard-chips"><span class="tag-pill">New</span></div>
           <div class="tcard-info">
             <div class="tcard-name">Louisa Doe</div>
             <div class="tcard-meta"><span>Junior 3D Designer</span><span class="dot"></span><span>Hamburg</span></div>
           </div>
         </div>
         <!-- Lisa Wallow -->
-        <div class="tcard" onclick="window.location='talent-profile.html'">
+        <div class="tcard card-shadow" onclick="window.location='talent-profile.html'">
           <div class="tcard-bg-color"></div>
           <img src="https://www.figma.com/api/mcp/asset/c044a360-9215-45a8-95ce-0be5d2e21451" alt="Lisa Wallow" />
-          <div class="tcard-overlay"></div>
+          <div class="card-overlay"></div>
           <div class="tcard-chips"></div>
           <div class="tcard-info">
             <div class="tcard-name">Lisa Wallow</div>
@@ -892,10 +889,10 @@
           </div>
         </div>
         <!-- Herman Ronald -->
-        <div class="tcard" onclick="window.location='talent-profile.html'">
+        <div class="tcard card-shadow" onclick="window.location='talent-profile.html'">
           <div class="tcard-bg-color" style="background:#c9b8e0"></div>
           <img src="https://www.figma.com/api/mcp/asset/03b6175d-b269-4886-81d3-0293f13602d3" alt="Herman Ronald" />
-          <div class="tcard-overlay"></div>
+          <div class="card-overlay"></div>
           <div class="tcard-chips"></div>
           <div class="tcard-info">
             <div class="tcard-name">Herman Ronald</div>
@@ -905,21 +902,21 @@
       </div>
       <div class="talents-row">
         <!-- Mervin Caldwell -->
-        <div class="tcard" onclick="window.location='talent-profile.html'">
+        <div class="tcard card-shadow" onclick="window.location='talent-profile.html'">
           <div class="tcard-bg-color" style="background:#232323"></div>
           <img src="https://www.figma.com/api/mcp/asset/12b39e32-637b-4e48-ae6d-0fdb57c636f7" alt="Mervin Caldwell" />
-          <div class="tcard-overlay"></div>
-          <div class="tcard-chips"><span class="tcard-badge">New</span></div>
+          <div class="card-overlay"></div>
+          <div class="tcard-chips"><span class="tag-pill">New</span></div>
           <div class="tcard-info">
             <div class="tcard-name">Mervin Caldwell</div>
             <div class="tcard-meta"><span>Sr Brand Strategist</span><span class="dot"></span><span>Los Angeles</span></div>
           </div>
         </div>
         <!-- Mike Walker -->
-        <div class="tcard" onclick="window.location='talent-profile.html'">
+        <div class="tcard card-shadow" onclick="window.location='talent-profile.html'">
           <div class="tcard-bg-color"></div>
           <img src="https://www.figma.com/api/mcp/asset/be12409f-1854-4672-a7e2-0f3ce7ca5bf1" alt="Mike Walker" />
-          <div class="tcard-overlay"></div>
+          <div class="card-overlay"></div>
           <div class="tcard-chips"></div>
           <div class="tcard-info">
             <div class="tcard-name">Mike Walker</div>
@@ -927,10 +924,10 @@
           </div>
         </div>
         <!-- Annie Ochoa -->
-        <div class="tcard" onclick="window.location='talent-profile.html'">
+        <div class="tcard card-shadow" onclick="window.location='talent-profile.html'">
           <div class="tcard-bg-color" style="background:#dbd1c8"></div>
           <img src="https://www.figma.com/api/mcp/asset/5043a589-fd33-40a6-9b1a-b56f4c147616" alt="Annie Ochoa" />
-          <div class="tcard-overlay"></div>
+          <div class="card-overlay"></div>
           <div class="tcard-chips"></div>
           <div class="tcard-info">
             <div class="tcard-name">Annie Ochoa</div>
@@ -940,10 +937,10 @@
       </div>
       <div class="talents-row">
         <!-- Julian Schultz -->
-        <div class="tcard" onclick="window.location='talent-profile.html'">
+        <div class="tcard card-shadow" onclick="window.location='talent-profile.html'">
           <div class="tcard-bg-color"></div>
           <img src="https://www.figma.com/api/mcp/asset/657f3faf-bc28-4b92-bb1c-7340cdb7ed05" alt="Julian Schultz" />
-          <div class="tcard-overlay"></div>
+          <div class="card-overlay"></div>
           <div class="tcard-chips"></div>
           <div class="tcard-info">
             <div class="tcard-name">Julian Schultz</div>
@@ -951,10 +948,10 @@
           </div>
         </div>
         <!-- Joseph Lowe -->
-        <div class="tcard" onclick="window.location='talent-profile.html'">
+        <div class="tcard card-shadow" onclick="window.location='talent-profile.html'">
           <div class="tcard-bg-color" style="background:#0e1adf"></div>
           <img src="https://www.figma.com/api/mcp/asset/8bc284f7-098f-42b9-a63d-76ef9776342d" alt="Joseph Lowe" />
-          <div class="tcard-overlay"></div>
+          <div class="card-overlay"></div>
           <div class="tcard-chips"></div>
           <div class="tcard-info">
             <div class="tcard-name">Joseph Lowe</div>
@@ -962,11 +959,11 @@
           </div>
         </div>
         <!-- Rosa Müller -->
-        <div class="tcard" onclick="window.location='talent-profile.html'">
+        <div class="tcard card-shadow" onclick="window.location='talent-profile.html'">
           <div class="tcard-bg-color" style="background:#e8e6ea"></div>
           <img src="https://www.figma.com/api/mcp/asset/b583cbd6-e702-4d70-8a58-025345ec14e3" alt="Rosa Müller" />
-          <div class="tcard-overlay"></div>
-          <div class="tcard-chips"><span class="tcard-badge">New</span></div>
+          <div class="card-overlay"></div>
+          <div class="tcard-chips"><span class="tag-pill">New</span></div>
           <div class="tcard-info">
             <div class="tcard-name">Rosa Müller</div>
             <div class="tcard-meta"><span>Brand Designer</span><span class="dot"></span><span>Geneva</span></div>
@@ -1121,13 +1118,13 @@
       ? `<img src="${t.profile_photo_url}" alt="${t.full_name}" loading="lazy" />`
       : `<div class="tcard-initials" style="color:${AVATAR_TEXT[colorIdx]}">${initials(t.full_name)}</div>`;
     const badge = t.created_at && (Date.now() - new Date(t.created_at) < 30 * 86400000)
-      ? '<span class="tcard-badge">New</span>' : '';
+      ? '<span class="tag-pill">New</span>' : '';
     const studio = t.studio_name ? `<span class="dot"></span><span>${t.studio_name}</span>` : '';
     return `
-      <div class="tcard" onclick="window.location='talent-profile.html?id=${t.id}'">
+      <div class="tcard card-shadow" onclick="window.location='talent-profile.html?id=${t.id}'">
         <div class="tcard-bg-color" ${bgStyle}></div>
         ${photo}
-        <div class="tcard-overlay"></div>
+        <div class="card-overlay"></div>
         <div class="tcard-chips">${badge}</div>
         <div class="tcard-info">
           <div class="tcard-name">${t.full_name}</div>
