@@ -711,29 +711,141 @@
         </div>
         <p style="margin: 0 0 32px; font-size: 14px; color: #606161; line-height: 1.6; max-width: 600px;">Horizontal tab bar pinned below the page header. One tab is active at a time; count badges show live record totals. Active tab renders in Ultramarine with a 2px underline.</p>
 
-        <!-- Live component -->
-        <div style="background: #fff; border: 1px solid #ECEAEE; border-radius: 12px; padding: 24px; display: inline-flex; flex-direction: column; gap: 0; min-width: 480px; margin-bottom: 32px;">
-          <!-- tab row -->
-          <div style="display: flex; align-items: stretch; border-bottom: 1px solid #D8D8D8;">
-            <!-- Active tab -->
-            <div style="display: flex; align-items: center; gap: 8px; padding: 14px 20px 12px; border-bottom: 2px solid #0027D7; margin-bottom: -1px; cursor: default;">
-              <span style="font-size: 14px; font-weight: 600; color: #0027D7; letter-spacing: 0.02em;">Home</span>
+        <!-- Live component — interactive with sliding indicator -->
+        <style>
+          .ds-tabs {
+            background: #fff;
+            border: 1px solid #ECEAEE;
+            border-radius: 12px;
+            padding: 24px 24px 0;
+            display: inline-flex;
+            flex-direction: column;
+            min-width: 480px;
+            margin-bottom: 32px;
+          }
+          .ds-tabs-strip {
+            position: relative;
+            display: flex;
+            align-items: stretch;
+            border-bottom: 1px solid #D8D8D8;
+          }
+          /* Sliding blue indicator */
+          .ds-tabs-indicator {
+            position: absolute;
+            bottom: -1px;
+            height: 2px;
+            background: #0027D7;
+            border-radius: 2px 2px 0 0;
+            transition: left 280ms cubic-bezier(0.4, 0, 0.2, 1),
+                        width 280ms cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+          }
+          .ds-tab {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 20px;
+            cursor: pointer;
+            position: relative;
+            user-select: none;
+            border-radius: 8px 8px 0 0;
+            transition: background 150ms ease;
+          }
+          .ds-tab:hover { background: #F4F3F5; }
+          .ds-tab .ds-tab-label {
+            font-size: 14px;
+            font-weight: 400;
+            color: #1D1D21;
+            transition: color 200ms ease, font-weight 0ms;
+            letter-spacing: 0.02em;
+          }
+          .ds-tab .ds-tab-count {
+            font-size: 12px;
+            font-weight: 600;
+            color: #B3B3B3;
+            min-width: 20px;
+            text-align: center;
+            transition: color 200ms ease;
+          }
+          .ds-tab.active .ds-tab-label { color: #0027D7; font-weight: 600; }
+          .ds-tab.active .ds-tab-count { color: #0027D7; }
+          .ds-tab.active { background: transparent; cursor: default; }
+          /* Tab content panel */
+          .ds-tab-panel {
+            padding: 20px 4px 24px;
+            font-size: 13px;
+            color: #606161;
+            line-height: 1.5;
+            min-height: 48px;
+          }
+        </style>
+
+        <div class="ds-tabs" id="dsTabs">
+          <div class="ds-tabs-strip" id="dsStrip">
+            <div class="ds-tabs-indicator" id="dsIndicator"></div>
+            <div class="ds-tab active" data-tab="home">
+              <span class="ds-tab-label">Home</span>
             </div>
-            <!-- Inactive tabs -->
-            <div style="display: flex; align-items: center; gap: 8px; padding: 14px 20px; cursor: pointer;">
-              <span style="font-size: 14px; font-weight: 400; color: #1D1D21;">Talents</span>
-              <span style="font-size: 12px; font-weight: 600; color: #B3B3B3; min-width: 20px; text-align: center;">247</span>
+            <div class="ds-tab" data-tab="talents">
+              <span class="ds-tab-label">Talents</span>
+              <span class="ds-tab-count">247</span>
             </div>
-            <div style="display: flex; align-items: center; gap: 8px; padding: 14px 20px; cursor: pointer;">
-              <span style="font-size: 14px; font-weight: 400; color: #1D1D21;">Projects</span>
-              <span style="font-size: 12px; font-weight: 600; color: #B3B3B3; min-width: 20px; text-align: center;">83</span>
+            <div class="ds-tab" data-tab="projects">
+              <span class="ds-tab-label">Projects</span>
+              <span class="ds-tab-count">83</span>
             </div>
-            <div style="display: flex; align-items: center; gap: 8px; padding: 14px 20px; cursor: pointer;">
-              <span style="font-size: 14px; font-weight: 400; color: #1D1D21;">Clients</span>
-              <span style="font-size: 12px; font-weight: 600; color: #B3B3B3; min-width: 20px; text-align: center;">41</span>
+            <div class="ds-tab" data-tab="clients">
+              <span class="ds-tab-label">Clients</span>
+              <span class="ds-tab-count">41</span>
             </div>
           </div>
+          <div class="ds-tab-panel" id="dsPanel">Overview — recently added talents, project highlights, and studio activity.</div>
         </div>
+
+        <script>
+          (function() {
+            const strip     = document.getElementById('dsStrip');
+            const indicator = document.getElementById('dsIndicator');
+            const panel     = document.getElementById('dsPanel');
+            const tabs      = Array.from(strip.querySelectorAll('.ds-tab'));
+
+            const content = {
+              home:     'Overview — recently added talents, project highlights, and studio activity.',
+              talents:  '247 talents across all studios. Filter by role, seniority, location, or availability.',
+              projects: '83 projects. Browse by client, year, discipline, or colour palette.',
+              clients:  '41 clients including Nike, Johnnie Walker, Societe Generale, and Pernod Ricard.'
+            };
+
+            function moveIndicator(tab) {
+              indicator.style.left  = tab.offsetLeft + 'px';
+              indicator.style.width = tab.offsetWidth + 'px';
+            }
+
+            function activate(tab) {
+              tabs.forEach(t => t.classList.remove('active'));
+              tab.classList.add('active');
+              moveIndicator(tab);
+              panel.textContent = content[tab.dataset.tab] || '';
+            }
+
+            tabs.forEach(tab => {
+              tab.addEventListener('click', () => activate(tab));
+            });
+
+            // Initialise indicator position after layout
+            requestAnimationFrame(() => {
+              const active = strip.querySelector('.ds-tab.active');
+              if (active) {
+                // Set without transition on first paint
+                indicator.style.transition = 'none';
+                moveIndicator(active);
+                requestAnimationFrame(() => {
+                  indicator.style.transition = '';
+                });
+              }
+            });
+          })();
+        </script>
 
         <!-- States side by side -->
         <p style="margin: 0 0 16px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #232323;">Tab states</p>
