@@ -349,6 +349,128 @@
       .view-toggle-btn { flex: 1; }
     }
   }
+
+  /* ════════════════════════════════════════════════════════════
+     PROJECTS VIEW
+  ════════════════════════════════════════════════════════════ */
+
+  /* Toolbar */
+  .proj-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .proj-count {
+    font-size: clamp(22px, 2.5vw, 32px); line-height: 32px; color: var(--ds-nav-text);
+  }
+  .proj-toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0; /* never wrap — always pinned to the right */
+  }
+
+  /* Year group */
+  .proj-grid-wrap { display: flex; flex-direction: column; gap: 40px; padding-bottom: 60px; }
+  .proj-year-group { display: flex; flex-direction: column; gap: 20px; }
+  .proj-year-heading {
+    display: flex; align-items: baseline; gap: 8px;
+  }
+  .proj-year {
+    font-size: clamp(22px, 2vw, 28px); font-weight: 400; line-height: 31px;
+    color: var(--ds-interactive-default);
+  }
+  .proj-year-count {
+    font-size: 20px; font-weight: 400; line-height: 1.1;
+    color: var(--ds-nav-count);
+  }
+
+  /* 2-column project grid */
+  .proj-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  /* Project card */
+  .proj-card {
+    position: relative;
+    border-radius: var(--ds-radius-card);
+    overflow: hidden;
+    height: 408px;
+    cursor: pointer;
+    box-shadow: var(--ds-shadow-card);
+    display: flex; flex-direction: column; justify-content: space-between;
+    transition: transform var(--ds-transition), box-shadow var(--ds-transition);
+  }
+  .proj-card:hover { transform: translateY(-2px); box-shadow: 0px 6px 20px rgba(0,0,0,0.18); }
+  .proj-card > img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; border-radius: var(--ds-radius-card);
+    pointer-events: none;
+  }
+
+  /* Frosted avatar pill — top left */
+  .proj-card-top {
+    position: relative; z-index: 2;
+    display: flex; align-items: flex-start; justify-content: space-between;
+    padding: 16px;
+  }
+  .proj-avatar-pill {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--ds-frosted);
+    backdrop-filter: blur(2px);
+    border-radius: var(--ds-radius-pill);
+    padding: 6px 12px;
+    font-size: 12px; font-weight: 400;
+    letter-spacing: 0.12px; white-space: nowrap;
+  }
+  .proj-avatar-stack {
+    display: flex; align-items: center;
+  }
+  .proj-avatar-stack img {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    border: 1.5px solid #fff;
+    margin-left: -6px; object-fit: cover;
+  }
+  .proj-avatar-stack img:first-child { margin-left: 0; }
+
+  /* Info panel — bottom gradient */
+  .proj-card-info {
+    position: relative; z-index: 2;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.95) 74%);
+    padding: 24px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .proj-card-title-row { display: flex; flex-direction: column; gap: 6px; }
+  .proj-card-title {
+    font-size: 28px; font-weight: 400; line-height: 31px; color: #fff;
+  }
+  .proj-card-meta {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 4px;
+    font-size: 14px; color: #fff; text-transform: uppercase; letter-spacing: 0.1px; line-height: 14px;
+  }
+  .proj-dot {
+    display: inline-block;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.7);
+  }
+  .proj-card-details { display: flex; flex-direction: column; gap: 14px; }
+  .proj-detail-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    font-size: 12px; color: #fff; white-space: nowrap;
+  }
+  .proj-detail-label { text-transform: uppercase; letter-spacing: 0.1px; font-weight: 400; }
+  .proj-detail-val { letter-spacing: 0.12px; text-align: right; white-space: normal; max-width: 55%; }
+
+  @media (max-width: 900px) {
+    .proj-grid { grid-template-columns: 1fr; }
+    .proj-card { height: 340px; }
+  }
   </style>
 </head>
 <body>
@@ -453,7 +575,7 @@
       <div class="nav-indicator" id="navHomeIndicator"></div>
       <div class="nav-item active" onclick="showView('home')">Home</div>
       <div class="nav-item" onclick="showView('talents')"><span>Talents</span><span class="count">2 324</span></div>
-      <div class="nav-item"><span>Projects</span><span class="count">436</span></div>
+      <div class="nav-item" onclick="showView('projects')"><span>Projects</span><span class="count">436</span></div>
       <div class="nav-item"><span>Clients</span><span class="count">124</span></div>
     </nav>
 
@@ -660,6 +782,234 @@
         </div>
 
       </div>
+
+      <div class="projects-row">
+
+        <!-- Project 3 -->
+        <div class="project-card card-shadow">
+          <div class="project-card-bg project-card-bg-cover">
+            <img src="https://www.figma.com/api/mcp/asset/81548a12-c7cd-410e-a133-e1fbc5a7ac2f" alt="Roots & Routes" />
+          </div>
+          <div class="card-overlay"></div>
+          <div class="project-card-top">
+            <div class="people-tag">
+              <div class="people-avatars">
+                <img src="https://www.figma.com/api/mcp/asset/be12409f-1854-4672-a7e2-0f3ce7ca5bf1" alt="" />
+                <img src="https://www.figma.com/api/mcp/asset/e8098b4e-cc7e-4858-8fe3-0d4622930fdd" alt="" />
+                <img src="https://www.figma.com/api/mcp/asset/5043a589-fd33-40a6-9b1a-b56f4c147616" alt="" />
+              </div>
+              <span class="people-count">+5</span>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-title-block">
+              <p class="project-title">Roots &amp; Routes</p>
+              <div class="project-meta">
+                <span>Airbnb</span><span class="dot-white"></span>
+                <span>TRAVEL</span><span class="dot-white"></span>
+                <span>2025</span>
+              </div>
+            </div>
+            <div class="project-details">
+              <div class="project-detail-row">
+                <span class="label">MARKET</span><span class="value">Global</span>
+              </div>
+              <div class="project-detail-row">
+                <span class="label">SKILLSET</span><span class="value">Brand Strategy, Motion, Copywriting</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="project-card card-shadow">
+          <div class="project-card-bg project-card-bg-cover">
+            <img src="https://www.figma.com/api/mcp/asset/37ed6550-de68-4342-b2f5-ffe6c5d1ac01" alt="Feel Everything" />
+          </div>
+          <div class="card-overlay"></div>
+          <div class="project-card-top">
+            <div class="people-tag">
+              <div class="people-avatars">
+                <img src="https://www.figma.com/api/mcp/asset/657f3faf-bc28-4b92-bb1c-7340cdb7ed05" alt="" />
+                <img src="https://www.figma.com/api/mcp/asset/f1fa61e2-3c67-45b4-8648-065c86843b8f" alt="" />
+              </div>
+              <span class="people-count">+9</span>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-title-block">
+              <p class="project-title">Feel Everything</p>
+              <div class="project-meta">
+                <span>Spotify</span><span class="dot-white"></span>
+                <span>TECH</span><span class="dot-white"></span>
+                <span>2025</span>
+              </div>
+            </div>
+            <div class="project-details">
+              <div class="project-detail-row">
+                <span class="label">MARKET</span><span class="value">US, LATAM</span>
+              </div>
+              <div class="project-detail-row">
+                <span class="label">SKILLSET</span><span class="value">Visual Identity, UX/UI, Sound Design</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="projects-row">
+
+        <!-- Project 5 -->
+        <div class="project-card card-shadow">
+          <div class="project-card-bg project-card-bg-cover">
+            <img src="https://www.figma.com/api/mcp/asset/81548a12-c7cd-410e-a133-e1fbc5a7ac2f" alt="Future Proof" />
+          </div>
+          <div class="card-overlay"></div>
+          <div class="project-card-top">
+            <div class="people-tag">
+              <div class="people-avatars">
+                <img src="https://www.figma.com/api/mcp/asset/7c7695e1-6211-45fa-9e96-1b849d6a0db9" alt="" />
+                <img src="https://www.figma.com/api/mcp/asset/8bc284f7-098f-42b9-a63d-76ef9776342d" alt="" />
+                <img src="https://www.figma.com/api/mcp/asset/b583cbd6-e702-4d70-8a58-025345ec14e3" alt="" />
+                <img src="https://www.figma.com/api/mcp/asset/be12409f-1854-4672-a7e2-0f3ce7ca5bf1" alt="" />
+              </div>
+              <span class="people-count">+14</span>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-title-block">
+              <p class="project-title">Future Proof</p>
+              <div class="project-meta">
+                <span>Microsoft</span><span class="dot-white"></span>
+                <span>TECH</span><span class="dot-white"></span>
+                <span>2024</span>
+              </div>
+            </div>
+            <div class="project-details">
+              <div class="project-detail-row">
+                <span class="label">MARKET</span><span class="value">Global</span>
+              </div>
+              <div class="project-detail-row">
+                <span class="label">SKILLSET</span><span class="value">Brand Architecture, Naming, Identity</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 6 -->
+        <div class="project-card card-shadow">
+          <div class="project-card-bg project-card-bg-cover">
+            <img src="https://www.figma.com/api/mcp/asset/37ed6550-de68-4342-b2f5-ffe6c5d1ac01" alt="Speak Volumes" />
+          </div>
+          <div class="card-overlay"></div>
+          <div class="project-card-top">
+            <div class="people-tag">
+              <div class="people-avatars">
+                <img src="https://www.figma.com/api/mcp/asset/e8098b4e-cc7e-4858-8fe3-0d4622930fdd" alt="" />
+                <img src="https://www.figma.com/api/mcp/asset/5043a589-fd33-40a6-9b1a-b56f4c147616" alt="" />
+              </div>
+              <span class="people-count">+6</span>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-title-block">
+              <p class="project-title">Speak Volumes</p>
+              <div class="project-meta">
+                <span>Penguin Books</span><span class="dot-white"></span>
+                <span>PUBLISHING</span><span class="dot-white"></span>
+                <span>2025</span>
+              </div>
+            </div>
+            <div class="project-details">
+              <div class="project-detail-row">
+                <span class="label">MARKET</span><span class="value">UK, Australia</span>
+              </div>
+              <div class="project-detail-row">
+                <span class="label">SKILLSET</span><span class="value">Editorial Design, Typography, Branding</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="projects-row">
+
+        <!-- Project 7 -->
+        <div class="project-card card-shadow">
+          <div class="project-card-bg project-card-bg-cover">
+            <img src="https://www.figma.com/api/mcp/asset/81548a12-c7cd-410e-a133-e1fbc5a7ac2f" alt="New Horizons" />
+          </div>
+          <div class="card-overlay"></div>
+          <div class="project-card-top">
+            <div class="people-tag">
+              <div class="people-avatars">
+                <img src="https://www.figma.com/api/mcp/asset/f1fa61e2-3c67-45b4-8648-065c86843b8f" alt="" />
+                <img src="https://www.figma.com/api/mcp/asset/657f3faf-bc28-4b92-bb1c-7340cdb7ed05" alt="" />
+                <img src="https://www.figma.com/api/mcp/asset/7c7695e1-6211-45fa-9e96-1b849d6a0db9" alt="" />
+              </div>
+              <span class="people-count">+8</span>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-title-block">
+              <p class="project-title">New Horizons</p>
+              <div class="project-meta">
+                <span>Emirates</span><span class="dot-white"></span>
+                <span>TRAVEL</span><span class="dot-white"></span>
+                <span>2024</span>
+              </div>
+            </div>
+            <div class="project-details">
+              <div class="project-detail-row">
+                <span class="label">MARKET</span><span class="value">Middle East, Asia</span>
+              </div>
+              <div class="project-detail-row">
+                <span class="label">SKILLSET</span><span class="value">Campaign, Photography Art Direction</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 8 -->
+        <div class="project-card card-shadow">
+          <div class="project-card-bg project-card-bg-cover">
+            <img src="https://www.figma.com/api/mcp/asset/37ed6550-de68-4342-b2f5-ffe6c5d1ac01" alt="The Good Side" />
+          </div>
+          <div class="card-overlay"></div>
+          <div class="project-card-top">
+            <div class="people-tag">
+              <div class="people-avatars">
+                <img src="https://www.figma.com/api/mcp/asset/b583cbd6-e702-4d70-8a58-025345ec14e3" alt="" />
+                <img src="https://www.figma.com/api/mcp/asset/8bc284f7-098f-42b9-a63d-76ef9776342d" alt="" />
+                <img src="https://www.figma.com/api/mcp/asset/be12409f-1854-4672-a7e2-0f3ce7ca5bf1" alt="" />
+              </div>
+              <span class="people-count">+11</span>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-title-block">
+              <p class="project-title">The Good Side</p>
+              <div class="project-meta">
+                <span>Patagonia</span><span class="dot-white"></span>
+                <span>SUSTAINABILITY</span><span class="dot-white"></span>
+                <span>2025</span>
+              </div>
+            </div>
+            <div class="project-details">
+              <div class="project-detail-row">
+                <span class="label">MARKET</span><span class="value">US, Europe</span>
+              </div>
+              <div class="project-detail-row">
+                <span class="label">SKILLSET</span><span class="value">Purpose Branding, Content, Strategy</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
     </section>
 
   </main>
@@ -766,7 +1116,7 @@
       <div class="nav-indicator" id="navTalentsIndicator"></div>
       <div class="nav-item" onclick="showView('home')">Home</div>
       <div class="nav-item active"><span>Talents</span><span class="count">2 324</span></div>
-      <div class="nav-item"><span>Projects</span><span class="count">436</span></div>
+      <div class="nav-item" onclick="showView('projects')"><span>Projects</span><span class="count">436</span></div>
       <div class="nav-item"><span>Clients</span><span class="count">124</span></div>
     </nav>
 
@@ -898,6 +1248,283 @@
   </main>
 </div>
 </div><!-- /viewTalents -->
+
+
+<!-- ════════════════════════════════════════════════════════════
+     VIEW: PROJECTS LANDING (02_D_a_Projects_Landing)
+════════════════════════════════════════════════════════════ -->
+<div class="view" id="viewProjects">
+<div class="page">
+
+  <!-- Sidebar: project filters -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img class="sidebar-logo"
+           src="https://www.figma.com/api/mcp/asset/479f353f-2d86-4775-9aed-50de959cd7c5"
+           alt="Landor Logo" />
+      <span class="sidebar-subtitle">Talent Directory</span>
+    </div>
+
+    <div class="search-bar" style="background:var(--volt);">
+      <span>Search for a name, project..</span>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </div>
+
+    <!-- Filters -->
+    <div style="display:flex;flex-direction:column;gap:0;flex:1;min-height:0;overflow-y:auto;">
+      <div class="filters-header" style="margin-bottom:16px;">
+        <span class="filters-title">Filters <span style="color:var(--ds-interactive-default);font-weight:400;">(10)</span></span>
+        <button class="btn-tertiary">Reset all filters
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2H2a1 1 0 00-1 1v7a1 1 0 001 1h7a1 1 0 001-1V7M7 1h4m0 0v4m0-4L5 7"/></svg>
+        </button>
+      </div>
+      <div class="filter-list">
+        <div class="filter-item">
+          <span>Clients <span style="color:var(--ds-text-muted);">(1 selected)</span></span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+        </div>
+        <div class="filter-item">
+          <span>Location <span style="color:var(--ds-text-muted);">(3 selected)</span></span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+        </div>
+        <div class="filter-item">
+          <span>Years <span style="color:var(--ds-text-muted);">(Selected)</span></span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+        </div>
+        <div class="filter-item">
+          <span>Type of project <span style="color:var(--ds-text-muted);">(3 selected)</span></span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+        </div>
+        <div class="filter-item">
+          <span>Colours <span style="color:var(--ds-text-muted);">(2 selected)</span></span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- User pill -->
+    <div class="user-pill">
+      <div class="user-pill-inner">
+        <div class="user-avatar-init" style="width:24px;height:24px;border-radius:50%;background:#0E1ADF;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;">JD</div>
+        <span class="user-name">John D.</span>
+      </div>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="main">
+
+    <!-- Top nav -->
+    <nav class="top-nav" id="navProjects">
+      <div class="nav-indicator" id="navProjectsIndicator"></div>
+      <div class="nav-item" onclick="showView('home')">Home</div>
+      <div class="nav-item" onclick="showView('talents')"><span>Talents</span><span class="count">2 324</span></div>
+      <div class="nav-item active"><span>Projects</span><span class="count">436</span></div>
+      <div class="nav-item"><span>Clients</span><span class="count">124</span></div>
+    </nav>
+
+    <!-- Toolbar -->
+    <div class="proj-toolbar">
+      <span class="proj-count" id="projCount">436 projects</span>
+      <div class="proj-toolbar-actions">
+        <button class="btn-secondary">
+          Most recent
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M7 12h10M11 18h2"/></svg>
+        </button>
+        <button class="btn-primary">
+          Add new project
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Projects grid (grouped by year) -->
+    <div class="proj-grid-wrap" id="projGridWrap">
+
+      <!-- Year group: 2023 -->
+      <div class="proj-year-group">
+        <div class="proj-year-heading">
+          <span class="proj-year">2023</span>
+          <span class="proj-year-count">123</span>
+        </div>
+        <div class="proj-grid">
+
+          <!-- Card 1 -->
+          <div class="proj-card">
+            <img src="https://www.figma.com/api/mcp/asset/e0a264e4-a836-4881-aeeb-0e16e3bdc02c" alt="Enter the bubbleverse" />
+            <div class="proj-card-top">
+              <div class="proj-avatar-pill">
+                <div class="proj-avatar-stack">
+                  <img src="https://www.figma.com/api/mcp/asset/e1baa9a5-5b57-41e3-86a0-2b4fc6e900ce" alt="" />
+                  <img src="https://www.figma.com/api/mcp/asset/f220b764-a821-47ec-9b7c-b6a814d2d5de" alt="" />
+                  <img src="https://www.figma.com/api/mcp/asset/6ce86620-6e24-4d06-906a-0b12d175643b" alt="" />
+                  <img src="https://www.figma.com/api/mcp/asset/18de143c-00f9-46b4-bc56-cfef30fad3a8" alt="" />
+                </div>
+                <span>+12</span>
+              </div>
+            </div>
+            <div class="proj-card-info">
+              <div class="proj-card-title-row">
+                <div class="proj-card-title">Enter the bubbleverse</div>
+                <div class="proj-card-meta">
+                  <span>NIKE KIDS</span><span class="proj-dot"></span><span>FASHION</span><span class="proj-dot"></span><span>2024</span>
+                </div>
+              </div>
+              <div class="proj-card-details">
+                <div class="proj-detail-row"><span class="proj-detail-label">MARKET</span><span class="proj-detail-val">US, Europe</span></div>
+                <div class="proj-detail-row"><span class="proj-detail-label">SKILLSET</span><span class="proj-detail-val">Illustration, UX/UI, Branding</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="proj-card">
+            <img src="https://www.figma.com/api/mcp/asset/9d4893a4-719f-4f8d-b549-2091b7cee6c6" alt="Explosive. Emotive. Evocative." />
+            <div class="proj-card-top">
+              <div class="proj-avatar-pill">
+                <div class="proj-avatar-stack">
+                  <img src="https://www.figma.com/api/mcp/asset/63ac7615-efd7-4769-b963-b30ba5edf305" alt="" />
+                  <img src="https://www.figma.com/api/mcp/asset/975551a4-ea57-4b69-9929-ef187dd43679" alt="" />
+                  <img src="https://www.figma.com/api/mcp/asset/1e36c84f-ed86-40b4-a20e-d6231a53d076" alt="" />
+                  <img src="https://www.figma.com/api/mcp/asset/ea94367a-07d3-4cfd-a66a-853c4f54353b" alt="" />
+                </div>
+                <span>+7</span>
+              </div>
+            </div>
+            <div class="proj-card-info">
+              <div class="proj-card-title-row">
+                <div class="proj-card-title">Explosive. Emotive. Evocative.</div>
+                <div class="proj-card-meta">
+                  <span>MILAN SYMPHONY ORCHESTRA</span><span class="proj-dot"></span><span>CULTURE</span><span class="proj-dot"></span><span>2024</span>
+                </div>
+              </div>
+              <div class="proj-card-details">
+                <div class="proj-detail-row"><span class="proj-detail-label">MARKET</span><span class="proj-detail-val">US, Europe</span></div>
+                <div class="proj-detail-row"><span class="proj-detail-label">SKILLSET</span><span class="proj-detail-val">Illustration, UX/UI, Branding</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="proj-card">
+            <img src="https://www.figma.com/api/mcp/asset/e94b0f64-af51-4cc1-b0fa-33351128758a" alt="Salut to LeShuttle" />
+            <div class="proj-card-top">
+              <div class="proj-avatar-pill">
+                <div class="proj-avatar-stack">
+                  <img src="https://www.figma.com/api/mcp/asset/454c2ed9-028c-4c1d-8201-e0a6a22d57fd" alt="" />
+                  <img src="https://www.figma.com/api/mcp/asset/f0648326-94a9-4961-b2f7-444737da8925" alt="" />
+                  <img src="https://www.figma.com/api/mcp/asset/f4f71c22-fcd3-4457-b52a-36df2d4a0312" alt="" />
+                  <img src="https://www.figma.com/api/mcp/asset/a474d547-c676-4493-91a8-a167e15f2b27" alt="" />
+                </div>
+                <span>+3</span>
+              </div>
+            </div>
+            <div class="proj-card-info">
+              <div class="proj-card-title-row">
+                <div class="proj-card-title">Salut to LeShuttle</div>
+                <div class="proj-card-meta">
+                  <span>LESHUTTLE</span><span class="proj-dot"></span><span>TRANSPORT</span><span class="proj-dot"></span><span>2024</span>
+                </div>
+              </div>
+              <div class="proj-card-details">
+                <div class="proj-detail-row"><span class="proj-detail-label">MARKET</span><span class="proj-detail-val">Europe</span></div>
+                <div class="proj-detail-row"><span class="proj-detail-label">SKILLSET</span><span class="proj-detail-val">Illustration, UX/UI, Branding</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="proj-card">
+            <img src="https://www.figma.com/api/mcp/asset/8e218472-032f-4595-92ea-0e59fedb75e8" alt="Bringing new energy to bp" />
+            <div class="proj-card-top">
+              <div class="proj-avatar-pill">
+                <div class="proj-avatar-stack">
+                  <img src="https://www.figma.com/api/mcp/asset/1c932048-71c5-43cc-92b4-85bea9b532dc" alt="" />
+                  <img src="https://www.figma.com/api/mcp/asset/573d5a18-20ac-4f41-9c23-e90492fe4ff1" alt="" />
+                  <img src="https://www.figma.com/api/mcp/asset/a0b43e09-1dd9-4a4d-9d36-f117dc325e0a" alt="" />
+                  <img src="https://www.figma.com/api/mcp/asset/43212559-66b7-419c-92fd-99d670bca6e9" alt="" />
+                </div>
+                <span>+9</span>
+              </div>
+            </div>
+            <div class="proj-card-info">
+              <div class="proj-card-title-row">
+                <div class="proj-card-title">Bringing new energy to bp's transformation</div>
+                <div class="proj-card-meta">
+                  <span>BP</span><span class="proj-dot"></span><span>ENERGY</span><span class="proj-dot"></span><span>2024</span>
+                </div>
+              </div>
+              <div class="proj-card-details">
+                <div class="proj-detail-row"><span class="proj-detail-label">MARKET</span><span class="proj-detail-val">US, Europe</span></div>
+                <div class="proj-detail-row"><span class="proj-detail-label">SKILLSET</span><span class="proj-detail-val">Illustration, UX/UI, Branding</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="proj-card">
+            <img src="https://www.figma.com/api/mcp/asset/5392cf6c-e31e-4c59-98ea-ae7eeb7f2712" alt="Explosive. Emotive. Evocative." />
+            <div class="proj-card-top">
+              <div class="proj-avatar-pill">
+                <div class="proj-avatar-stack">
+                  <img src="https://www.figma.com/api/mcp/asset/643ec5d8-044f-43ed-a7ba-2b4caccea10e" alt="" />
+                  <img src="https://www.figma.com/api/mcp/asset/840c95b6-35d0-47a6-88c4-d19fd3c2b40e" alt="" />
+                  <img src="https://www.figma.com/api/mcp/asset/73a178a6-d0b0-478a-b381-2a4fdcc1cd84" alt="" />
+                  <img src="https://www.figma.com/api/mcp/asset/c843169d-20a6-44b6-a0d5-1090f9f1a7aa" alt="" />
+                </div>
+                <span>+4</span>
+              </div>
+            </div>
+            <div class="proj-card-info">
+              <div class="proj-card-title-row">
+                <div class="proj-card-title">Explosive. Emotive. Evocative.</div>
+                <div class="proj-card-meta">
+                  <span>MILAN SYMPHONY ORCHESTRA</span><span class="proj-dot"></span><span>CULTURE</span><span class="proj-dot"></span><span>2024</span>
+                </div>
+              </div>
+              <div class="proj-card-details">
+                <div class="proj-detail-row"><span class="proj-detail-label">MARKET</span><span class="proj-detail-val">US, Europe</span></div>
+                <div class="proj-detail-row"><span class="proj-detail-label">SKILLSET</span><span class="proj-detail-val">Illustration, UX/UI, Branding</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="proj-card">
+            <img src="https://www.figma.com/api/mcp/asset/b8bf490a-3836-4088-b1b4-e193758810f0" alt="The beverage with a heritage" />
+            <div class="proj-card-top">
+              <div class="proj-avatar-pill">
+                <div class="proj-avatar-stack">
+                  <img src="https://www.figma.com/api/mcp/asset/c3669ba6-0882-40c2-bacf-378403db57f6" alt="" />
+                  <img src="https://www.figma.com/api/mcp/asset/ac75216b-70ec-4f4b-af8d-605da89d22b9" alt="" />
+                  <img src="https://www.figma.com/api/mcp/asset/55f5e522-5cb0-4aa5-94dd-6d522bb049a5" alt="" />
+                  <img src="https://www.figma.com/api/mcp/asset/eb18575d-9ad7-45cc-b519-b943c07adaec" alt="" />
+                </div>
+                <span>+12</span>
+              </div>
+            </div>
+            <div class="proj-card-info">
+              <div class="proj-card-title-row">
+                <div class="proj-card-title">The beverage with a heritage</div>
+                <div class="proj-card-meta">
+                  <span>TOPO CHICO</span><span class="proj-dot"></span><span>FOOD &amp; BEVERAGE</span><span class="proj-dot"></span><span>2024</span>
+                </div>
+              </div>
+              <div class="proj-card-details">
+                <div class="proj-detail-row"><span class="proj-detail-label">MARKET</span><span class="proj-detail-val">US, Europe</span></div>
+                <div class="proj-detail-row"><span class="proj-detail-label">SKILLSET</span><span class="proj-detail-val">Illustration, UX/UI, Branding</span></div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /proj-grid -->
+      </div><!-- /proj-year-group -->
+
+    </div><!-- /proj-grid-wrap -->
+  </main>
+</div>
+</div><!-- /viewProjects -->
 
 
 <script>
