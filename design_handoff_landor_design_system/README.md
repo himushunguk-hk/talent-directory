@@ -180,3 +180,261 @@ Every field = **blue uppercase Label** (Label Large) + black short-description (
 - `LANDOR Design System.dc.html` — the full living spec (Colours, Type, Icons, Buttons,
   Inputs, Tags). Open it in a browser to see every component and state; it is the source
   of truth for exact SVG paths and inline values.
+
+---
+
+## Implemented Components (codebase additions)
+
+The following components have been built and shipped in `components.css`. They extend the
+original handoff spec and are the production-ready equivalents of the conceptual descriptions
+above.
+
+---
+
+### `.btn-primary` — DS Primary Button (Medium)
+
+Filled Ultramarine pill. Use for the primary call-to-action on any toolbar or form.
+
+```css
+/* Medium (default) — padding 12px 20px, 14px font */
+.btn-primary { … }
+.btn-primary:hover   { background: var(--ds-interactive-hover);    }
+.btn-primary:active  { background: var(--ds-interactive-pressed);  }
+.btn-primary:disabled{ background: var(--ds-interactive-disabled); cursor: not-allowed; }
+```
+
+| Variant | Padding | Font | Token |
+|---|---|---|---|
+| Medium (default) | `12px 20px` | 14px | `--ds-interactive-default` (`#0027D7`) |
+| Hover | — | — | `--ds-interactive-hover` (`#0E1ADF`) |
+| Pressed | — | — | `--ds-interactive-pressed` (`#081086`) |
+| Disabled | — | — | `--ds-interactive-disabled` (`#DCDCDC`) |
+
+Usage:
+```html
+<button class="btn-primary">Add new project</button>
+```
+
+---
+
+### `.btn-secondary` — DS Secondary Button (Medium)
+
+White pill with 1.5px black border. Inverts to black/white on hover. Use for secondary
+actions alongside a primary button.
+
+```css
+.btn-secondary { border: 1.5px solid #000; background: #fff; color: #000; … }
+.btn-secondary:hover  { background: #000; color: #fff; }
+.btn-secondary:active { background: #232323; color: #fff; }
+```
+
+Usage:
+```html
+<button class="btn-secondary">Most recent</button>
+```
+
+---
+
+### Toolbar pattern
+
+Toolbars appear at the top of list/grid views. The count is left-aligned; action buttons
+are always pinned to the right using `justify-content: space-between`.
+
+```html
+<div class="proj-toolbar">
+  <span class="proj-count">436 projects</span>
+  <div class="proj-toolbar-actions">
+    <button class="btn-secondary">Most recent …</button>
+    <button class="btn-primary">Add new project …</button>
+  </div>
+</div>
+```
+
+Key CSS rules (defined inline per view; candidates for promotion to `components.css`):
+```css
+.proj-toolbar         { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.proj-toolbar-actions { display:flex; align-items:center; gap:12px; flex-shrink:0; }
+```
+
+---
+
+### `.project-card` — Project Card
+
+Image-backed card with a frosted people-pill in the top-right corner and a gradient
+info panel at the bottom. Lives inside a 2-column responsive grid.
+
+**Structure:**
+```html
+<div class="project-card" style="height:480px;">
+  <div class="project-card-bg project-card-bg-cover">
+    <img src="…" alt="Project cover" />
+  </div>
+  <div class="project-card-top">
+    <!-- optional year label or tag pill top-left -->
+    <div class="people-tag">
+      <div class="people-avatars">
+        <img src="avatar.jpg" />
+      </div>
+      <span class="people-count">3 people</span>
+    </div>
+  </div>
+  <div class="project-info">
+    <div class="project-title-block">
+      <div class="project-title">Project Name</div>
+      <div class="project-meta">
+        <span>INDUSTRY</span><span class="dot-white"></span><span>2024</span>
+      </div>
+    </div>
+    <div class="project-details">
+      <div class="project-detail-row">
+        <span class="label">MARKET</span>
+        <span class="value">Global</span>
+      </div>
+      <div class="project-detail-row">
+        <span class="label">SKILLSET</span>
+        <span class="value">Brand Strategy, Design</span>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+**Sub-elements:**
+
+| Class | Role |
+|---|---|
+| `.project-card-bg` | Absolutely-positioned image container |
+| `.project-card-bg-cover` | Modifier — `object-fit: cover`, fills full card |
+| `.project-card-top` | Top zone: people-pill + optional label, `z-index: 1` |
+| `.people-tag` | Frosted pill (`--ds-frosted` + `backdrop-filter: blur(2px)`) |
+| `.people-avatars` | Overlapping avatars stack, `−4px` margin between |
+| `.people-count` | 12px label beside avatars |
+| `.project-info` | Bottom info panel with gradient background |
+| `.project-title` | 28px / 31px white title |
+| `.project-meta` | 14px uppercase meta row with `.dot-white` separators |
+| `.project-detail-row` | Key/value row: `.label` (uppercase) + `.value` (right-aligned) |
+
+---
+
+### `.client-card` — Client Card
+
+Full-bleed image card with a gradient info panel at the bottom. Used in a 3-column
+responsive grid (`client-grid`).
+
+**Structure:**
+```html
+<div class="client-card">
+  <img src="client-cover.jpg" alt="Client name" />
+  <div class="client-card-info">
+    <div class="client-card-name">Nike</div>
+    <div class="client-card-meta">
+      <span>13 projects</span>
+      <span class="dot"></span>
+      <span>FASHION</span>
+      <span class="dot"></span>
+      <span>Since 2024</span>
+    </div>
+  </div>
+</div>
+```
+
+**Sub-elements:**
+
+| Class | Role |
+|---|---|
+| `.client-card` | Card root — `position: relative`, `height: 336px`, `border-radius: var(--ds-radius-card)` |
+| `.client-card > img` | Absolutely-positioned cover image, `inset: 0`, `object-fit: cover` |
+| `.client-card-info` | Gradient info panel — `rgba(0,0,0,0) → rgba(0,0,0,0.92)`, `padding: 24px` |
+| `.client-card-name` | 28px / 31px white client name |
+| `.client-card-meta` | 14px uppercase meta row with `.dot` separators |
+
+Hover state: card lifts `translateY(-2px)` with deeper shadow.
+
+---
+
+### `.client-grid` — Client Grid Layout
+
+3-column responsive grid for client cards.
+
+```css
+.client-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+@media (max-width: 1100px) { .client-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 700px)  { .client-grid { grid-template-columns: 1fr; } .client-card { height: 260px; } }
+```
+
+Usage:
+```html
+<div class="client-grid">
+  <div class="client-card">…</div>
+  <div class="client-card">…</div>
+  <!-- … -->
+</div>
+```
+
+---
+
+### `.dot` / `.dot-white` — Inline Dot Separator
+
+Small 4×4px circular separators used in meta rows inside cards.
+
+```css
+.dot       { width:4px; height:4px; border-radius:50%; background:currentColor; flex-shrink:0; }
+.dot-white { width:4px; height:4px; border-radius:50%; background:#fff; flex-shrink:0; }
+```
+
+Use `.dot` on white backgrounds (inherits text colour) and `.dot-white` on dark/image
+backgrounds.
+
+---
+
+## Architecture Notes
+
+### SPA View Switching
+
+`index.html` is a single-page application. All views (`#viewHome`, `#viewTalents`,
+`#viewProjects`, `#viewClients`) share the same shell and are toggled with the
+`showView(name)` helper:
+
+```js
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view' + name[0].toUpperCase() + name.slice(1))
+          .classList.add('active');
+  // update nav-item active state & slide indicator
+}
+```
+
+Views use `.view { display: none; }` / `.view.active { display: block; }` (or flex/grid
+as appropriate for the view).
+
+### Supabase Integration
+
+Live data is fetched from Supabase REST on page load. Pattern:
+
+```js
+const SB_URL = 'https://<project>.supabase.co';
+const SB_KEY = '<anon-publishable-key>';
+
+async function loadData() {
+  const res = await fetch(`${SB_URL}/rest/v1/talents?select=*,studios(name)&order=full_name.asc`, {
+    headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }
+  });
+  const data = await res.json();
+  // render data into DOM
+}
+```
+
+RLS policy required: `CREATE POLICY "Public can read talents" ON talents FOR SELECT USING (true);`
+The `anon` role needs `USAGE` on the schema and `SELECT` on the table granted before the
+policy applies. Do **not** create a policy that queries the same table from within its own
+USING clause — this causes infinite recursion (`42P17`).
+
+### CSS Import Order
+
+Always import in this order at the top of every page:
+
+```html
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="components.css" />
+<!-- page-specific inline styles or a page.css last -->
+```
