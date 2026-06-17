@@ -209,9 +209,10 @@ body { overflow-x: hidden; }
   padding: 10px 22px; font-size: 13px; font-weight: 600;
   text-transform: uppercase; letter-spacing: 0.04em;
   font-family: var(--font); cursor: pointer;
-  transition: background 150ms ease;
+  transition: background 200ms ease, opacity 200ms ease;
 }
-.btn-edit:hover { background: #0e1adf; }
+.btn-edit:hover  { background: #0e1adf; opacity: 0.85; }
+.btn-edit:active { background: var(--ds-interactive-pressed); opacity: 1; }
 
 /* ============================================================
    TAG / CHIP PILLS
