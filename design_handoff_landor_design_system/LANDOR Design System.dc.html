@@ -1333,166 +1333,307 @@
   </section>
 
   <!-- ============ FILTER SIDEBAR ============ -->
+  <style>
+    /* ── Filter Sidebar component styles (scoped to .ds-filter-demo) ── */
+    .ds-filter-demo { font-family: "Landor Sans Beta", "Archivo", sans-serif; }
+
+    .ds-filter-demo .fn-nav {
+      display: flex; flex-direction: column; gap: 32px;
+    }
+    .ds-filter-demo .fn-header {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .ds-filter-demo .fn-title {
+      display: flex; align-items: center; gap: 4px; font-size: 20px; line-height: 1.1;
+    }
+    .ds-filter-demo .fn-count { color: #0027D7; }
+    .ds-filter-demo .fn-reset {
+      display: inline-flex; align-items: center; gap: 4px;
+      border: 0.5px solid #000; border-radius: 100px; padding: 8px 12px;
+      font-size: 12px; text-transform: uppercase; letter-spacing: 0.12px;
+      background: none; cursor: pointer; opacity: 0.8; font-family: inherit;
+      transition: opacity 150ms ease, background 150ms ease;
+    }
+    .ds-filter-demo .fn-reset:hover { opacity: 1; background: rgba(0,0,0,0.04); }
+
+    .ds-filter-demo .fn-groups { display: flex; flex-direction: column; gap: 16px; }
+
+    .ds-filter-demo .fn-group {
+      display: flex; flex-direction: column; gap: 12px;
+      border-bottom: 1px solid #D9DADA; padding-bottom: 24px;
+    }
+    .ds-filter-demo .fn-group-header {
+      display: flex; align-items: center; justify-content: space-between;
+      cursor: pointer; background: none; border: none; width: 100%; padding: 0;
+      text-align: left; font-family: inherit;
+    }
+    .ds-filter-demo .fn-group-label {
+      font-size: 14px; text-transform: uppercase; letter-spacing: 0.1px;
+      line-height: 14px; color: #000;
+    }
+    .ds-filter-demo .fn-group-count { color: #A0A2A2; }
+    .ds-filter-demo .fn-chevron {
+      width: 16px; height: 16px; flex-shrink: 0;
+      transition: transform 280ms cubic-bezier(0.4,0,0.2,1);
+    }
+    .ds-filter-demo .fn-group.open .fn-chevron { transform: rotate(180deg); }
+
+    .ds-filter-demo .fn-body {
+      display: flex; flex-direction: column; gap: 8px;
+      overflow: hidden; max-height: 0; opacity: 0; pointer-events: none;
+      transition: max-height 320ms cubic-bezier(0.4,0,0.2,1), opacity 220ms ease;
+    }
+    .ds-filter-demo .fn-group.open .fn-body {
+      max-height: 400px; opacity: 1; pointer-events: auto;
+      transition: max-height 320ms cubic-bezier(0.4,0,0.2,1), opacity 220ms ease 40ms;
+    }
+
+    .ds-filter-demo .fn-tags {
+      display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+    }
+    .ds-filter-demo .fn-tag {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: #ECECEC; border-radius: 1000px; padding: 5px 12px;
+      font-size: 14px; line-height: 1; color: #000; font-family: inherit;
+    }
+    .ds-filter-demo .fn-tag-x {
+      background: none; border: none; padding: 0; cursor: pointer;
+      opacity: 0.5; line-height: 1; font-size: 10px;
+      transition: opacity 150ms ease; font-family: inherit;
+    }
+    .ds-filter-demo .fn-tag-x:hover { opacity: 1; }
+
+    .ds-filter-demo .fn-search {
+      width: 100%; height: 35px; background: #D9DADA; border: none;
+      border-radius: 2px; padding: 0 16px; font-size: 12px;
+      letter-spacing: 0.12px; color: #000; outline: none;
+      font-family: inherit;
+    }
+    .ds-filter-demo .fn-search::placeholder { color: #898989; }
+
+    .ds-filter-demo .fn-dropdown {
+      background: #FBFBFB; border-radius: 2px;
+      box-shadow: 0 2px 2.5px rgba(0,0,0,0.16);
+      padding: 16px 12px; display: flex; flex-direction: column; gap: 12px;
+    }
+    .ds-filter-demo .fn-option {
+      padding: 5px 8px; border-radius: 1000px; font-size: 12px;
+      line-height: 13.8px; letter-spacing: 0.12px; color: #000;
+      cursor: pointer; user-select: none; transition: background 150ms ease;
+      font-family: inherit;
+    }
+    .ds-filter-demo .fn-option:hover { background: rgba(0,0,0,0.05); }
+    .ds-filter-demo .fn-option.active { background: #fff; border-radius: 2px; }
+  </style>
+
   <section data-screen-label="Filter Sidebar" style="width: 100%; max-width: 1160px; border-radius: 40px 40px 16px 16px; overflow: hidden; background: #fff;">
     <div style="background: #E6E0E9; padding: 52px 56px 56px;">
       <h2 style="margin: 0; font-size: 88px; font-weight: 800; line-height: 0.9; letter-spacing: -0.02em; text-transform: uppercase;">Filter Sidebar</h2>
-      <p style="margin: 20px 0 0; font-size: 18px; line-height: 1.5; max-width: 560px;">Collapsible filter navigation panel — header with active count, six filter groups (Roles, Location, Skillset, Industry, Clients, Interests), each with selected-tag pills, inline search, and a dropdown option list.</p>
+      <p style="margin: 20px 0 0; font-size: 18px; line-height: 1.5; max-width: 560px;">Collapsible filter navigation panel — header with live active count, six accordion groups each with selected-tag pills, inline search, and an option dropdown. Click any drawer below to experience the interaction.</p>
     </div>
     <div style="padding: 56px; display: flex; flex-direction: column; gap: 56px;">
 
-      <!-- ANATOMY -->
+      <!-- LIVE INTERACTIVE DEMO -->
       <div>
-        <p style="margin: 0 0 24px; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #606161;">Anatomy</p>
-        <div style="display: flex; gap: 32px; align-items: flex-start; flex-wrap: wrap;">
+        <p style="margin: 0 0 24px; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #606161;">Live Demo — click a drawer to expand</p>
+        <div style="display: flex; gap: 48px; align-items: flex-start; flex-wrap: wrap;">
 
-          <!-- Live sidebar preview -->
-          <div style="background: #FCFCFC; border: 1px solid #ECECEC; border-radius: 16px; width: 300px; min-height: 600px; padding: 40px 32px; display: flex; flex-direction: column; gap: 40px; flex-shrink: 0; position: relative;">
+          <!-- ── Interactive sidebar ── -->
+          <div class="ds-filter-demo" style="background: #FCFCFC; border: 1px solid #ECECEC; border-radius: 16px; width: 320px; padding: 40px 32px; display: flex; flex-direction: column; gap: 40px; flex-shrink: 0;">
 
             <!-- Search bar -->
-            <div style="background: #ECFD01; border-radius: 100px; padding: 10px 17px; display: flex; align-items: center; justify-content: space-between;">
-              <span style="font-size: 13px; color: #000;">Search for a name, project..</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <div style="background: #ECFD01; border-radius: 100px; padding: 10px 17px; display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+              <span style="font-size: 13px; color: #000; flex: 1;">Search for a name, project..</span>
+              <svg width="12" height="13" viewBox="0 0 12 12.6" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round"><circle cx="5" cy="5" r="4"/><path d="M9 9.4l2 2"/></svg>
             </div>
 
-            <!-- Filter header -->
-            <div style="display: flex; flex-direction: column; gap: 24px;">
-              <div style="display: flex; align-items: center; justify-content: space-between;">
-                <div style="display: flex; align-items: center; gap: 4px; font-size: 20px; line-height: 1.1;">
-                  <span style="color: #000;">Filters</span>
-                  <span style="color: #0027D7;">(6)</span>
+            <!-- Filter nav -->
+            <div class="fn-nav">
+              <div class="fn-header">
+                <div class="fn-title">
+                  Filters <span class="fn-count" id="ds-fn-total">(0)</span>
                 </div>
-                <div style="border: 0.5px solid #000; border-radius: 100px; padding: 8px 12px; display: flex; align-items: center; gap: 4px; opacity: 0.8;">
-                  <span style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.12px;">RESET ALL FILTERS</span>
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
-                </div>
+                <button class="fn-reset" onclick="dsFnResetAll()">
+                  RESET ALL FILTERS
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+                </button>
               </div>
 
-              <!-- Filter groups -->
-              <div style="display: flex; flex-direction: column; gap: 0;">
-                <!-- Roles – expanded with tag + search + dropdown -->
-                <div style="border-bottom: 1px solid #D9DADA; padding-bottom: 20px; margin-bottom: 16px;">
-                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-                    <span style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.1px; color: #000;">Roles <span style="color: #A0A2A2;">(1 selected)</span></span>
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(180deg)"><path d="M4 6l4 4 4-4"/></svg>
-                  </div>
-                  <!-- Tag -->
-                  <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px;">
-                    <div style="display: inline-flex; align-items: center; gap: 4px; background: #ECECEC; border-radius: 1000px; padding: 5px 12px; font-size: 14px; color: #000;">
-                      Creative Director
-                      <span style="opacity:0.5; font-size: 10px; line-height:1;">✕</span>
+              <div class="fn-groups">
+
+                <!-- ROLES -->
+                <div class="fn-group" id="ds-fg-roles">
+                  <button class="fn-group-header" onclick="dsFnToggle('ds-fg-roles')">
+                    <span class="fn-group-label">Roles <span class="fn-group-count" id="ds-fg-roles-count"></span></span>
+                    <svg class="fn-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+                  </button>
+                  <div class="fn-body">
+                    <div class="fn-tags" id="ds-fg-roles-tags" style="display:none;"></div>
+                    <input class="fn-search" type="text" placeholder="Search roles…" oninput="dsFnSearch('ds-fg-roles', this.value)" />
+                    <div class="fn-dropdown" id="ds-fg-roles-dd">
+                      <div class="fn-option" data-group="ds-fg-roles" data-value="Creative Director" onclick="dsFnToggleOpt(this)">Creative Director</div>
+                      <div class="fn-option" data-group="ds-fg-roles" data-value="Design Director" onclick="dsFnToggleOpt(this)">Design Director</div>
+                      <div class="fn-option" data-group="ds-fg-roles" data-value="Senior Designer" onclick="dsFnToggleOpt(this)">Senior Designer</div>
+                      <div class="fn-option" data-group="ds-fg-roles" data-value="Midweight Designer" onclick="dsFnToggleOpt(this)">Midweight Designer</div>
+                      <div class="fn-option" data-group="ds-fg-roles" data-value="Junior Designer" onclick="dsFnToggleOpt(this)">Junior Designer</div>
+                      <div class="fn-option" data-group="ds-fg-roles" data-value="3D Artist" onclick="dsFnToggleOpt(this)">3D Artist</div>
                     </div>
                   </div>
-                  <!-- Search input -->
-                  <div style="height: 35px; background: #D9DADA; border-radius: 2px; padding: 0 16px; display: flex; align-items: center; margin-bottom: 8px;">
-                    <span style="font-size: 12px; color: #898989;">Search roles…</span>
-                  </div>
-                  <!-- Dropdown -->
-                  <div style="background: #FBFBFB; border-radius: 2px; box-shadow: 0px 2px 2.5px rgba(0,0,0,0.16); padding: 16px 12px; display: flex; flex-direction: column; gap: 12px;">
-                    <div style="padding: 5px 8px; background: #fff; border-radius: 2px; font-size: 12px; color: #000;">Design Director</div>
-                    <div style="padding: 5px 8px; border-radius: 100px; font-size: 12px; color: #000;">Senior Designer</div>
-                    <div style="padding: 5px 8px; border-radius: 100px; font-size: 12px; color: #000;">Midweight Designer</div>
-                    <div style="padding: 5px 8px; border-radius: 100px; font-size: 12px; color: #000;">Junior Designer</div>
-                  </div>
                 </div>
-                <!-- Location – collapsed -->
-                <div style="border-bottom: 1px solid #D9DADA; padding-bottom: 20px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
-                  <span style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.1px; color: #000;">Location <span style="color: #A0A2A2;">(3 selected)</span></span>
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
-                </div>
-                <!-- Skillset – collapsed -->
-                <div style="border-bottom: 1px solid #D9DADA; padding-bottom: 20px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
-                  <span style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.1px; color: #000;">Skillset <span style="color: #A0A2A2;">(2 selected)</span></span>
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
-                </div>
-                <!-- Industry – collapsed -->
-                <div style="border-bottom: 1px solid #D9DADA; padding-bottom: 20px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
-                  <span style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.1px; color: #000;">Industry</span>
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
-                </div>
-                <!-- Clients – collapsed -->
-                <div style="border-bottom: 1px solid #D9DADA; padding-bottom: 20px; display: flex; align-items: center; justify-content: space-between;">
-                  <span style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.1px; color: #000;">Clients <span style="color: #A0A2A2;">(1 selected)</span></span>
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <!-- Annotations -->
-          <div style="display: flex; flex-direction: column; gap: 20px; flex: 1; min-width: 260px;">
+                <!-- LOCATION -->
+                <div class="fn-group" id="ds-fg-location">
+                  <button class="fn-group-header" onclick="dsFnToggle('ds-fg-location')">
+                    <span class="fn-group-label">Location <span class="fn-group-count" id="ds-fg-location-count"></span></span>
+                    <svg class="fn-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+                  </button>
+                  <div class="fn-body">
+                    <div class="fn-tags" id="ds-fg-location-tags" style="display:none;"></div>
+                    <input class="fn-search" type="text" placeholder="Search locations…" oninput="dsFnSearch('ds-fg-location', this.value)" />
+                    <div class="fn-dropdown" id="ds-fg-location-dd">
+                      <div class="fn-option" data-group="ds-fg-location" data-value="London" onclick="dsFnToggleOpt(this)">London</div>
+                      <div class="fn-option" data-group="ds-fg-location" data-value="New York" onclick="dsFnToggleOpt(this)">New York</div>
+                      <div class="fn-option" data-group="ds-fg-location" data-value="Paris" onclick="dsFnToggleOpt(this)">Paris</div>
+                      <div class="fn-option" data-group="ds-fg-location" data-value="Singapore" onclick="dsFnToggleOpt(this)">Singapore</div>
+                      <div class="fn-option" data-group="ds-fg-location" data-value="Sydney" onclick="dsFnToggleOpt(this)">Sydney</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- SKILLSET -->
+                <div class="fn-group" id="ds-fg-skillset">
+                  <button class="fn-group-header" onclick="dsFnToggle('ds-fg-skillset')">
+                    <span class="fn-group-label">Skillset <span class="fn-group-count" id="ds-fg-skillset-count"></span></span>
+                    <svg class="fn-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+                  </button>
+                  <div class="fn-body">
+                    <div class="fn-tags" id="ds-fg-skillset-tags" style="display:none;"></div>
+                    <input class="fn-search" type="text" placeholder="Search skillsets…" oninput="dsFnSearch('ds-fg-skillset', this.value)" />
+                    <div class="fn-dropdown" id="ds-fg-skillset-dd">
+                      <div class="fn-option" data-group="ds-fg-skillset" data-value="Branding" onclick="dsFnToggleOpt(this)">Branding</div>
+                      <div class="fn-option" data-group="ds-fg-skillset" data-value="UX/UI" onclick="dsFnToggleOpt(this)">UX/UI</div>
+                      <div class="fn-option" data-group="ds-fg-skillset" data-value="Illustration" onclick="dsFnToggleOpt(this)">Illustration</div>
+                      <div class="fn-option" data-group="ds-fg-skillset" data-value="Motion" onclick="dsFnToggleOpt(this)">Motion</div>
+                      <div class="fn-option" data-group="ds-fg-skillset" data-value="Strategy" onclick="dsFnToggleOpt(this)">Strategy</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- INDUSTRY -->
+                <div class="fn-group" id="ds-fg-industry">
+                  <button class="fn-group-header" onclick="dsFnToggle('ds-fg-industry')">
+                    <span class="fn-group-label">Industry <span class="fn-group-count" id="ds-fg-industry-count"></span></span>
+                    <svg class="fn-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+                  </button>
+                  <div class="fn-body">
+                    <div class="fn-tags" id="ds-fg-industry-tags" style="display:none;"></div>
+                    <input class="fn-search" type="text" placeholder="Search industries…" oninput="dsFnSearch('ds-fg-industry', this.value)" />
+                    <div class="fn-dropdown" id="ds-fg-industry-dd">
+                      <div class="fn-option" data-group="ds-fg-industry" data-value="Fashion" onclick="dsFnToggleOpt(this)">Fashion</div>
+                      <div class="fn-option" data-group="ds-fg-industry" data-value="Tech" onclick="dsFnToggleOpt(this)">Tech</div>
+                      <div class="fn-option" data-group="ds-fg-industry" data-value="Culture" onclick="dsFnToggleOpt(this)">Culture</div>
+                      <div class="fn-option" data-group="ds-fg-industry" data-value="Sustainability" onclick="dsFnToggleOpt(this)">Sustainability</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- CLIENTS -->
+                <div class="fn-group" id="ds-fg-clients">
+                  <button class="fn-group-header" onclick="dsFnToggle('ds-fg-clients')">
+                    <span class="fn-group-label">Clients <span class="fn-group-count" id="ds-fg-clients-count"></span></span>
+                    <svg class="fn-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+                  </button>
+                  <div class="fn-body">
+                    <div class="fn-tags" id="ds-fg-clients-tags" style="display:none;"></div>
+                    <input class="fn-search" type="text" placeholder="Search clients…" oninput="dsFnSearch('ds-fg-clients', this.value)" />
+                    <div class="fn-dropdown" id="ds-fg-clients-dd">
+                      <div class="fn-option" data-group="ds-fg-clients" data-value="Nike" onclick="dsFnToggleOpt(this)">Nike</div>
+                      <div class="fn-option" data-group="ds-fg-clients" data-value="Spotify" onclick="dsFnToggleOpt(this)">Spotify</div>
+                      <div class="fn-option" data-group="ds-fg-clients" data-value="Airbnb" onclick="dsFnToggleOpt(this)">Airbnb</div>
+                      <div class="fn-option" data-group="ds-fg-clients" data-value="Microsoft" onclick="dsFnToggleOpt(this)">Microsoft</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- INTERESTS -->
+                <div class="fn-group" id="ds-fg-interests">
+                  <button class="fn-group-header" onclick="dsFnToggle('ds-fg-interests')">
+                    <span class="fn-group-label">Interests <span class="fn-group-count" id="ds-fg-interests-count"></span></span>
+                    <svg class="fn-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+                  </button>
+                  <div class="fn-body">
+                    <div class="fn-tags" id="ds-fg-interests-tags" style="display:none;"></div>
+                    <input class="fn-search" type="text" placeholder="Search interests…" oninput="dsFnSearch('ds-fg-interests', this.value)" />
+                    <div class="fn-dropdown" id="ds-fg-interests-dd">
+                      <div class="fn-option" data-group="ds-fg-interests" data-value="Typography" onclick="dsFnToggleOpt(this)">Typography</div>
+                      <div class="fn-option" data-group="ds-fg-interests" data-value="Photography" onclick="dsFnToggleOpt(this)">Photography</div>
+                      <div class="fn-option" data-group="ds-fg-interests" data-value="Animation" onclick="dsFnToggleOpt(this)">Animation</div>
+                      <div class="fn-option" data-group="ds-fg-interests" data-value="Music" onclick="dsFnToggleOpt(this)">Music</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div><!-- /fn-groups -->
+            </div><!-- /fn-nav -->
+          </div><!-- /sidebar -->
+
+          <!-- ── Annotations ── -->
+          <div style="display: flex; flex-direction: column; gap: 20px; flex: 1; min-width: 260px; padding-top: 8px;">
             <div style="display: flex; gap: 16px; align-items: flex-start;">
               <div style="width: 28px; height: 28px; border-radius: 50%; background: #0027D7; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">A</div>
               <div>
                 <p style="margin: 0 0 4px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">Filter Header</p>
-                <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #606161;">Sticky row showing total active filter count in ultramarine + Reset All Filters <code>.btn-pill</code>.</p>
+                <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #606161;">Live total count in ultramarine — updates as options are selected. <code>.btn-pill</code> resets all groups at once.</p>
               </div>
             </div>
             <div style="display: flex; gap: 16px; align-items: flex-start;">
               <div style="width: 28px; height: 28px; border-radius: 50%; background: #0027D7; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">B</div>
               <div>
-                <p style="margin: 0 0 4px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">Filter Group — Collapsed</p>
-                <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #606161;">Label (14 px uppercase) + <span style="color:#A0A2A2;">(N selected)</span> count + chevron. Chevron rotates 180° when open.</p>
+                <p style="margin: 0 0 4px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">Accordion Drawer</p>
+                <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #606161;">Click the row to expand. <code>max-height</code> + <code>opacity</code> transition at 320 ms cubic-bezier. Chevron rotates 180° on open.</p>
               </div>
             </div>
             <div style="display: flex; gap: 16px; align-items: flex-start;">
               <div style="width: 28px; height: 28px; border-radius: 50%; background: #0027D7; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">C</div>
               <div>
                 <p style="margin: 0 0 4px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">Selected Tags</p>
-                <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #606161;"><code>#ECECEC</code> pill with inline ✕ button to deselect. Hidden when no selections are active.</p>
+                <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #606161;"><code>#ECECEC</code> pill — appears when an option is active. Tap ✕ to deselect inline. Hidden when empty.</p>
               </div>
             </div>
             <div style="display: flex; gap: 16px; align-items: flex-start;">
               <div style="width: 28px; height: 28px; border-radius: 50%; background: #0027D7; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">D</div>
               <div>
-                <p style="margin: 0 0 4px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">Inline Search Input</p>
-                <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #606161;"><code>#D9DADA</code> 35 px field, radius 2 px. Filters visible options in real time.</p>
+                <p style="margin: 0 0 4px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">Inline Search</p>
+                <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #606161;"><code>#D9DADA</code> 35 px field, radius 2 px. Filters dropdown options in real time as you type.</p>
               </div>
             </div>
             <div style="display: flex; gap: 16px; align-items: flex-start;">
               <div style="width: 28px; height: 28px; border-radius: 50%; background: #0027D7; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">E</div>
               <div>
                 <p style="margin: 0 0 4px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">Option Dropdown</p>
-                <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #606161;"><code>#FBFBFB</code> card with drop shadow. Active option gets white background + radius 2 px. Others get pill hover.</p>
+                <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #606161;"><code>#FBFBFB</code> card with drop shadow. Active row → <code>#fff</code> bg + radius 2 px. Unselected rows → pill hover.</p>
               </div>
             </div>
           </div>
+
         </div>
       </div>
 
-      <!-- STATES -->
+      <!-- MOTION SPEC -->
       <div>
-        <p style="margin: 0 0 24px; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #606161;">Filter Group · States</p>
+        <p style="margin: 0 0 24px; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #606161;">Motion Spec</p>
         <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-          <!-- Collapsed, no selection -->
-          <div style="flex: 1; min-width: 200px; border: 1px solid #ECECEC; border-radius: 12px; padding: 20px;">
-            <p style="margin: 0 0 12px; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #898989;">Collapsed · Empty</p>
-            <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #D9DADA; padding-bottom: 16px;">
-              <span style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.1px;">Industry</span>
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
-            </div>
+          <div style="flex: 1; min-width: 180px; background: #F4F3F5; border-radius: 12px; padding: 20px 24px;">
+            <p style="margin: 0 0 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #898989;">Expand</p>
+            <p style="margin: 0; font-size: 14px; color: #000;"><code>max-height</code> 0 → 400 px<br><code>opacity</code> 0 → 1<br>320 ms · cubic-bezier(0.4, 0, 0.2, 1)</p>
           </div>
-          <!-- Collapsed, with selections -->
-          <div style="flex: 1; min-width: 200px; border: 1px solid #ECECEC; border-radius: 12px; padding: 20px;">
-            <p style="margin: 0 0 12px; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #898989;">Collapsed · Active</p>
-            <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #D9DADA; padding-bottom: 16px;">
-              <span style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.1px;">Roles <span style="color: #A0A2A2;">(3 selected)</span></span>
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
-            </div>
+          <div style="flex: 1; min-width: 180px; background: #F4F3F5; border-radius: 12px; padding: 20px 24px;">
+            <p style="margin: 0 0 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #898989;">Collapse</p>
+            <p style="margin: 0; font-size: 14px; color: #000;"><code>max-height</code> → 0<br><code>opacity</code> → 0<br>320 ms · cubic-bezier(0.4, 0, 0.2, 1)</p>
           </div>
-          <!-- Expanded, with dropdown -->
-          <div style="flex: 1; min-width: 200px; border: 1px solid #ECECEC; border-radius: 12px; padding: 20px;">
-            <p style="margin: 0 0 12px; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #898989;">Expanded · Open</p>
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
-              <span style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.1px;">Location <span style="color: #A0A2A2;">(1)</span></span>
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(180deg)"><path d="M4 6l4 4 4-4"/></svg>
-            </div>
-            <div style="display: inline-flex; align-items: center; gap: 4px; background: #ECECEC; border-radius: 1000px; padding: 4px 10px; font-size: 12px; margin-bottom: 8px;">London <span style="opacity:0.5;">✕</span></div>
-            <div style="height: 30px; background: #D9DADA; border-radius: 2px; padding: 0 12px; display: flex; align-items: center; font-size: 11px; color: #898989; margin-bottom: 8px;">Search…</div>
-            <div style="background: #FBFBFB; border-radius: 2px; padding: 10px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 2.5px rgba(0,0,0,0.16);">
-              <div style="background: #fff; border-radius: 2px; padding: 4px 8px; font-size: 11px;">New York</div>
-              <div style="padding: 4px 8px; font-size: 11px; border-radius: 100px;">Paris</div>
-              <div style="padding: 4px 8px; font-size: 11px; border-radius: 100px;">Singapore</div>
-            </div>
+          <div style="flex: 1; min-width: 180px; background: #F4F3F5; border-radius: 12px; padding: 20px 24px;">
+            <p style="margin: 0 0 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #898989;">Chevron</p>
+            <p style="margin: 0; font-size: 14px; color: #000;"><code>transform: rotate(180deg)</code><br>280 ms · cubic-bezier(0.4, 0, 0.2, 1)</p>
           </div>
         </div>
       </div>
@@ -1503,63 +1644,92 @@
         <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
           <thead>
             <tr style="border-bottom: 2px solid #000;">
-              <th style="text-align: left; padding: 8px 0; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;">Class / Token</th>
+              <th style="text-align: left; padding: 8px 0; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;">Class</th>
               <th style="text-align: left; padding: 8px 0; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;">Role</th>
-              <th style="text-align: left; padding: 8px 0; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;">Value</th>
+              <th style="text-align: left; padding: 8px 0; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;">Token / Value</th>
             </tr>
           </thead>
           <tbody>
-            <tr style="border-bottom: 1px solid #ECECEC;">
-              <td style="padding: 12px 0;"><code>.filter-nav</code></td>
-              <td style="padding: 12px 0; color: #606161;">Scroll wrapper, flex column, gap 32</td>
-              <td style="padding: 12px 0; color: #898989;">flex-1, overflow-y auto</td>
-            </tr>
-            <tr style="border-bottom: 1px solid #ECECEC;">
-              <td style="padding: 12px 0;"><code>.filter-nav-header</code></td>
-              <td style="padding: 12px 0; color: #606161;">Title + reset button row</td>
-              <td style="padding: 12px 0; color: #898989;">space-between, shrink 0</td>
-            </tr>
-            <tr style="border-bottom: 1px solid #ECECEC;">
-              <td style="padding: 12px 0;"><code>.filter-count</code></td>
-              <td style="padding: 12px 0; color: #606161;">Active filter total "(N)"</td>
-              <td style="padding: 12px 0; color: #898989;"><code>--ds-interactive-default</code> #0027D7</td>
-            </tr>
-            <tr style="border-bottom: 1px solid #ECECEC;">
-              <td style="padding: 12px 0;"><code>.filter-group</code></td>
-              <td style="padding: 12px 0; color: #606161;">Collapsible group wrapper</td>
-              <td style="padding: 12px 0; color: #898989;">border-bottom <code>--ds-filter-divider</code> #D9DADA, pb 24</td>
-            </tr>
-            <tr style="border-bottom: 1px solid #ECECEC;">
-              <td style="padding: 12px 0;"><code>.filter-group.open</code></td>
-              <td style="padding: 12px 0; color: #606161;">Expanded state</td>
-              <td style="padding: 12px 0; color: #898989;">Reveals .filter-group-body; rotates chevron 180°</td>
-            </tr>
-            <tr style="border-bottom: 1px solid #ECECEC;">
-              <td style="padding: 12px 0;"><code>.filter-tag</code></td>
-              <td style="padding: 12px 0; color: #606161;">Selected option pill</td>
-              <td style="padding: 12px 0; color: #898989;"><code>--ds-neutral-100</code> #ECECEC, radius pill, 16 px text</td>
-            </tr>
-            <tr style="border-bottom: 1px solid #ECECEC;">
-              <td style="padding: 12px 0;"><code>.filter-search</code></td>
-              <td style="padding: 12px 0; color: #606161;">Inline search field</td>
-              <td style="padding: 12px 0; color: #898989;"><code>--ds-filter-search-bg</code> #D9DADA, h 35 px, radius 2 px</td>
-            </tr>
-            <tr style="border-bottom: 1px solid #ECECEC;">
-              <td style="padding: 12px 0;"><code>.filter-dropdown</code></td>
-              <td style="padding: 12px 0; color: #606161;">Options card</td>
-              <td style="padding: 12px 0; color: #898989;"><code>--ds-filter-dropdown-bg</code> #FBFBFB, shadow 0 2 2.5 rgba(0,0,0,.16)</td>
-            </tr>
-            <tr>
-              <td style="padding: 12px 0;"><code>.filter-option.active</code></td>
-              <td style="padding: 12px 0; color: #606161;">Selected option row</td>
-              <td style="padding: 12px 0; color: #898989;">bg #fff, radius 2 px</td>
-            </tr>
+            <tr style="border-bottom: 1px solid #ECECEC;"><td style="padding:12px 0;"><code>.filter-nav</code></td><td style="padding:12px 0;color:#606161;">Scroll wrapper</td><td style="padding:12px 0;color:#898989;">flex col, gap 32, overflow-y auto</td></tr>
+            <tr style="border-bottom: 1px solid #ECECEC;"><td style="padding:12px 0;"><code>.filter-nav-header</code></td><td style="padding:12px 0;color:#606161;">Title + reset row</td><td style="padding:12px 0;color:#898989;">space-between</td></tr>
+            <tr style="border-bottom: 1px solid #ECECEC;"><td style="padding:12px 0;"><code>.filter-count</code></td><td style="padding:12px 0;color:#606161;">Active total "(N)"</td><td style="padding:12px 0;color:#898989;"><code>--ds-interactive-default</code> #0027D7</td></tr>
+            <tr style="border-bottom: 1px solid #ECECEC;"><td style="padding:12px 0;"><code>.filter-group</code></td><td style="padding:12px 0;color:#606161;">Collapsible group</td><td style="padding:12px 0;color:#898989;">border-bottom <code>--ds-filter-divider</code> #D9DADA, pb 24</td></tr>
+            <tr style="border-bottom: 1px solid #ECECEC;"><td style="padding:12px 0;"><code>.filter-group.open</code></td><td style="padding:12px 0;color:#606161;">Expanded state</td><td style="padding:12px 0;color:#898989;">max-height 600 px, opacity 1, chevron 180°</td></tr>
+            <tr style="border-bottom: 1px solid #ECECEC;"><td style="padding:12px 0;"><code>.filter-tag</code></td><td style="padding:12px 0;color:#606161;">Selected pill</td><td style="padding:12px 0;color:#898989;"><code>--ds-neutral-100</code> #ECECEC, radius pill</td></tr>
+            <tr style="border-bottom: 1px solid #ECECEC;"><td style="padding:12px 0;"><code>.filter-search</code></td><td style="padding:12px 0;color:#606161;">Inline search field</td><td style="padding:12px 0;color:#898989;"><code>--ds-filter-search-bg</code> #D9DADA, h 35 px</td></tr>
+            <tr style="border-bottom: 1px solid #ECECEC;"><td style="padding:12px 0;"><code>.filter-dropdown</code></td><td style="padding:12px 0;color:#606161;">Options card</td><td style="padding:12px 0;color:#898989;"><code>--ds-filter-dropdown-bg</code> #FBFBFB, shadow 0 2 2.5 rgba(0,0,0,.16)</td></tr>
+            <tr><td style="padding:12px 0;"><code>.filter-option.active</code></td><td style="padding:12px 0;color:#606161;">Selected option</td><td style="padding:12px 0;color:#898989;">bg #fff, radius 2 px</td></tr>
           </tbody>
         </table>
       </div>
 
     </div>
   </section>
+
+  <script>
+    /* ── Filter Sidebar demo JS (design guide only, prefixed ds-fn-) ── */
+    function dsFnToggle(id) {
+      document.getElementById(id).classList.toggle('open');
+    }
+    function dsFnToggleOpt(el) {
+      el.classList.toggle('active');
+      const gid = el.dataset.group;
+      dsFnRenderTags(gid);
+      dsFnUpdateCount(gid);
+      dsFnUpdateTotal();
+    }
+    function dsFnRenderTags(gid) {
+      const dd = document.getElementById(gid + '-dd');
+      const tagsEl = document.getElementById(gid + '-tags');
+      if (!dd || !tagsEl) return;
+      const sel = dd.querySelectorAll('.fn-option.active');
+      tagsEl.innerHTML = '';
+      sel.forEach(opt => {
+        const t = document.createElement('div');
+        t.className = 'fn-tag';
+        t.innerHTML = opt.dataset.value +
+          `<button class="fn-tag-x" onclick="dsFnRemoveTag('${gid}','${opt.dataset.value}')">✕</button>`;
+        tagsEl.appendChild(t);
+      });
+      tagsEl.style.display = sel.length ? 'flex' : 'none';
+    }
+    function dsFnRemoveTag(gid, val) {
+      const dd = document.getElementById(gid + '-dd');
+      if (!dd) return;
+      const opt = dd.querySelector(`.fn-option[data-value="${val}"]`);
+      if (opt) opt.classList.remove('active');
+      dsFnRenderTags(gid);
+      dsFnUpdateCount(gid);
+      dsFnUpdateTotal();
+    }
+    function dsFnUpdateCount(gid) {
+      const dd = document.getElementById(gid + '-dd');
+      const el = document.getElementById(gid + '-count');
+      if (!dd || !el) return;
+      const n = dd.querySelectorAll('.fn-option.active').length;
+      el.textContent = n > 0 ? `(${n} selected)` : '';
+    }
+    function dsFnUpdateTotal() {
+      const n = document.querySelectorAll('.ds-filter-demo .fn-option.active').length;
+      const el = document.getElementById('ds-fn-total');
+      if (el) el.textContent = `(${n})`;
+    }
+    function dsFnSearch(gid, q) {
+      const dd = document.getElementById(gid + '-dd');
+      if (!dd) return;
+      dd.querySelectorAll('.fn-option').forEach(o => {
+        o.style.display = o.dataset.value.toLowerCase().includes(q.toLowerCase()) ? '' : 'none';
+      });
+    }
+    function dsFnResetAll() {
+      document.querySelectorAll('.ds-filter-demo .fn-option.active').forEach(o => o.classList.remove('active'));
+      ['ds-fg-roles','ds-fg-location','ds-fg-skillset','ds-fg-industry','ds-fg-clients','ds-fg-interests'].forEach(id => {
+        dsFnRenderTags(id);
+        dsFnUpdateCount(id);
+      });
+      dsFnUpdateTotal();
+    }
+  </script>
 
   <!-- ============ TIMEZONE ============ -->
   <section data-screen-label="Timezone" style="width: 100%; max-width: 1160px; border-radius: 16px; overflow: hidden; background: #fff; box-shadow: 0px 2px 12px rgba(0,0,0,0.08);">
