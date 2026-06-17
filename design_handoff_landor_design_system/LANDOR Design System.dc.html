@@ -1332,6 +1332,235 @@
     </div>
   </section>
 
+  <!-- ============ FILTER SIDEBAR ============ -->
+  <section data-screen-label="Filter Sidebar" style="width: 100%; max-width: 1160px; border-radius: 40px 40px 16px 16px; overflow: hidden; background: #fff;">
+    <div style="background: #E6E0E9; padding: 52px 56px 56px;">
+      <h2 style="margin: 0; font-size: 88px; font-weight: 800; line-height: 0.9; letter-spacing: -0.02em; text-transform: uppercase;">Filter Sidebar</h2>
+      <p style="margin: 20px 0 0; font-size: 18px; line-height: 1.5; max-width: 560px;">Collapsible filter navigation panel — header with active count, six filter groups (Roles, Location, Skillset, Industry, Clients, Interests), each with selected-tag pills, inline search, and a dropdown option list.</p>
+    </div>
+    <div style="padding: 56px; display: flex; flex-direction: column; gap: 56px;">
+
+      <!-- ANATOMY -->
+      <div>
+        <p style="margin: 0 0 24px; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #606161;">Anatomy</p>
+        <div style="display: flex; gap: 32px; align-items: flex-start; flex-wrap: wrap;">
+
+          <!-- Live sidebar preview -->
+          <div style="background: #FCFCFC; border: 1px solid #ECECEC; border-radius: 16px; width: 300px; min-height: 600px; padding: 40px 32px; display: flex; flex-direction: column; gap: 40px; flex-shrink: 0; position: relative;">
+
+            <!-- Search bar -->
+            <div style="background: #ECFD01; border-radius: 100px; padding: 10px 17px; display: flex; align-items: center; justify-content: space-between;">
+              <span style="font-size: 13px; color: #000;">Search for a name, project..</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            </div>
+
+            <!-- Filter header -->
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 4px; font-size: 20px; line-height: 1.1;">
+                  <span style="color: #000;">Filters</span>
+                  <span style="color: #0027D7;">(6)</span>
+                </div>
+                <div style="border: 0.5px solid #000; border-radius: 100px; padding: 8px 12px; display: flex; align-items: center; gap: 4px; opacity: 0.8;">
+                  <span style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.12px;">RESET ALL FILTERS</span>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+                </div>
+              </div>
+
+              <!-- Filter groups -->
+              <div style="display: flex; flex-direction: column; gap: 0;">
+                <!-- Roles – expanded with tag + search + dropdown -->
+                <div style="border-bottom: 1px solid #D9DADA; padding-bottom: 20px; margin-bottom: 16px;">
+                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                    <span style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.1px; color: #000;">Roles <span style="color: #A0A2A2;">(1 selected)</span></span>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(180deg)"><path d="M4 6l4 4 4-4"/></svg>
+                  </div>
+                  <!-- Tag -->
+                  <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px;">
+                    <div style="display: inline-flex; align-items: center; gap: 4px; background: #ECECEC; border-radius: 1000px; padding: 5px 12px; font-size: 14px; color: #000;">
+                      Creative Director
+                      <span style="opacity:0.5; font-size: 10px; line-height:1;">✕</span>
+                    </div>
+                  </div>
+                  <!-- Search input -->
+                  <div style="height: 35px; background: #D9DADA; border-radius: 2px; padding: 0 16px; display: flex; align-items: center; margin-bottom: 8px;">
+                    <span style="font-size: 12px; color: #898989;">Search roles…</span>
+                  </div>
+                  <!-- Dropdown -->
+                  <div style="background: #FBFBFB; border-radius: 2px; box-shadow: 0px 2px 2.5px rgba(0,0,0,0.16); padding: 16px 12px; display: flex; flex-direction: column; gap: 12px;">
+                    <div style="padding: 5px 8px; background: #fff; border-radius: 2px; font-size: 12px; color: #000;">Design Director</div>
+                    <div style="padding: 5px 8px; border-radius: 100px; font-size: 12px; color: #000;">Senior Designer</div>
+                    <div style="padding: 5px 8px; border-radius: 100px; font-size: 12px; color: #000;">Midweight Designer</div>
+                    <div style="padding: 5px 8px; border-radius: 100px; font-size: 12px; color: #000;">Junior Designer</div>
+                  </div>
+                </div>
+                <!-- Location – collapsed -->
+                <div style="border-bottom: 1px solid #D9DADA; padding-bottom: 20px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
+                  <span style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.1px; color: #000;">Location <span style="color: #A0A2A2;">(3 selected)</span></span>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+                </div>
+                <!-- Skillset – collapsed -->
+                <div style="border-bottom: 1px solid #D9DADA; padding-bottom: 20px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
+                  <span style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.1px; color: #000;">Skillset <span style="color: #A0A2A2;">(2 selected)</span></span>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+                </div>
+                <!-- Industry – collapsed -->
+                <div style="border-bottom: 1px solid #D9DADA; padding-bottom: 20px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
+                  <span style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.1px; color: #000;">Industry</span>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+                </div>
+                <!-- Clients – collapsed -->
+                <div style="border-bottom: 1px solid #D9DADA; padding-bottom: 20px; display: flex; align-items: center; justify-content: space-between;">
+                  <span style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.1px; color: #000;">Clients <span style="color: #A0A2A2;">(1 selected)</span></span>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Annotations -->
+          <div style="display: flex; flex-direction: column; gap: 20px; flex: 1; min-width: 260px;">
+            <div style="display: flex; gap: 16px; align-items: flex-start;">
+              <div style="width: 28px; height: 28px; border-radius: 50%; background: #0027D7; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">A</div>
+              <div>
+                <p style="margin: 0 0 4px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">Filter Header</p>
+                <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #606161;">Sticky row showing total active filter count in ultramarine + Reset All Filters <code>.btn-pill</code>.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 16px; align-items: flex-start;">
+              <div style="width: 28px; height: 28px; border-radius: 50%; background: #0027D7; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">B</div>
+              <div>
+                <p style="margin: 0 0 4px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">Filter Group — Collapsed</p>
+                <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #606161;">Label (14 px uppercase) + <span style="color:#A0A2A2;">(N selected)</span> count + chevron. Chevron rotates 180° when open.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 16px; align-items: flex-start;">
+              <div style="width: 28px; height: 28px; border-radius: 50%; background: #0027D7; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">C</div>
+              <div>
+                <p style="margin: 0 0 4px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">Selected Tags</p>
+                <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #606161;"><code>#ECECEC</code> pill with inline ✕ button to deselect. Hidden when no selections are active.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 16px; align-items: flex-start;">
+              <div style="width: 28px; height: 28px; border-radius: 50%; background: #0027D7; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">D</div>
+              <div>
+                <p style="margin: 0 0 4px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">Inline Search Input</p>
+                <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #606161;"><code>#D9DADA</code> 35 px field, radius 2 px. Filters visible options in real time.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 16px; align-items: flex-start;">
+              <div style="width: 28px; height: 28px; border-radius: 50%; background: #0027D7; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">E</div>
+              <div>
+                <p style="margin: 0 0 4px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;">Option Dropdown</p>
+                <p style="margin: 0; font-size: 13px; line-height: 1.5; color: #606161;"><code>#FBFBFB</code> card with drop shadow. Active option gets white background + radius 2 px. Others get pill hover.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATES -->
+      <div>
+        <p style="margin: 0 0 24px; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #606161;">Filter Group · States</p>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+          <!-- Collapsed, no selection -->
+          <div style="flex: 1; min-width: 200px; border: 1px solid #ECECEC; border-radius: 12px; padding: 20px;">
+            <p style="margin: 0 0 12px; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #898989;">Collapsed · Empty</p>
+            <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #D9DADA; padding-bottom: 16px;">
+              <span style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.1px;">Industry</span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+            </div>
+          </div>
+          <!-- Collapsed, with selections -->
+          <div style="flex: 1; min-width: 200px; border: 1px solid #ECECEC; border-radius: 12px; padding: 20px;">
+            <p style="margin: 0 0 12px; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #898989;">Collapsed · Active</p>
+            <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #D9DADA; padding-bottom: 16px;">
+              <span style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.1px;">Roles <span style="color: #A0A2A2;">(3 selected)</span></span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+            </div>
+          </div>
+          <!-- Expanded, with dropdown -->
+          <div style="flex: 1; min-width: 200px; border: 1px solid #ECECEC; border-radius: 12px; padding: 20px;">
+            <p style="margin: 0 0 12px; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #898989;">Expanded · Open</p>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+              <span style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.1px;">Location <span style="color: #A0A2A2;">(1)</span></span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(180deg)"><path d="M4 6l4 4 4-4"/></svg>
+            </div>
+            <div style="display: inline-flex; align-items: center; gap: 4px; background: #ECECEC; border-radius: 1000px; padding: 4px 10px; font-size: 12px; margin-bottom: 8px;">London <span style="opacity:0.5;">✕</span></div>
+            <div style="height: 30px; background: #D9DADA; border-radius: 2px; padding: 0 12px; display: flex; align-items: center; font-size: 11px; color: #898989; margin-bottom: 8px;">Search…</div>
+            <div style="background: #FBFBFB; border-radius: 2px; padding: 10px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 2.5px rgba(0,0,0,0.16);">
+              <div style="background: #fff; border-radius: 2px; padding: 4px 8px; font-size: 11px;">New York</div>
+              <div style="padding: 4px 8px; font-size: 11px; border-radius: 100px;">Paris</div>
+              <div style="padding: 4px 8px; font-size: 11px; border-radius: 100px;">Singapore</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOKENS & CLASSES -->
+      <div>
+        <p style="margin: 0 0 24px; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #606161;">Tokens &amp; Classes</p>
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+          <thead>
+            <tr style="border-bottom: 2px solid #000;">
+              <th style="text-align: left; padding: 8px 0; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;">Class / Token</th>
+              <th style="text-align: left; padding: 8px 0; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;">Role</th>
+              <th style="text-align: left; padding: 8px 0; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;">Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid #ECECEC;">
+              <td style="padding: 12px 0;"><code>.filter-nav</code></td>
+              <td style="padding: 12px 0; color: #606161;">Scroll wrapper, flex column, gap 32</td>
+              <td style="padding: 12px 0; color: #898989;">flex-1, overflow-y auto</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ECECEC;">
+              <td style="padding: 12px 0;"><code>.filter-nav-header</code></td>
+              <td style="padding: 12px 0; color: #606161;">Title + reset button row</td>
+              <td style="padding: 12px 0; color: #898989;">space-between, shrink 0</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ECECEC;">
+              <td style="padding: 12px 0;"><code>.filter-count</code></td>
+              <td style="padding: 12px 0; color: #606161;">Active filter total "(N)"</td>
+              <td style="padding: 12px 0; color: #898989;"><code>--ds-interactive-default</code> #0027D7</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ECECEC;">
+              <td style="padding: 12px 0;"><code>.filter-group</code></td>
+              <td style="padding: 12px 0; color: #606161;">Collapsible group wrapper</td>
+              <td style="padding: 12px 0; color: #898989;">border-bottom <code>--ds-filter-divider</code> #D9DADA, pb 24</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ECECEC;">
+              <td style="padding: 12px 0;"><code>.filter-group.open</code></td>
+              <td style="padding: 12px 0; color: #606161;">Expanded state</td>
+              <td style="padding: 12px 0; color: #898989;">Reveals .filter-group-body; rotates chevron 180°</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ECECEC;">
+              <td style="padding: 12px 0;"><code>.filter-tag</code></td>
+              <td style="padding: 12px 0; color: #606161;">Selected option pill</td>
+              <td style="padding: 12px 0; color: #898989;"><code>--ds-neutral-100</code> #ECECEC, radius pill, 16 px text</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ECECEC;">
+              <td style="padding: 12px 0;"><code>.filter-search</code></td>
+              <td style="padding: 12px 0; color: #606161;">Inline search field</td>
+              <td style="padding: 12px 0; color: #898989;"><code>--ds-filter-search-bg</code> #D9DADA, h 35 px, radius 2 px</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #ECECEC;">
+              <td style="padding: 12px 0;"><code>.filter-dropdown</code></td>
+              <td style="padding: 12px 0; color: #606161;">Options card</td>
+              <td style="padding: 12px 0; color: #898989;"><code>--ds-filter-dropdown-bg</code> #FBFBFB, shadow 0 2 2.5 rgba(0,0,0,.16)</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px 0;"><code>.filter-option.active</code></td>
+              <td style="padding: 12px 0; color: #606161;">Selected option row</td>
+              <td style="padding: 12px 0; color: #898989;">bg #fff, radius 2 px</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
   <!-- ============ TIMEZONE ============ -->
   <section data-screen-label="Timezone" style="width: 100%; max-width: 1160px; border-radius: 16px; overflow: hidden; background: #fff; box-shadow: 0px 2px 12px rgba(0,0,0,0.08);">
     <div style="background: #E6E0E9; padding: 20px 40px;">

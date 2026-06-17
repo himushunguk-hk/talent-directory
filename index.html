@@ -219,38 +219,7 @@
     .view.fading-in  main { animation: viewFadeIn 220ms ease forwards; }
     .view.fading-out main { opacity: 0; transition: opacity 150ms ease; pointer-events: none; }
 
-    /* ════════════════════════════════════════════════════════════
-       TALENTS LANDING — Sidebar filters
-    ════════════════════════════════════════════════════════════ */
-    .filters-header {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 8px;
-    }
-    .filters-title {
-      font-size: 16px; font-weight: 700; line-height: 1.1;
-    }
-    /* filters-reset now uses .btn-tertiary from components.css */
-    .filter-list { display: flex; flex-direction: column; gap: 0; }
-    .filter-item {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 13px 0;
-      border-bottom: 1px solid var(--neutral);
-      cursor: pointer;
-      user-select: none;
-    }
-    .filter-item:first-child { border-top: 1px solid var(--neutral); }
-    .filter-item-left { display: flex; align-items: center; gap: 10px; }
-    .filter-item-name { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
-    .filter-badge {
-      font-size: 11px; font-weight: 600; background: var(--blue); color: #fff;
-      border-radius: 100px; padding: 2px 7px; line-height: 1.3;
-    }
-    .filter-selected { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
-    .filter-chevron {
-      width: 14px; height: 14px; flex-shrink: 0;
-      transition: transform 0.2s;
-    }
-    .filter-item.open .filter-chevron { transform: rotate(180deg); }
+    /* filter sidebar styles live in components.css → .filter-nav */
 
     /* ════════════════════════════════════════════════════════════
        TALENTS LANDING — Toolbar
@@ -1042,62 +1011,143 @@
            alt="Search" />
     </div>
 
-    <!-- Filters -->
-    <div style="display:flex;flex-direction:column;gap:20px;flex:1;min-height:0;overflow-y:auto;">
-      <div class="filters-header">
-        <span class="filters-title">Filters <span style="color:var(--muted);font-weight:400;">(8)</span></span>
-        <button class="btn-tertiary">Reset all filters</button>
+    <!-- Filter Nav -->
+    <div class="filter-nav" id="filterNav">
+
+      <div class="filter-nav-header">
+        <div class="filter-nav-title">
+          Filters <span class="filter-count" id="filterTotalCount">(0)</span>
+        </div>
+        <button class="btn-pill" id="filterResetBtn" onclick="resetAllFilters()">
+          RESET ALL FILTERS
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+        </button>
       </div>
-      <div class="filter-list">
-        <div class="filter-item">
-          <div class="filter-item-left">
-            <span class="filter-item-name">Roles</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;">
-            <span class="filter-selected">0 selected</span>
-            <svg class="filter-chevron" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
-          </div>
-        </div>
-        <div class="filter-item">
-          <div class="filter-item-left">
-            <span class="filter-item-name">Location</span>
-            <span class="filter-badge">1</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;">
-            <span class="filter-selected">1 selected</span>
-            <svg class="filter-chevron" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
-          </div>
-        </div>
-        <div class="filter-item">
-          <div class="filter-item-left">
-            <span class="filter-item-name">Skillset</span>
-            <span class="filter-badge">1</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;">
-            <span class="filter-selected">1 selected</span>
-            <svg class="filter-chevron" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+
+      <div class="filter-groups">
+
+        <!-- ROLES -->
+        <div class="filter-group" id="fg-roles">
+          <button class="filter-group-header" onclick="toggleFilterGroup('fg-roles')">
+            <span class="filter-group-label">Roles <span class="filter-group-count" id="fg-roles-count"></span></span>
+            <svg class="filter-group-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+          <div class="filter-group-body">
+            <div class="filter-tags" id="fg-roles-tags"></div>
+            <input class="filter-search" type="text" placeholder="Search roles…" oninput="filterOptions('fg-roles', this.value)" />
+            <div class="filter-dropdown" id="fg-roles-dropdown">
+              <div class="filter-option" data-group="fg-roles" data-value="Creative Director" onclick="toggleFilterOption(this)">Creative Director</div>
+              <div class="filter-option" data-group="fg-roles" data-value="Design Director" onclick="toggleFilterOption(this)">Design Director</div>
+              <div class="filter-option" data-group="fg-roles" data-value="Senior Designer" onclick="toggleFilterOption(this)">Senior Designer</div>
+              <div class="filter-option" data-group="fg-roles" data-value="Midweight Designer" onclick="toggleFilterOption(this)">Midweight Designer</div>
+              <div class="filter-option" data-group="fg-roles" data-value="Junior Designer" onclick="toggleFilterOption(this)">Junior Designer</div>
+              <div class="filter-option" data-group="fg-roles" data-value="3D Artist" onclick="toggleFilterOption(this)">3D Artist</div>
+            </div>
           </div>
         </div>
-        <div class="filter-item">
-          <div class="filter-item-left">
-            <span class="filter-item-name">Industry</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;">
-            <span class="filter-selected">0 selected</span>
-            <svg class="filter-chevron" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+
+        <!-- LOCATION -->
+        <div class="filter-group" id="fg-location">
+          <button class="filter-group-header" onclick="toggleFilterGroup('fg-location')">
+            <span class="filter-group-label">Location <span class="filter-group-count" id="fg-location-count"></span></span>
+            <svg class="filter-group-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+          <div class="filter-group-body">
+            <div class="filter-tags" id="fg-location-tags"></div>
+            <input class="filter-search" type="text" placeholder="Search locations…" oninput="filterOptions('fg-location', this.value)" />
+            <div class="filter-dropdown" id="fg-location-dropdown">
+              <div class="filter-option" data-group="fg-location" data-value="London" onclick="toggleFilterOption(this)">London</div>
+              <div class="filter-option" data-group="fg-location" data-value="New York" onclick="toggleFilterOption(this)">New York</div>
+              <div class="filter-option" data-group="fg-location" data-value="Paris" onclick="toggleFilterOption(this)">Paris</div>
+              <div class="filter-option" data-group="fg-location" data-value="Singapore" onclick="toggleFilterOption(this)">Singapore</div>
+              <div class="filter-option" data-group="fg-location" data-value="Sydney" onclick="toggleFilterOption(this)">Sydney</div>
+              <div class="filter-option" data-group="fg-location" data-value="Dubai" onclick="toggleFilterOption(this)">Dubai</div>
+            </div>
           </div>
         </div>
-        <div class="filter-item">
-          <div class="filter-item-left">
-            <span class="filter-item-name">Interests</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;">
-            <span class="filter-selected">0 selected</span>
-            <svg class="filter-chevron" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+
+        <!-- SKILLSET -->
+        <div class="filter-group" id="fg-skillset">
+          <button class="filter-group-header" onclick="toggleFilterGroup('fg-skillset')">
+            <span class="filter-group-label">Skillset <span class="filter-group-count" id="fg-skillset-count"></span></span>
+            <svg class="filter-group-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+          <div class="filter-group-body">
+            <div class="filter-tags" id="fg-skillset-tags"></div>
+            <input class="filter-search" type="text" placeholder="Search skillsets…" oninput="filterOptions('fg-skillset', this.value)" />
+            <div class="filter-dropdown" id="fg-skillset-dropdown">
+              <div class="filter-option" data-group="fg-skillset" data-value="Branding" onclick="toggleFilterOption(this)">Branding</div>
+              <div class="filter-option" data-group="fg-skillset" data-value="UX/UI" onclick="toggleFilterOption(this)">UX/UI</div>
+              <div class="filter-option" data-group="fg-skillset" data-value="Illustration" onclick="toggleFilterOption(this)">Illustration</div>
+              <div class="filter-option" data-group="fg-skillset" data-value="Motion" onclick="toggleFilterOption(this)">Motion</div>
+              <div class="filter-option" data-group="fg-skillset" data-value="Strategy" onclick="toggleFilterOption(this)">Strategy</div>
+              <div class="filter-option" data-group="fg-skillset" data-value="Copywriting" onclick="toggleFilterOption(this)">Copywriting</div>
+            </div>
           </div>
         </div>
+
+        <!-- INDUSTRY -->
+        <div class="filter-group" id="fg-industry">
+          <button class="filter-group-header" onclick="toggleFilterGroup('fg-industry')">
+            <span class="filter-group-label">Industry <span class="filter-group-count" id="fg-industry-count"></span></span>
+            <svg class="filter-group-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+          <div class="filter-group-body">
+            <div class="filter-tags" id="fg-industry-tags"></div>
+            <input class="filter-search" type="text" placeholder="Search industries…" oninput="filterOptions('fg-industry', this.value)" />
+            <div class="filter-dropdown" id="fg-industry-dropdown">
+              <div class="filter-option" data-group="fg-industry" data-value="Fashion" onclick="toggleFilterOption(this)">Fashion</div>
+              <div class="filter-option" data-group="fg-industry" data-value="Tech" onclick="toggleFilterOption(this)">Tech</div>
+              <div class="filter-option" data-group="fg-industry" data-value="Culture" onclick="toggleFilterOption(this)">Culture</div>
+              <div class="filter-option" data-group="fg-industry" data-value="Finance" onclick="toggleFilterOption(this)">Finance</div>
+              <div class="filter-option" data-group="fg-industry" data-value="Health" onclick="toggleFilterOption(this)">Health</div>
+              <div class="filter-option" data-group="fg-industry" data-value="Sustainability" onclick="toggleFilterOption(this)">Sustainability</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CLIENTS -->
+        <div class="filter-group" id="fg-clients">
+          <button class="filter-group-header" onclick="toggleFilterGroup('fg-clients')">
+            <span class="filter-group-label">Clients <span class="filter-group-count" id="fg-clients-count"></span></span>
+            <svg class="filter-group-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+          <div class="filter-group-body">
+            <div class="filter-tags" id="fg-clients-tags"></div>
+            <input class="filter-search" type="text" placeholder="Search clients…" oninput="filterOptions('fg-clients', this.value)" />
+            <div class="filter-dropdown" id="fg-clients-dropdown">
+              <div class="filter-option" data-group="fg-clients" data-value="Nike" onclick="toggleFilterOption(this)">Nike</div>
+              <div class="filter-option" data-group="fg-clients" data-value="Spotify" onclick="toggleFilterOption(this)">Spotify</div>
+              <div class="filter-option" data-group="fg-clients" data-value="Airbnb" onclick="toggleFilterOption(this)">Airbnb</div>
+              <div class="filter-option" data-group="fg-clients" data-value="Microsoft" onclick="toggleFilterOption(this)">Microsoft</div>
+              <div class="filter-option" data-group="fg-clients" data-value="Patagonia" onclick="toggleFilterOption(this)">Patagonia</div>
+              <div class="filter-option" data-group="fg-clients" data-value="Emirates" onclick="toggleFilterOption(this)">Emirates</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- INTERESTS -->
+        <div class="filter-group" id="fg-interests">
+          <button class="filter-group-header" onclick="toggleFilterGroup('fg-interests')">
+            <span class="filter-group-label">Interests <span class="filter-group-count" id="fg-interests-count"></span></span>
+            <svg class="filter-group-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+          <div class="filter-group-body">
+            <div class="filter-tags" id="fg-interests-tags"></div>
+            <input class="filter-search" type="text" placeholder="Search interests…" oninput="filterOptions('fg-interests', this.value)" />
+            <div class="filter-dropdown" id="fg-interests-dropdown">
+              <div class="filter-option" data-group="fg-interests" data-value="Typography" onclick="toggleFilterOption(this)">Typography</div>
+              <div class="filter-option" data-group="fg-interests" data-value="Photography" onclick="toggleFilterOption(this)">Photography</div>
+              <div class="filter-option" data-group="fg-interests" data-value="Animation" onclick="toggleFilterOption(this)">Animation</div>
+              <div class="filter-option" data-group="fg-interests" data-value="Sculpture" onclick="toggleFilterOption(this)">Sculpture</div>
+              <div class="filter-option" data-group="fg-interests" data-value="Music" onclick="toggleFilterOption(this)">Music</div>
+              <div class="filter-option" data-group="fg-interests" data-value="Architecture" onclick="toggleFilterOption(this)">Architecture</div>
+            </div>
+          </div>
+        </div>
+
       </div>
-    </div>
+    </div><!-- /filter-nav -->
 
     <div class="user-pill">
       <div class="user-pill-inner">
@@ -1766,6 +1816,110 @@
   document.addEventListener('DOMContentLoaded', function () {
     initIndicator(document.getElementById('navHome'),    document.getElementById('navHomeIndicator'));
     initIndicator(document.getElementById('navTalents'), document.getElementById('navTalentsIndicator'));
+  });
+
+  /* ══════════════════════════════════════════════════════════
+     FILTER SIDEBAR — interactivity
+  ══════════════════════════════════════════════════════════ */
+
+  // Toggle a filter group open/closed
+  function toggleFilterGroup(id) {
+    const group = document.getElementById(id);
+    if (!group) return;
+    group.classList.toggle('open');
+  }
+
+  // Toggle a single option selected/deselected
+  function toggleFilterOption(el) {
+    const group = el.dataset.group;
+    const value = el.dataset.value;
+    el.classList.toggle('active');
+    renderFilterTags(group);
+    updateFilterCount(group);
+    updateFilterTotalCount();
+  }
+
+  // Render selected-tag pills inside a group
+  function renderFilterTags(groupId) {
+    const dropdown = document.getElementById(groupId + '-dropdown');
+    const tagsEl   = document.getElementById(groupId + '-tags');
+    if (!dropdown || !tagsEl) return;
+
+    const selected = dropdown.querySelectorAll('.filter-option.active');
+    tagsEl.innerHTML = '';
+    selected.forEach(opt => {
+      const tag = document.createElement('div');
+      tag.className = 'filter-tag';
+      tag.innerHTML = `${opt.dataset.value}
+        <button class="filter-tag-remove" aria-label="Remove ${opt.dataset.value}"
+                onclick="removeFilterTag('${groupId}', '${opt.dataset.value}')">
+          <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <path d="M2 2l6 6M8 2l-6 6"/>
+          </svg>
+        </button>`;
+      tagsEl.appendChild(tag);
+    });
+    tagsEl.style.display = selected.length ? 'flex' : 'none';
+  }
+
+  // Remove a tag (deselect the matching option)
+  function removeFilterTag(groupId, value) {
+    const dropdown = document.getElementById(groupId + '-dropdown');
+    if (!dropdown) return;
+    const opt = dropdown.querySelector(`.filter-option[data-value="${value}"]`);
+    if (opt) opt.classList.remove('active');
+    renderFilterTags(groupId);
+    updateFilterCount(groupId);
+    updateFilterTotalCount();
+  }
+
+  // Update the "(N selected)" label inside a group header
+  function updateFilterCount(groupId) {
+    const dropdown = document.getElementById(groupId + '-dropdown');
+    const countEl  = document.getElementById(groupId + '-count');
+    if (!dropdown || !countEl) return;
+    const n = dropdown.querySelectorAll('.filter-option.active').length;
+    countEl.textContent = n > 0 ? `(${n} selected)` : '';
+  }
+
+  // Update the total "(N)" count in the filter nav header
+  function updateFilterTotalCount() {
+    const total = document.querySelectorAll('#filterNav .filter-option.active').length;
+    const el = document.getElementById('filterTotalCount');
+    if (el) el.textContent = `(${total})`;
+  }
+
+  // Live search within a group's dropdown
+  function filterOptions(groupId, query) {
+    const dropdown = document.getElementById(groupId + '-dropdown');
+    if (!dropdown) return;
+    const q = query.toLowerCase().trim();
+    dropdown.querySelectorAll('.filter-option').forEach(opt => {
+      opt.style.display = opt.dataset.value.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+
+  // Reset all active filters across all groups
+  function resetAllFilters() {
+    document.querySelectorAll('#filterNav .filter-option.active').forEach(opt => {
+      opt.classList.remove('active');
+    });
+    const groups = ['fg-roles','fg-location','fg-skillset','fg-industry','fg-clients','fg-interests'];
+    groups.forEach(id => {
+      renderFilterTags(id);
+      updateFilterCount(id);
+    });
+    updateFilterTotalCount();
+  }
+
+  // Init: all groups start collapsed (max-height:0 in CSS handles this)
+  // Tags rows start hidden — rendered on demand by renderFilterTags()
+  document.addEventListener('DOMContentLoaded', function () {
+    const groups = ['fg-roles','fg-location','fg-skillset','fg-industry','fg-clients','fg-interests'];
+    groups.forEach(id => {
+      const tagsEl = document.getElementById(id + '-tags');
+      if (tagsEl) tagsEl.style.display = 'none';
+    });
   });
 
   /* ── Live clocks ─────────────────────────────────────────── */
