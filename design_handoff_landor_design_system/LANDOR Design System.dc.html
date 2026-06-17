@@ -1285,6 +1285,32 @@
       indicator.style.transition = '';
     });
   });
+
+  /* Wire up style-hover / style-active attributes as real interactions */
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[style-hover]').forEach(function(el) {
+      var base   = el.getAttribute('style') || '';
+      var hover  = el.getAttribute('style-hover')  || '';
+      var active = el.getAttribute('style-active')  || '';
+
+      function applyStyles(extra) {
+        // Reset to base then layer extra props
+        el.setAttribute('style', base);
+        extra.split(';').forEach(function(rule) {
+          var parts = rule.split(':');
+          if (parts.length < 2) return;
+          var prop = parts[0].trim();
+          var val  = parts.slice(1).join(':').trim();
+          if (prop) el.style.setProperty(prop, val);
+        });
+      }
+
+      el.addEventListener('mouseenter',  function() { applyStyles(hover); });
+      el.addEventListener('mouseleave',  function() { applyStyles(''); });
+      el.addEventListener('mousedown',   function() { if (active) applyStyles(active); });
+      el.addEventListener('mouseup',     function() { applyStyles(hover); });
+    });
+  });
 </script>
 
 <script type="text/x-dc" data-dc-script data-props="{&quot;primary&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#0E1ADF&quot;,&quot;options&quot;:[&quot;#0E1ADF&quot;,&quot;#0027D7&quot;,&quot;#081086&quot;,&quot;#000000&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#ECFD01&quot;,&quot;options&quot;:[&quot;#ECFD01&quot;,&quot;#DBD1C8&quot;,&quot;#0E1ADF&quot;],&quot;tsType&quot;:&quot;string&quot;}}">
