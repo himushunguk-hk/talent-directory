@@ -471,6 +471,9 @@
     .proj-grid { grid-template-columns: 1fr; }
     .proj-card { height: 340px; }
   }
+
+  /* Clients grid wrap */
+  .client-grid-wrap { display: flex; flex-direction: column; gap: 12px; padding-bottom: 60px; }
   </style>
 </head>
 <body>
@@ -576,7 +579,7 @@
       <div class="nav-item active" onclick="showView('home')">Home</div>
       <div class="nav-item" onclick="showView('talents')"><span>Talents</span><span class="count">2 324</span></div>
       <div class="nav-item" onclick="showView('projects')"><span>Projects</span><span class="count">436</span></div>
-      <div class="nav-item"><span>Clients</span><span class="count">124</span></div>
+      <div class="nav-item" onclick="showView('clients')"><span>Clients</span><span class="count">124</span></div>
     </nav>
 
     <!-- ── TALENT SECTION ──────────────────────────────────────── -->
@@ -1117,7 +1120,7 @@
       <div class="nav-item" onclick="showView('home')">Home</div>
       <div class="nav-item active"><span>Talents</span><span class="count">2 324</span></div>
       <div class="nav-item" onclick="showView('projects')"><span>Projects</span><span class="count">436</span></div>
-      <div class="nav-item"><span>Clients</span><span class="count">124</span></div>
+      <div class="nav-item" onclick="showView('clients')"><span>Clients</span><span class="count">124</span></div>
     </nav>
 
     <div class="talents-toolbar">
@@ -1321,7 +1324,7 @@
       <div class="nav-item" onclick="showView('home')">Home</div>
       <div class="nav-item" onclick="showView('talents')"><span>Talents</span><span class="count">2 324</span></div>
       <div class="nav-item active"><span>Projects</span><span class="count">436</span></div>
-      <div class="nav-item"><span>Clients</span><span class="count">124</span></div>
+      <div class="nav-item" onclick="showView('clients')"><span>Clients</span><span class="count">124</span></div>
     </nav>
 
     <!-- Toolbar -->
@@ -1525,6 +1528,189 @@
   </main>
 </div>
 </div><!-- /viewProjects -->
+
+
+<!-- ════════════════════════════════════════════════════════════
+     VIEW: CLIENTS LANDING (02_D_a_Clients_Landing)
+════════════════════════════════════════════════════════════ -->
+<div class="view" id="viewClients">
+<div class="page">
+
+  <!-- Sidebar: client filters -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img class="sidebar-logo"
+           src="https://www.figma.com/api/mcp/asset/36d61374-672d-419f-94a7-d64b1c074c45"
+           alt="Landor Logo" />
+      <span class="sidebar-subtitle">Talent Directory</span>
+    </div>
+
+    <div class="search-bar" style="background:var(--volt);">
+      <span>Search for a name, project..</span>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </div>
+
+    <!-- Filters -->
+    <div style="display:flex;flex-direction:column;gap:0;flex:1;min-height:0;overflow-y:auto;">
+      <div class="filters-header" style="margin-bottom:16px;">
+        <span class="filters-title">Filters <span style="color:var(--ds-interactive-default);font-weight:400;">(10)</span></span>
+        <button class="btn-tertiary">Reset all filters
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2H2a1 1 0 00-1 1v7a1 1 0 001 1h7a1 1 0 001-1V7M7 1h4m0 0v4m0-4L5 7"/></svg>
+        </button>
+      </div>
+      <div class="filter-list">
+        <div class="filter-item">
+          <span>Location <span style="color:var(--ds-text-muted);">(3 selected)</span></span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+        </div>
+        <div class="filter-item">
+          <span>Industry <span style="color:var(--ds-text-muted);">(2 selected)</span></span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+        </div>
+        <div class="filter-item">
+          <span>Type of project <span style="color:var(--ds-text-muted);">(3 selected)</span></span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- User pill -->
+    <div class="user-pill">
+      <div class="user-pill-inner">
+        <div style="width:24px;height:24px;border-radius:50%;background:#0E1ADF;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;">JD</div>
+        <span class="user-name">John D.</span>
+      </div>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="main">
+
+    <!-- Top nav -->
+    <nav class="top-nav" id="navClients">
+      <div class="nav-indicator" id="navClientsIndicator"></div>
+      <div class="nav-item" onclick="showView('home')">Home</div>
+      <div class="nav-item" onclick="showView('talents')"><span>Talents</span><span class="count">2 324</span></div>
+      <div class="nav-item" onclick="showView('projects')"><span>Projects</span><span class="count">436</span></div>
+      <div class="nav-item active"><span>Clients</span><span class="count">124</span></div>
+    </nav>
+
+    <!-- Toolbar -->
+    <div class="proj-toolbar">
+      <span class="proj-count" id="clientCount">134 clients</span>
+      <div class="proj-toolbar-actions">
+        <button class="btn-secondary">
+          Most recent
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M7 12h10M11 18h2"/></svg>
+        </button>
+        <button class="btn-primary">
+          Add new client
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Client card grid -->
+    <div class="client-grid-wrap">
+      <div class="client-grid">
+
+        <div class="client-card">
+          <img src="https://www.figma.com/api/mcp/asset/461b76d8-4ea2-4e12-954b-73d33eb87475" alt="Nike" />
+          <div class="client-card-info">
+            <div class="client-card-name">Nike</div>
+            <div class="client-card-meta">
+              <span>13 projects</span><span class="dot"></span><span>FASHION</span><span class="dot"></span><span>Since 2024</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="client-card">
+          <img src="https://www.figma.com/api/mcp/asset/8f9d03da-5a8a-4457-9d72-91d8d14d60ab" alt="Royal Canin" />
+          <div class="client-card-info">
+            <div class="client-card-name">Royal Canin</div>
+            <div class="client-card-meta">
+              <span>13 projects</span><span class="dot"></span><span>PETS</span><span class="dot"></span><span>Since 2024</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="client-card">
+          <img src="https://www.figma.com/api/mcp/asset/0b2ae202-dffd-4445-bb46-d1097dcf37eb" alt="TCCC" />
+          <div class="client-card-info">
+            <div class="client-card-name">TCCC</div>
+            <div class="client-card-meta">
+              <span>13 projects</span><span class="dot"></span><span>F&amp;B</span><span class="dot"></span><span>Since 2024</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="client-card">
+          <img src="https://www.figma.com/api/mcp/asset/cd7833f2-267e-4520-8bf9-84edbaa3c52b" alt="bp" />
+          <div class="client-card-info">
+            <div class="client-card-name">bp</div>
+            <div class="client-card-meta">
+              <span>13 projects</span><span class="dot"></span><span>ENERGY</span><span class="dot"></span><span>Since 2024</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="client-card">
+          <img src="https://www.figma.com/api/mcp/asset/03001fbc-70fd-45eb-bce4-2ab8e485e507" alt="Nestlé" />
+          <div class="client-card-info">
+            <div class="client-card-name">Nestlé</div>
+            <div class="client-card-meta">
+              <span>13 projects</span><span class="dot"></span><span>F&amp;B</span><span class="dot"></span><span>Since 2024</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="client-card">
+          <img src="https://www.figma.com/api/mcp/asset/27b3c75d-172d-4581-8cc7-7d5425a32820" alt="M&M's" />
+          <div class="client-card-info">
+            <div class="client-card-name">M&amp;M's</div>
+            <div class="client-card-meta">
+              <span>13 projects</span><span class="dot"></span><span>F&amp;B</span><span class="dot"></span><span>Since 2024</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="client-card">
+          <img src="https://www.figma.com/api/mcp/asset/461b76d8-4ea2-4e12-954b-73d33eb87475" alt="Nike" />
+          <div class="client-card-info">
+            <div class="client-card-name">Nike</div>
+            <div class="client-card-meta">
+              <span>13 projects</span><span class="dot"></span><span>FASHION</span><span class="dot"></span><span>Since 2024</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="client-card">
+          <img src="https://www.figma.com/api/mcp/asset/8f9d03da-5a8a-4457-9d72-91d8d14d60ab" alt="Royal Canin" />
+          <div class="client-card-info">
+            <div class="client-card-name">Royal Canin</div>
+            <div class="client-card-meta">
+              <span>13 projects</span><span class="dot"></span><span>PETS</span><span class="dot"></span><span>Since 2024</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="client-card">
+          <img src="https://www.figma.com/api/mcp/asset/0b2ae202-dffd-4445-bb46-d1097dcf37eb" alt="TCCC" />
+          <div class="client-card-info">
+            <div class="client-card-name">TCCC</div>
+            <div class="client-card-meta">
+              <span>13 projects</span><span class="dot"></span><span>F&amp;B</span><span class="dot"></span><span>Since 2024</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+</div><!-- /viewClients -->
 
 
 <script>
