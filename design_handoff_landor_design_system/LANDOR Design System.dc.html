@@ -308,6 +308,39 @@
         </div>
       </div>
 
+      <!-- SECONDARY STATE -->
+      <div style="display: flex; flex-direction: column; gap: 22px;">
+        <span style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ds-primary, #0E1ADF);">Secondary · State</span>
+        <div style="display: flex; gap: 28px; align-items: flex-end; flex-wrap: wrap;">
+          <!-- Default -->
+          <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px;">
+            <button style="cursor: pointer; border-radius: 100px; background: #fff; border: 1.5px solid #000; color: #000; font-family: inherit; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 11px 20px; transition: background 200ms ease, border-color 200ms ease, color 200ms ease, opacity 200ms ease;" style-hover="background: #0027D7; border-color: #0027D7; color: #fff; opacity: 0.85;" style-active="background: #081086; border-color: #081086; color: #fff; opacity: 1;">Label</button>
+            <span style="font-size: 12px; color: #898989;">Default</span>
+          </div>
+          <!-- Hover — pinned -->
+          <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px;">
+            <button style="cursor: pointer; border-radius: 100px; background: #0027D7; border: 1.5px solid #0027D7; color: #fff; opacity: 0.85; font-family: inherit; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 11px 20px; transition: background 200ms ease, border-color 200ms ease, color 200ms ease, opacity 200ms ease;" style-hover="background: #0027D7; border-color: #0027D7; color: #fff; opacity: 0.85;" style-active="background: #081086; border-color: #081086; color: #fff; opacity: 1;">Label</button>
+            <span style="font-size: 12px; color: #898989;">Hover</span>
+          </div>
+          <!-- Pressed — pinned -->
+          <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px;">
+            <button style="cursor: pointer; border-radius: 100px; background: #081086; border: 1.5px solid #081086; color: #fff; opacity: 1; font-family: inherit; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 11px 20px; transition: background 200ms ease, border-color 200ms ease, color 200ms ease, opacity 200ms ease;" style-hover="background: #0027D7; border-color: #0027D7; color: #fff; opacity: 0.85;" style-active="background: #081086; border-color: #081086; color: #fff; opacity: 1;">Label</button>
+            <span style="font-size: 12px; color: #898989;">Pressed</span>
+          </div>
+          <!-- Disabled -->
+          <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px;">
+            <button disabled style="border-radius: 100px; background: #fff; border: 1.5px solid #DCDCDC; color: #DCDCDC; font-family: inherit; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 11px 20px; cursor: not-allowed;">Label</button>
+            <span style="font-size: 12px; color: #898989;">Disabled</span>
+          </div>
+        </div>
+        <!-- Motion spec -->
+        <div style="margin-top: 4px; padding: 14px 20px; background: #F4F3F5; border-radius: 10px; display: flex; gap: 32px; flex-wrap: wrap;">
+          <span style="font-size: 12px; color: #606161;"><strong style="color: #000; font-weight: 700;">Transition</strong> &nbsp;background + border-color + color + opacity · 200ms ease</span>
+          <span style="font-size: 12px; color: #606161;"><strong style="color: #000; font-weight: 700;">Hover</strong> &nbsp;#0027D7 fill · opacity 85%</span>
+          <span style="font-size: 12px; color: #606161;"><strong style="color: #000; font-weight: 700;">Pressed</strong> &nbsp;#081086 fill · opacity 100%</span>
+        </div>
+      </div>
+
       <!-- TERTIARY -->
       <div style="display: flex; flex-direction: column; gap: 22px;">
         <span style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ds-primary, #0E1ADF);">Tertiary · Text</span>
