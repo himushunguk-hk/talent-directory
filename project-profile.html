@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Landor — Project</title>
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="components.css" />
+  <style>
+    :root { --sidebar-w: 280px; }
+
+    /* ══════════════════════════════════════════
+       SIDEBAR — project cover panel
+    ══════════════════════════════════════════ */
+    .sidebar {
+      width: var(--sidebar-w); flex-shrink: 0;
+      position: sticky; top: 0; height: calc(100vh - 42px);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+    }
+    .sidebar-header {
+      position: absolute; top: 0; left: 0; right: 0; z-index: 3;
+      padding: clamp(24px, 3vw, 40px) clamp(16px, 2.5vw, 28px) 0;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .sidebar-logo     { width: min(160px, 80%); filter: brightness(0) invert(1); }
+    .sidebar-subtitle { color: rgba(255,255,255,0.85); }
+
+    /* Cover image fills the sidebar */
+    .cover-fill { position: absolute; inset: 0; }
+    .cover-fill img { width: 100%; height: 100%; object-fit: cover; }
+    .cover-fill::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.55) 0%,
+        rgba(0,0,0,0)    35%,
+        rgba(0,0,0,0)    48%,
+        rgba(0,0,0,0.72) 100%
+      );
+    }
+
+    /* Project info at the bottom of the sidebar */
+    .sidebar-project-info {
+      position: absolute; bottom: 64px; left: 0; right: 0; z-index: 3;
+      padding: 0 clamp(16px, 2.5vw, 24px);
+    }
+    .project-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.15); backdrop-filter: blur(4px);
+      border-radius: 100px; padding: 5px 12px; margin-bottom: 10px;
+      font-size: 11px; font-weight: 600; color: #fff;
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .project-sidebar-title {
+      font-size: clamp(18px, 2vw, 24px); font-weight: 700;
+      color: #fff; line-height: 1.2;
+    }
+    .project-sidebar-meta {
+      font-size: 13px; color: rgba(255,255,255,0.78);
+      text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px;
+    }
+
+    /* User pill */
+    .user-pill {
+      position: absolute; bottom: 14px; left: 50%;
+      transform: translateX(-50%); z-index: 3;
+      background: rgba(255,255,255,0.92);
+      border: 0.5px solid rgba(219,209,200,0.6);
+      border-radius: 1000px; padding: 7px 10px;
+      display: flex; align-items: center; gap: 10px; white-space: nowrap;
+    }
+    .user-pill-inner { display: flex; align-items: center; gap: 6px; }
+    .user-avatar  { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; }
+    .user-name    { font-size: 12px; font-weight: 600; text-transform: uppercase; }
+    .settings-icon { width: 14px; height: 14px; }
+
+    /* ══════════════════════════════════════════
+       MAIN content
+    ══════════════════════════════════════════ */
+    .main {
+      flex: 1; min-width: 0; overflow-y: auto;
+      padding: clamp(24px, 3vw, 44px) clamp(20px, 3vw, 48px) 80px clamp(16px, 2vw, 24px);
+      display: flex; flex-direction: column; gap: clamp(32px, 4vw, 48px);
+    }
+
+    /* ── Action bar ── */
+    .action-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; flex-wrap: wrap;
+    }
+    .action-left  { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .action-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .role-tag {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: #2E2E2E; color: #fff; border-radius: 100px;
+      padding: 10px 16px; font-size: 13px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap;
+    }
+
+    /* ── Section heading ── */
+    .section-heading {
+      font-size: clamp(20px, 2vw, 28px); font-weight: 700; line-height: 1.1;
+    }
+    .section-heading-row {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; flex-wrap: wrap;
+    }
+    .section-heading-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+    /* ── Overview two-panel layout ── */
+    .overview-panels {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 16px;
+      align-items: start;
+    }
+    .info-panel {
+      background: #fff; border-radius: 16px;
+      border: 1px solid var(--neutral);
+      padding: 28px; display: flex; flex-direction: column; gap: 24px;
+    }
+    .panel-title {
+      font-size: 18px; font-weight: 700;
+      padding-bottom: 16px; border-bottom: 1px solid var(--neutral);
+    }
+    .info-block { display: flex; flex-direction: column; gap: 8px; }
+    .info-label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.05em; color: var(--blue);
+    }
+    .info-text { font-size: 14px; line-height: 1.65; color: #232323; }
+
+    /* ── Team panel ── */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0 32px;
+      margin-top: 8px;
+    }
+    .team-office { display: flex; flex-direction: column; gap: 16px; }
+    .team-office-label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--blue);
+      padding-bottom: 8px; border-bottom: 1px solid var(--neutral);
+    }
+    .team-member {
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .team-avatar {
+      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+      background: var(--ds-avatar-1); display: flex; align-items: center;
+      justify-content: center; font-size: 10px; font-weight: 700;
+      color: #fff; text-transform: uppercase; overflow: hidden;
+      margin-top: 2px;
+    }
+    .team-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .team-member-info { display: flex; flex-direction: column; gap: 3px; }
+    .team-member-name {
+      font-size: 12px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px;
+    }
+    .team-member-role {
+      font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .team-member-skills { font-size: 12px; color: var(--ds-text-secondary); }
+
+    /* ── Visuals grid ── */
+    .visuals-section { display: flex; flex-direction: column; gap: 12px; }
+    .visuals-row-2 {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    }
+    .visuals-row-3 {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;
+    }
+    .visual-card {
+      border-radius: var(--ds-radius-card); overflow: hidden;
+      position: relative; cursor: pointer;
+      box-shadow: var(--ds-shadow-card);
+      transition: transform var(--ds-transition), box-shadow var(--ds-transition);
+    }
+    .visual-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0px 6px 20px rgba(0,0,0,0.18);
+    }
+    .visual-card img {
+      width: 100%; height: 100%; display: block; object-fit: cover;
+    }
+    .visuals-row-2 .visual-card { height: 380px; }
+    .visuals-row-3 .visual-card { height: 280px; }
+
+    /* project info overlay on visual cards */
+    .visual-card-info {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.82) 100%);
+      padding: 40px 20px 20px; z-index: 1;
+    }
+    .visual-card-title { font-size: 18px; font-weight: 600; color: #fff; line-height: 1.2; }
+    .visual-card-meta  {
+      font-size: 11px; color: rgba(255,255,255,0.75);
+      text-transform: uppercase; letter-spacing: 0.04em; margin-top: 4px;
+      display: flex; align-items: center; gap: 5px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1100px) { :root { --sidebar-w: 240px; } }
+    @media (max-width: 900px)  { .overview-panels { grid-template-columns: 1fr; } .team-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 860px)  { .page { flex-direction: column; } .sidebar { position: static; height: 320px; width: 100%; } }
+    @media (max-width: 700px)  { .visuals-row-2, .visuals-row-3 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<!-- Timezone bar -->
+<div class="timezone-bar">
+  <div class="timezone-track">
+    <div class="tz-item"><span class="tz-city">Sydney</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Hamburg</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">London</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Tokyo</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Paris</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Los Angeles</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Mexico City</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Milan</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Geneva</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Sydney</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Hamburg</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">London</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Tokyo</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Paris</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Los Angeles</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Mexico City</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Milan</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Geneva</span><span class="tz-time">—</span></div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- ══ SIDEBAR — Project cover ══ -->
+  <aside class="sidebar">
+    <div class="cover-fill">
+      <img class="proj-cover-photo"
+           src="https://www.figma.com/api/mcp/asset/81548a12-c7cd-410e-a133-e1fbc5a7ac2f"
+           alt="Project cover" />
+    </div>
+
+    <div class="sidebar-header">
+      <div class="sidebar-brand">
+        <img class="sidebar-logo"
+             src="https://www.figma.com/api/mcp/asset/f559b064-80fc-4b62-bc70-6f557d134bf5"
+             alt="Landor" />
+        <span class="sidebar-subtitle">Talent Directory</span>
+      </div>
+      <div class="search-bar">
+        <span>Search for a name, project..</span>
+        <img class="search-icon"
+             src="https://www.figma.com/api/mcp/asset/eb2e79d2-1e9f-45b1-8c31-b3d49dabfd96"
+             alt="Search" />
+      </div>
+    </div>
+
+    <div class="sidebar-project-info">
+      <div class="project-badge proj-client-badge">✦ Nike Kids</div>
+      <div class="project-sidebar-title proj-sidebar-name">Enter the Bubbleverse</div>
+      <div class="project-sidebar-meta proj-sidebar-meta">Fashion · 2024</div>
+    </div>
+
+    <div class="user-pill">
+      <div class="user-pill-inner">
+        <img class="user-avatar"
+             src="https://www.figma.com/api/mcp/asset/604ea8ee-429b-49f2-bbb2-22e15feaaed4"
+             alt="John D" />
+        <span class="user-name">John D.</span>
+      </div>
+      <img class="settings-icon"
+           src="https://www.figma.com/api/mcp/asset/db52f6a6-6d2a-49b2-ab06-d43076c3c517"
+           alt="Settings" />
+    </div>
+  </aside>
+
+  <!-- ══ MAIN ══ -->
+  <main class="main">
+
+    <!-- Nav -->
+    <nav class="top-nav" id="navProject">
+      <div class="nav-indicator" id="navProjectIndicator"></div>
+      <a class="nav-item" href="index.html">Home</a>
+      <a class="nav-item" href="index.html#talents"><span>Talents</span><span class="count">2 324</span></a>
+      <a class="nav-item active" href="index.html#projects"><span>Projects</span><span class="count">436</span></a>
+      <a class="nav-item" href="index.html#clients"><span>Clients</span><span class="count">124</span></a>
+    </nav>
+
+    <!-- Action bar -->
+    <div class="action-bar">
+      <div class="action-left">
+        <a class="btn-back" href="javascript:history.back()">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 2L4 6.5l4.5 4.5"/></svg>
+          Back
+        </a>
+      </div>
+      <div class="action-right">
+        <span class="role-tag proj-industry-tag">✦ Fashion</span>
+        <span class="role-tag proj-region-tag">✦ EMEA</span>
+        <button class="btn-primary proj-edit-btn">Edit Project →</button>
+      </div>
+    </div>
+
+    <!-- ── Overview ── -->
+    <div>
+      <div class="section-heading" style="margin-bottom:20px;">Overview</div>
+      <div class="overview-panels">
+
+        <!-- Left: project info -->
+        <div class="info-panel">
+          <div class="panel-title proj-name-heading">Enter the Bubbleverse</div>
+          <div class="info-block">
+            <div class="info-label">Description</div>
+            <div class="info-text proj-description">Lorem ipsum dolor sit amet consectetur. Massa sem tristique ac sed. Lacus elementum ultrices egestas morbi a sapien proin viverra. Nulla enim ultrices mi nunc. Morbi vestibulum diam morbi urna in.</div>
+          </div>
+          <div class="info-block">
+            <div class="info-label">Client</div>
+            <div class="info-text proj-client">Nike Kids</div>
+          </div>
+          <div class="info-block">
+            <div class="info-label">Year</div>
+            <div class="info-text proj-year">2024</div>
+          </div>
+          <div class="info-block">
+            <div class="info-label">Market</div>
+            <div class="info-text proj-market">Global</div>
+          </div>
+          <div class="info-block">
+            <div class="info-label">Awards</div>
+            <div class="info-text proj-awards">D&amp;AD Wood Pencil (2024)</div>
+          </div>
+        </div>
+
+        <!-- Right: team -->
+        <div class="info-panel">
+          <div class="panel-title">Team <span style="color:var(--muted);font-weight:400;" class="proj-team-count">(7)</span></div>
+          <div class="team-grid" id="teamGrid">
+
+            <!-- London office -->
+            <div class="team-office">
+              <div class="team-office-label">London</div>
+              <div class="team-member">
+                <div class="team-avatar" style="background:var(--ds-avatar-1);">JD</div>
+                <div class="team-member-info">
+                  <div class="team-member-name">
+                    John Doe
+                    <span class="dot" style="background:#ccc;"></span>
+                    <span class="team-member-role">Senior Designer</span>
+                  </div>
+                  <div class="team-member-skills">Illustration, Font Design</div>
+                </div>
+              </div>
+              <div class="team-member">
+                <div class="team-avatar" style="background:var(--ds-avatar-2);color:#000;">AM</div>
+                <div class="team-member-info">
+                  <div class="team-member-name">
+                    Amie Ochoa
+                    <span class="dot" style="background:#ccc;"></span>
+                    <span class="team-member-role">Creative Director</span>
+                  </div>
+                  <div class="team-member-skills">Art Direction, Strategy</div>
+                </div>
+              </div>
+              <div class="team-member">
+                <div class="team-avatar" style="background:var(--ds-avatar-3);color:#3a2a52;">PK</div>
+                <div class="team-member-info">
+                  <div class="team-member-name">
+                    Paul Kim
+                    <span class="dot" style="background:#ccc;"></span>
+                    <span class="team-member-role">Motion Designer</span>
+                  </div>
+                  <div class="team-member-skills">After Effects, Cinema 4D</div>
+                </div>
+              </div>
+              <div class="team-member">
+                <div class="team-avatar" style="background:var(--ds-avatar-4);">SR</div>
+                <div class="team-member-info">
+                  <div class="team-member-name">
+                    Sara Reyes
+                    <span class="dot" style="background:#ccc;"></span>
+                    <span class="team-member-role">Strategist</span>
+                  </div>
+                  <div class="team-member-skills">Brand Strategy, Research</div>
+                </div>
+              </div>
+              <div class="team-member">
+                <div class="team-avatar" style="background:var(--ds-avatar-1);">MB</div>
+                <div class="team-member-info">
+                  <div class="team-member-name">
+                    Marco Bianchi
+                    <span class="dot" style="background:#ccc;"></span>
+                    <span class="team-member-role">Designer</span>
+                  </div>
+                  <div class="team-member-skills">Packaging, Illustration</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hamburg office -->
+            <div class="team-office">
+              <div class="team-office-label">Hamburg</div>
+              <div class="team-member">
+                <div class="team-avatar" style="background:var(--ds-avatar-2);color:#000;">LM</div>
+                <div class="team-member-info">
+                  <div class="team-member-name">
+                    Lisa Müller
+                    <span class="dot" style="background:#ccc;"></span>
+                    <span class="team-member-role">Project Manager</span>
+                  </div>
+                  <div class="team-member-skills">Client Services, Planning</div>
+                </div>
+              </div>
+              <div class="team-member">
+                <div class="team-avatar" style="background:var(--ds-avatar-3);color:#3a2a52;">TW</div>
+                <div class="team-member-info">
+                  <div class="team-member-name">
+                    Tom Weber
+                    <span class="dot" style="background:#ccc;"></span>
+                    <span class="team-member-role">Copywriter</span>
+                  </div>
+                  <div class="team-member-skills">Naming, TOV</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Visuals ── -->
+    <div class="visuals-section">
+      <div class="section-heading-row">
+        <div class="section-heading">Visuals</div>
+        <div class="section-heading-actions">
+          <button class="btn-secondary">Most recent ↓</button>
+          <button class="btn-primary">Download all →</button>
+        </div>
+      </div>
+
+      <!-- Row 1: 2 large -->
+      <div class="visuals-row-2">
+        <div class="visual-card">
+          <img src="https://www.figma.com/api/mcp/asset/81548a12-c7cd-410e-a133-e1fbc5a7ac2f" alt="Enter the Bubbleverse" />
+          <div class="visual-card-info">
+            <div class="visual-card-title">Enter the Bubbleverse</div>
+            <div class="visual-card-meta">Nike Kids <span class="dot-white"></span> Fashion <span class="dot-white"></span> 2024</div>
+          </div>
+        </div>
+        <div class="visual-card">
+          <img src="https://www.figma.com/api/mcp/asset/37ed6550-de68-4342-b2f5-ffe6c5d1ac01" alt="Swipe Rewards" />
+          <div class="visual-card-info">
+            <div class="visual-card-title">Campaign Stills</div>
+            <div class="visual-card-meta">Nike Kids <span class="dot-white"></span> Fashion <span class="dot-white"></span> 2024</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: 3 smaller -->
+      <div class="visuals-row-3">
+        <div class="visual-card">
+          <img src="https://www.figma.com/api/mcp/asset/657f3faf-bc28-4b92-bb1c-7340cdb7ed05" alt="Identity System" />
+          <div class="visual-card-info">
+            <div class="visual-card-title">Identity System</div>
+            <div class="visual-card-meta">Nike Kids <span class="dot-white"></span> 2024</div>
+          </div>
+        </div>
+        <div class="visual-card">
+          <img src="https://www.figma.com/api/mcp/asset/8bc284f7-098f-42b9-a63d-76ef9776342d" alt="Packaging" />
+          <div class="visual-card-info">
+            <div class="visual-card-title">Packaging</div>
+            <div class="visual-card-meta">Nike Kids <span class="dot-white"></span> 2024</div>
+          </div>
+        </div>
+        <div class="visual-card">
+          <img src="https://www.figma.com/api/mcp/asset/be12409f-1854-4672-a7e2-0f3ce7ca5bf1" alt="Social Assets" />
+          <div class="visual-card-info">
+            <div class="visual-card-title">Social Assets</div>
+            <div class="visual-card-meta">Nike Kids <span class="dot-white"></span> 2024</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  /* ── Timezone clocks ── */
+  const cities = [
+    { name: 'Sydney', tz: 'Australia/Sydney' }, { name: 'Hamburg', tz: 'Europe/Berlin' },
+    { name: 'London', tz: 'Europe/London' },    { name: 'Tokyo', tz: 'Asia/Tokyo' },
+    { name: 'Paris', tz: 'Europe/Paris' },      { name: 'Los Angeles', tz: 'America/Los_Angeles' },
+    { name: 'Mexico City', tz: 'America/Mexico_City' }, { name: 'Milan', tz: 'Europe/Rome' },
+    { name: 'Geneva', tz: 'Europe/Zurich' },
+  ];
+  function fmtTime(tz) {
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: tz, hour: '2-digit', minute: '2-digit',
+      weekday: 'short', hour12: false
+    }).formatToParts(new Date());
+    const get = t => parts.find(p => p.type === t)?.value ?? '';
+    return `${get('hour')}:${get('minute')} ${get('weekday').toUpperCase()}`;
+  }
+  function updateClocks() {
+    document.querySelectorAll('.tz-item').forEach((el, i) => {
+      const c = cities[i % cities.length];
+      el.querySelector('.tz-city').textContent = c.name;
+      el.querySelector('.tz-time').textContent = fmtTime(c.tz);
+    });
+  }
+  updateClocks();
+  setInterval(updateClocks, 60000);
+
+  /* ── Nav indicator ── */
+  document.addEventListener('DOMContentLoaded', function () {
+    const nav = document.getElementById('navProject');
+    const ind = document.getElementById('navProjectIndicator');
+    if (!nav || !ind) return;
+    const active = nav.querySelector('.nav-item.active');
+    if (!active) return;
+    ind.style.transition = 'none';
+    ind.style.left  = active.offsetLeft + 'px';
+    ind.style.width = active.offsetWidth + 'px';
+    requestAnimationFrame(() => { ind.style.transition = ''; });
+  });
+
+  /* ── Supabase — load project data ── */
+  const SB_URL = 'https://iynxaaxpjtlwhhjfaolc.supabase.co';
+  const SB_KEY = 'sb_publishable_99PXDwxMUeJG0t_K7K76Jw_TKfnzI5s';
+
+  function setText(sel, val) {
+    const el = document.querySelector(sel);
+    if (el && val != null) el.textContent = val;
+  }
+
+  async function loadProject() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    if (!id) return; // no id = keep static placeholder
+
+    const res  = await fetch(`${SB_URL}/rest/v1/projects?id=eq.${id}&select=*&limit=1`, {
+      headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }
+    });
+    const data = await res.json();
+    if (!Array.isArray(data) || !data[0]) return;
+    const p = data[0];
+
+    // Sidebar
+    if (p.cover_image_url) {
+      const img = document.querySelector('.proj-cover-photo');
+      if (img) { img.src = p.cover_image_url; img.alt = p.name; }
+    }
+    setText('.proj-client-badge', `✦ ${p.client_name ?? ''}`);
+    setText('.proj-sidebar-name', p.name);
+    setText('.proj-sidebar-meta', `${p.industry ?? ''} · ${p.year ?? ''}`);
+
+    // Action bar tags
+    setText('.proj-industry-tag', `✦ ${p.industry ?? ''}`);
+    setText('.proj-region-tag',   `✦ ${p.region ?? ''}`);
+
+    // Overview panel
+    setText('.proj-name-heading', p.name);
+    setText('.proj-description',  p.description);
+    setText('.proj-client',       p.client_name);
+    setText('.proj-year',         p.year);
+    setText('.proj-market',       p.market);
+    setText('.proj-awards',       p.awards);
+
+    // Page title
+    document.title = `${p.name} — Landor Talent Directory`;
+  }
+
+  loadProject();
+</script>
+</body>
+</html>
