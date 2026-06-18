@@ -1016,7 +1016,7 @@
 
       <div class="filter-nav-header">
         <div class="filter-nav-title">
-          Filters <span class="filter-count" id="filterTotalCount">(0)</span>
+          Filters <span class="filter-count" id="filterTotalCount">0</span>
         </div>
         <button class="btn-pill" id="filterResetBtn" onclick="resetAllFilters()">
           RESET ALL FILTERS
@@ -1886,7 +1886,7 @@
   function updateFilterTotalCount() {
     const total = document.querySelectorAll('#filterNav .filter-option.active').length;
     const el = document.getElementById('filterTotalCount');
-    if (el) el.textContent = `(${total})`;
+    if (el) el.textContent = total;
   }
 
   // Live search within a group's dropdown

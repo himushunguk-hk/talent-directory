@@ -388,8 +388,19 @@ body { overflow-x: hidden; }
   color: var(--ds-black);
 }
 .filter-nav-title .filter-count {
-  color: var(--ds-interactive-default);
-  font-size: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  background: var(--ds-interactive-default);
+  color: var(--ds-white);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  border-radius: var(--ds-radius-pill);
+  letter-spacing: 0;
 }
 
 .filter-groups {
