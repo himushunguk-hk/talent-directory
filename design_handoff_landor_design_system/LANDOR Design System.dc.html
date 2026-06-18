@@ -1346,7 +1346,13 @@
     .ds-filter-demo .fn-title {
       display: flex; align-items: center; gap: 4px; font-size: 20px; line-height: 1.1;
     }
-    .ds-filter-demo .fn-count { color: #0027D7; }
+    .ds-filter-demo .fn-count {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 22px; height: 22px; padding: 0 6px;
+      background: #0027D7; color: #fff;
+      font-size: 12px; font-weight: 700; line-height: 1; letter-spacing: 0;
+      border-radius: 1000px;
+    }
     .ds-filter-demo .fn-reset {
       display: inline-flex; align-items: center; gap: 4px;
       border: 0.5px solid #000; border-radius: 100px; padding: 8px 12px;
@@ -1451,7 +1457,7 @@
             <div class="fn-nav">
               <div class="fn-header">
                 <div class="fn-title">
-                  Filters <span class="fn-count" id="ds-fn-total">(0)</span>
+                  Filters <span class="fn-count" id="ds-fn-total">0</span>
                 </div>
                 <button class="fn-reset" onclick="dsFnResetAll()">
                   RESET ALL FILTERS
@@ -1712,7 +1718,7 @@
     function dsFnUpdateTotal() {
       const n = document.querySelectorAll('.ds-filter-demo .fn-option.active').length;
       const el = document.getElementById('ds-fn-total');
-      if (el) el.textContent = `(${n})`;
+      if (el) el.textContent = n;
     }
     function dsFnSearch(gid, q) {
       const dd = document.getElementById(gid + '-dd');
