@@ -1731,6 +1731,422 @@
     }
   </script>
 
+  <!-- ============ ATOM: ACCORDION ============ -->
+  <style>
+    /* Accordion atom demo */
+    .ds-acc { font-family: "Landor Sans Beta","Archivo",sans-serif; }
+    .ds-acc .acc-group {
+      display: flex; flex-direction: column;
+      border-bottom: 1px solid #D9DADA; padding-bottom: 20px;
+    }
+    .ds-acc .acc-header {
+      display: flex; align-items: center; justify-content: space-between;
+      cursor: pointer; background: none; border: none; width: 100%;
+      padding: 0; text-align: left; font-family: inherit;
+    }
+    .ds-acc .acc-label {
+      font-size: 14px; text-transform: uppercase; letter-spacing: 0.1px;
+      line-height: 14px; color: #000;
+    }
+    .ds-acc .acc-count { color: #A0A2A2; }
+    .ds-acc .acc-chevron {
+      width: 16px; height: 16px; flex-shrink: 0;
+      transition: transform 280ms cubic-bezier(0.4,0,0.2,1);
+    }
+    .ds-acc .acc-group.open .acc-chevron { transform: rotate(180deg); }
+    .ds-acc .acc-body {
+      overflow: hidden; max-height: 0; opacity: 0; pointer-events: none;
+      transition: max-height 320ms cubic-bezier(0.4,0,0.2,1), opacity 220ms ease;
+      padding-top: 0;
+    }
+    .ds-acc .acc-group.open .acc-body {
+      max-height: 200px; opacity: 1; pointer-events: auto;
+      transition: max-height 320ms cubic-bezier(0.4,0,0.2,1), opacity 220ms ease 40ms;
+      padding-top: 12px;
+    }
+    .ds-acc .acc-content {
+      background: #F4F3F5; border-radius: 8px; padding: 16px;
+      font-size: 13px; color: #606161; line-height: 1.5;
+    }
+    .ds-acc .acc-header:hover .acc-label { opacity: 0.7; }
+  </style>
+
+  <section data-screen-label="Atom · Accordion" style="width:100%;max-width:1160px;border-radius:40px 40px 16px 16px;overflow:hidden;background:#fff;">
+    <div style="background:#E6E0E9;padding:40px 56px 44px;">
+      <p style="margin:0 0 6px;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#606161;">Atom</p>
+      <h2 style="margin:0;font-size:72px;font-weight:800;line-height:0.9;letter-spacing:-0.02em;text-transform:uppercase;">Accordion</h2>
+      <p style="margin:16px 0 0;font-size:16px;line-height:1.5;max-width:520px;color:#232323;">Collapsible drawer used in the filter sidebar. Label + optional count in muted grey + chevron. Body animates via <code>max-height</code> + <code>opacity</code> transition.</p>
+    </div>
+    <div style="padding:56px;display:flex;flex-direction:column;gap:56px;">
+
+      <!-- LIVE DEMO -->
+      <div>
+        <p style="margin:0 0 24px;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#606161;">Live Demo — click to expand / collapse</p>
+        <div style="display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap;">
+          <div class="ds-acc" style="width:320px;flex-shrink:0;display:flex;flex-direction:column;gap:16px;">
+            <!-- Empty group -->
+            <div class="acc-group" id="ds-acc-1">
+              <button class="acc-header" onclick="document.getElementById('ds-acc-1').classList.toggle('open')">
+                <span class="acc-label">Industry</span>
+                <svg class="acc-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+              </button>
+              <div class="acc-body"><div class="acc-content">Dropdown content appears here when open.</div></div>
+            </div>
+            <!-- Group with count -->
+            <div class="acc-group" id="ds-acc-2">
+              <button class="acc-header" onclick="document.getElementById('ds-acc-2').classList.toggle('open')">
+                <span class="acc-label">Roles <span class="acc-count">(3 selected)</span></span>
+                <svg class="acc-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+              </button>
+              <div class="acc-body"><div class="acc-content">Dropdown content appears here when open.</div></div>
+            </div>
+          </div>
+
+          <!-- Annotations -->
+          <div style="display:flex;flex-direction:column;gap:16px;flex:1;min-width:240px;padding-top:4px;">
+            <div style="display:flex;gap:14px;align-items:flex-start;">
+              <div style="width:26px;height:26px;border-radius:50%;background:#0027D7;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">A</div>
+              <div><p style="margin:0 0 3px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">Label</p><p style="margin:0;font-size:13px;line-height:1.5;color:#606161;">14 px uppercase, letter-spacing 0.1 px, color #000.</p></div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start;">
+              <div style="width:26px;height:26px;border-radius:50%;background:#0027D7;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">B</div>
+              <div><p style="margin:0 0 3px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">Count</p><p style="margin:0;font-size:13px;line-height:1.5;color:#606161;">"(N selected)" in <code>#A0A2A2</code>. Hidden when zero selections.</p></div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start;">
+              <div style="width:26px;height:26px;border-radius:50%;background:#0027D7;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">C</div>
+              <div><p style="margin:0 0 3px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">Chevron</p><p style="margin:0;font-size:13px;line-height:1.5;color:#606161;">Rotates 180° on open. Transition: 280 ms cubic-bezier(0.4, 0, 0.2, 1).</p></div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start;">
+              <div style="width:26px;height:26px;border-radius:50%;background:#0027D7;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">D</div>
+              <div><p style="margin:0 0 3px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">Body</p><p style="margin:0;font-size:13px;line-height:1.5;color:#606161;"><code>max-height</code> 0 → 600 px + <code>opacity</code> 0 → 1, 320 ms. Pointer-events disabled while closed.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATES -->
+      <div>
+        <p style="margin:0 0 20px;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#606161;">States</p>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;">
+          <div style="flex:1;min-width:180px;border:1px solid #ECECEC;border-radius:12px;padding:20px;">
+            <p style="margin:0 0 14px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#898989;">Collapsed · Empty</p>
+            <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #D9DADA;padding-bottom:16px;">
+              <span style="font-size:14px;text-transform:uppercase;letter-spacing:0.1px;">Clients</span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+            </div>
+          </div>
+          <div style="flex:1;min-width:180px;border:1px solid #ECECEC;border-radius:12px;padding:20px;">
+            <p style="margin:0 0 14px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#898989;">Collapsed · Active</p>
+            <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #D9DADA;padding-bottom:16px;">
+              <span style="font-size:14px;text-transform:uppercase;letter-spacing:0.1px;">Roles <span style="color:#A0A2A2;">(3 selected)</span></span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+            </div>
+          </div>
+          <div style="flex:1;min-width:180px;border:1px solid #ECECEC;border-radius:12px;padding:20px;">
+            <p style="margin:0 0 14px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#898989;">Expanded · Open</p>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+              <span style="font-size:14px;text-transform:uppercase;letter-spacing:0.1px;">Location</span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(180deg)"><path d="M4 6l4 4 4-4"/></svg>
+            </div>
+            <div style="background:#F4F3F5;border-radius:6px;padding:12px;font-size:12px;color:#606161;">Body content visible</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOKENS -->
+      <div>
+        <p style="margin:0 0 20px;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#606161;">Tokens &amp; Classes</p>
+        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+          <thead><tr style="border-bottom:2px solid #000;"><th style="text-align:left;padding:8px 0;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">Class</th><th style="text-align:left;padding:8px 0;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">Role</th><th style="text-align:left;padding:8px 0;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">Value</th></tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;"><code>.filter-group</code></td><td style="padding:10px 0;color:#606161;">Wrapper</td><td style="padding:10px 0;color:#898989;">flex col, gap 12, border-bottom <code>--ds-filter-divider</code>, pb 24</td></tr>
+            <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;"><code>.filter-group-header</code></td><td style="padding:10px 0;color:#606161;">Click target</td><td style="padding:10px 0;color:#898989;">Full-width button, no default styles</td></tr>
+            <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;"><code>.filter-group-label</code></td><td style="padding:10px 0;color:#606161;">Label text</td><td style="padding:10px 0;color:#898989;">14 px, uppercase, letter-spacing 0.1 px</td></tr>
+            <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;"><code>.filter-group-count</code></td><td style="padding:10px 0;color:#606161;">Selection count</td><td style="padding:10px 0;color:#898989;"><code>--ds-text-deselected</code> #A0A2A2</td></tr>
+            <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;"><code>.filter-group-chevron</code></td><td style="padding:10px 0;color:#606161;">Arrow icon</td><td style="padding:10px 0;color:#898989;">16×16, rotate 0° → 180°, 280 ms ease</td></tr>
+            <tr><td style="padding:10px 0;"><code>.filter-group.open</code></td><td style="padding:10px 0;color:#606161;">Expanded state</td><td style="padding:10px 0;color:#898989;">max-height 600 px, opacity 1, chevron 180°</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ATOM: SEARCH INPUT ============ -->
+  <style>
+    .ds-input { font-family: "Landor Sans Beta","Archivo",sans-serif; }
+    .ds-input .inp {
+      width: 100%; height: 35px; background: #D9DADA; border: none;
+      border-radius: 2px; padding: 0 16px; font-size: 12px;
+      letter-spacing: 0.12px; color: #000; outline: none;
+      font-family: inherit; transition: background 150ms ease, box-shadow 150ms ease;
+    }
+    .ds-input .inp:focus { background: #cfd0d0; box-shadow: 0 0 0 2px #0027D7; }
+    .ds-input .inp::placeholder { color: #898989; }
+    .ds-input .inp-wrap { position: relative; width: 280px; }
+  </style>
+
+  <section data-screen-label="Atom · Search Input" style="width:100%;max-width:1160px;border-radius:40px 40px 16px 16px;overflow:hidden;background:#fff;">
+    <div style="background:#E6E0E9;padding:40px 56px 44px;">
+      <p style="margin:0 0 6px;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#606161;">Atom</p>
+      <h2 style="margin:0;font-size:72px;font-weight:800;line-height:0.9;letter-spacing:-0.02em;text-transform:uppercase;">Search Input</h2>
+      <p style="margin:16px 0 0;font-size:16px;line-height:1.5;max-width:520px;color:#232323;">Inline filter search field inside each accordion drawer. Filters dropdown options in real time as the user types.</p>
+    </div>
+    <div style="padding:56px;display:flex;flex-direction:column;gap:56px;">
+
+      <!-- LIVE DEMO -->
+      <div>
+        <p style="margin:0 0 24px;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#606161;">Live Demo — type to filter</p>
+        <div style="display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap;">
+          <div class="ds-input" style="display:flex;flex-direction:column;gap:24px;flex-shrink:0;">
+            <div>
+              <p style="margin:0 0 8px;font-size:11px;color:#898989;text-transform:uppercase;letter-spacing:0.1em;">Default</p>
+              <div class="inp-wrap"><input class="inp" type="text" placeholder="Search roles…" /></div>
+            </div>
+            <div>
+              <p style="margin:0 0 8px;font-size:11px;color:#898989;text-transform:uppercase;letter-spacing:0.1em;">Focus (click inside)</p>
+              <div class="inp-wrap"><input class="inp" type="text" placeholder="Search roles…" /></div>
+            </div>
+            <div>
+              <p style="margin:0 0 8px;font-size:11px;color:#898989;text-transform:uppercase;letter-spacing:0.1em;">Filled</p>
+              <div class="inp-wrap"><input class="inp" type="text" value="Senior" /></div>
+            </div>
+          </div>
+
+          <!-- Annotations -->
+          <div style="display:flex;flex-direction:column;gap:16px;flex:1;min-width:240px;">
+            <div style="display:flex;gap:14px;align-items:flex-start;">
+              <div style="width:26px;height:26px;border-radius:50%;background:#0027D7;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">A</div>
+              <div><p style="margin:0 0 3px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">Background</p><p style="margin:0;font-size:13px;line-height:1.5;color:#606161;"><code>--ds-filter-search-bg</code> #D9DADA. Darkens slightly on focus.</p></div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start;">
+              <div style="width:26px;height:26px;border-radius:50%;background:#0027D7;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">B</div>
+              <div><p style="margin:0 0 3px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">Focus ring</p><p style="margin:0;font-size:13px;line-height:1.5;color:#606161;"><code>box-shadow: 0 0 0 2px #0027D7</code>. Provides keyboard-accessible focus indicator.</p></div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start;">
+              <div style="width:26px;height:26px;border-radius:50%;background:#0027D7;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">C</div>
+              <div><p style="margin:0 0 3px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">Typography</p><p style="margin:0;font-size:13px;line-height:1.5;color:#606161;">12 px, letter-spacing 0.12 px. Placeholder: <code>--ds-text-muted</code> #898989.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOKENS -->
+      <div>
+        <p style="margin:0 0 20px;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#606161;">Tokens &amp; Classes</p>
+        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+          <thead><tr style="border-bottom:2px solid #000;"><th style="text-align:left;padding:8px 0;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">Property</th><th style="text-align:left;padding:8px 0;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">Value</th></tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;"><code>.filter-search</code></td><td style="padding:10px 0;color:#898989;">Class on the <code>&lt;input&gt;</code> element</td></tr>
+            <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;">Height</td><td style="padding:10px 0;color:#898989;">35 px</td></tr>
+            <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;">Background</td><td style="padding:10px 0;color:#898989;"><code>--ds-filter-search-bg</code> · #D9DADA</td></tr>
+            <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;">Border radius</td><td style="padding:10px 0;color:#898989;">2 px</td></tr>
+            <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;">Padding</td><td style="padding:10px 0;color:#898989;">0 16 px</td></tr>
+            <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;">Font size</td><td style="padding:10px 0;color:#898989;">12 px · letter-spacing 0.12 px</td></tr>
+            <tr><td style="padding:10px 0;">Placeholder colour</td><td style="padding:10px 0;color:#898989;"><code>--ds-text-muted</code> · #898989</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ATOM: APPLIED FILTER PILL ============ -->
+  <style>
+    .ds-pill { font-family: "Landor Sans Beta","Archivo",sans-serif; }
+    .ds-pill .ap {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: #ECECEC; border-radius: 1000px; padding: 5px 12px;
+      font-size: 16px; line-height: 20px; color: #000; font-family: inherit;
+    }
+    .ds-pill .ap-x {
+      display: flex; align-items: center; justify-content: center;
+      background: none; border: none; padding: 0; cursor: pointer;
+      opacity: 0.5; transition: opacity 150ms ease; font-family: inherit; line-height: 1;
+    }
+    .ds-pill .ap-x:hover { opacity: 1; }
+    .ds-pill .ap-x svg { width: 10px; height: 10px; display: block; }
+    .ds-pill .ap.removed { opacity: 0; transform: scale(0.85); transition: opacity 200ms ease, transform 200ms ease; }
+  </style>
+
+  <section data-screen-label="Atom · Applied Filter Pill" style="width:100%;max-width:1160px;border-radius:40px 40px 16px 16px;overflow:hidden;background:#fff;">
+    <div style="background:#E6E0E9;padding:40px 56px 44px;">
+      <p style="margin:0 0 6px;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#606161;">Atom</p>
+      <h2 style="margin:0;font-size:72px;font-weight:800;line-height:0.9;letter-spacing:-0.02em;text-transform:uppercase;">Applied Filter Pill</h2>
+      <p style="margin:16px 0 0;font-size:16px;line-height:1.5;max-width:520px;color:#232323;">Removable tag that appears when a filter option is selected. Tap ✕ to deselect inline and update the live count.</p>
+    </div>
+    <div style="padding:56px;display:flex;flex-direction:column;gap:56px;">
+
+      <!-- LIVE DEMO -->
+      <div>
+        <p style="margin:0 0 24px;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#606161;">Live Demo — click ✕ to remove</p>
+        <div style="display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap;">
+          <div class="ds-pill" style="display:flex;flex-wrap:wrap;gap:10px;flex-shrink:0;" id="ds-pill-group">
+            <div class="ap" id="ds-pill-1">Creative Director <button class="ap-x" onclick="dsPillRemove('ds-pill-1')" aria-label="Remove"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 2l6 6M8 2l-6 6"/></svg></button></div>
+            <div class="ap" id="ds-pill-2">Senior Designer <button class="ap-x" onclick="dsPillRemove('ds-pill-2')" aria-label="Remove"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 2l6 6M8 2l-6 6"/></svg></button></div>
+            <div class="ap" id="ds-pill-3">London <button class="ap-x" onclick="dsPillRemove('ds-pill-3')" aria-label="Remove"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 2l6 6M8 2l-6 6"/></svg></button></div>
+            <div class="ap" id="ds-pill-4">Branding <button class="ap-x" onclick="dsPillRemove('ds-pill-4')" aria-label="Remove"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 2l6 6M8 2l-6 6"/></svg></button></div>
+          </div>
+          <script>
+            function dsPillRemove(id) {
+              const el = document.getElementById(id);
+              if (!el) return;
+              el.style.transition = 'opacity 200ms ease, transform 200ms ease';
+              el.style.opacity = '0'; el.style.transform = 'scale(0.85)';
+              setTimeout(() => el.remove(), 210);
+            }
+          </script>
+
+          <!-- Annotations -->
+          <div style="display:flex;flex-direction:column;gap:16px;flex:1;min-width:240px;">
+            <div style="display:flex;gap:14px;align-items:flex-start;">
+              <div style="width:26px;height:26px;border-radius:50%;background:#0027D7;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">A</div>
+              <div><p style="margin:0 0 3px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">Background</p><p style="margin:0;font-size:13px;line-height:1.5;color:#606161;"><code>--ds-neutral-100</code> #ECECEC. Pill shape — radius 1000 px.</p></div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start;">
+              <div style="width:26px;height:26px;border-radius:50%;background:#0027D7;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">B</div>
+              <div><p style="margin:0 0 3px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">Label</p><p style="margin:0;font-size:13px;line-height:1.5;color:#606161;">16 px, line-height 20 px. Value text from the selected option.</p></div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start;">
+              <div style="width:26px;height:26px;border-radius:50%;background:#0027D7;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">C</div>
+              <div><p style="margin:0 0 3px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">Remove button</p><p style="margin:0;font-size:13px;line-height:1.5;color:#606161;">10×10 ✕ icon, opacity 0.5 → 1 on hover. Fades + scales out on remove.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATES -->
+      <div>
+        <p style="margin:0 0 20px;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#606161;">States</p>
+        <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:center;" class="ds-pill">
+          <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start;">
+            <span style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#898989;">Default</span>
+            <div class="ap">Motion Design <button class="ap-x" aria-label="Remove"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 2l6 6M8 2l-6 6"/></svg></button></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start;">
+            <span style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#898989;">✕ Hover</span>
+            <div class="ap">Motion Design <button class="ap-x" style="opacity:1;" aria-label="Remove"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 2l6 6M8 2l-6 6"/></svg></button></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start;">
+            <span style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#898989;">Removing</span>
+            <div class="ap" style="opacity:0.3;transform:scale(0.85);transition:none;">Motion Design <button class="ap-x" aria-label="Remove"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 2l6 6M8 2l-6 6"/></svg></button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOKENS -->
+      <div>
+        <p style="margin:0 0 20px;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#606161;">Tokens &amp; Classes</p>
+        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+          <thead><tr style="border-bottom:2px solid #000;"><th style="text-align:left;padding:8px 0;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">Property</th><th style="text-align:left;padding:8px 0;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">Value</th></tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;"><code>.filter-tag</code></td><td style="padding:10px 0;color:#898989;">Wrapper — inline-flex, pill, padding 5 12 px</td></tr>
+            <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;">Background</td><td style="padding:10px 0;color:#898989;"><code>--ds-neutral-100</code> · #ECECEC</td></tr>
+            <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;">Border radius</td><td style="padding:10px 0;color:#898989;"><code>--ds-radius-pill</code> · 1000 px</td></tr>
+            <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;">Font size</td><td style="padding:10px 0;color:#898989;">16 px · line-height 20 px</td></tr>
+            <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;"><code>.filter-tag-remove</code></td><td style="padding:10px 0;color:#898989;">✕ button — opacity 0.5 default, 1 on hover, 150 ms ease</td></tr>
+            <tr><td style="padding:10px 0;">Remove animation</td><td style="padding:10px 0;color:#898989;">opacity 0 + scale(0.85) · 200 ms ease</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ATOM: DROPDOWN ============ -->
+  <style>
+    .ds-dd { font-family: "Landor Sans Beta","Archivo",sans-serif; }
+    .ds-dd .dd-card {
+      background: #FBFBFB; border-radius: 2px;
+      box-shadow: 0 2px 2.5px rgba(0,0,0,0.16);
+      padding: 16px 12px; display: flex; flex-direction: column; gap: 12px;
+      width: 260px;
+    }
+    .ds-dd .dd-opt {
+      padding: 5px 8px; border-radius: 1000px; font-size: 12px;
+      line-height: 13.8px; letter-spacing: 0.12px; color: #000;
+      cursor: pointer; user-select: none;
+      transition: background 150ms ease;
+      font-family: inherit;
+    }
+    .ds-dd .dd-opt:hover { background: rgba(0,0,0,0.05); }
+    .ds-dd .dd-opt.sel { background: #fff; border-radius: 2px; font-weight: 600; }
+  </style>
+
+  <section data-screen-label="Atom · Dropdown" style="width:100%;max-width:1160px;border-radius:40px 40px 16px 16px;overflow:hidden;background:#fff;">
+    <div style="background:#E6E0E9;padding:40px 56px 44px;">
+      <p style="margin:0 0 6px;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#606161;">Atom</p>
+      <h2 style="margin:0;font-size:72px;font-weight:800;line-height:0.9;letter-spacing:-0.02em;text-transform:uppercase;">Dropdown</h2>
+      <p style="margin:16px 0 0;font-size:16px;line-height:1.5;max-width:520px;color:#232323;">Selectable option list inside each filter accordion. Appears below the search input — #FBFBFB card with a soft drop shadow. Active option highlighted in white.</p>
+    </div>
+    <div style="padding:56px;display:flex;flex-direction:column;gap:56px;">
+
+      <!-- LIVE DEMO -->
+      <div>
+        <p style="margin:0 0 24px;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#606161;">Live Demo — click options to select / deselect</p>
+        <div style="display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap;">
+          <div class="ds-dd">
+            <div class="dd-card">
+              <div class="dd-opt" onclick="this.classList.toggle('sel')">Creative Director</div>
+              <div class="dd-opt sel" onclick="this.classList.toggle('sel')">Design Director</div>
+              <div class="dd-opt" onclick="this.classList.toggle('sel')">Senior Designer</div>
+              <div class="dd-opt" onclick="this.classList.toggle('sel')">Midweight Designer</div>
+              <div class="dd-opt" onclick="this.classList.toggle('sel')">Junior Designer</div>
+              <div class="dd-opt" onclick="this.classList.toggle('sel')">3D Artist</div>
+            </div>
+          </div>
+
+          <!-- Annotations -->
+          <div style="display:flex;flex-direction:column;gap:16px;flex:1;min-width:240px;">
+            <div style="display:flex;gap:14px;align-items:flex-start;">
+              <div style="width:26px;height:26px;border-radius:50%;background:#0027D7;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">A</div>
+              <div><p style="margin:0 0 3px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">Card</p><p style="margin:0;font-size:13px;line-height:1.5;color:#606161;"><code>--ds-filter-dropdown-bg</code> #FBFBFB. Radius 2 px. Drop shadow 0 2 2.5 rgba(0,0,0,0.16).</p></div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start;">
+              <div style="width:26px;height:26px;border-radius:50%;background:#0027D7;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">B</div>
+              <div><p style="margin:0 0 3px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">Option — Default</p><p style="margin:0;font-size:13px;line-height:1.5;color:#606161;">12 px, pill border-radius. On hover: <code>rgba(0,0,0,0.05)</code> bg, 150 ms ease.</p></div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start;">
+              <div style="width:26px;height:26px;border-radius:50%;background:#0027D7;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">C</div>
+              <div><p style="margin:0 0 3px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">Option — Selected</p><p style="margin:0;font-size:13px;line-height:1.5;color:#606161;">bg <code>#fff</code>, radius changes to 2 px (rect, not pill). Selecting also creates a tag pill above the search input.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATES -->
+      <div>
+        <p style="margin:0 0 20px;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#606161;">Option States</p>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;" class="ds-dd">
+          <div style="flex:1;min-width:160px;border:1px solid #ECECEC;border-radius:12px;padding:20px;">
+            <p style="margin:0 0 12px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#898989;">Default</p>
+            <div class="dd-opt" style="cursor:default;">Senior Designer</div>
+          </div>
+          <div style="flex:1;min-width:160px;border:1px solid #ECECEC;border-radius:12px;padding:20px;">
+            <p style="margin:0 0 12px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#898989;">Hover</p>
+            <div class="dd-opt" style="background:rgba(0,0,0,0.05);cursor:default;">Senior Designer</div>
+          </div>
+          <div style="flex:1;min-width:160px;border:1px solid #ECECEC;border-radius:12px;padding:20px;">
+            <p style="margin:0 0 12px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#898989;">Selected · Active</p>
+            <div class="dd-opt sel" style="cursor:default;">Senior Designer</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOKENS -->
+      <div>
+        <p style="margin:0 0 20px;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#606161;">Tokens &amp; Classes</p>
+        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+          <thead><tr style="border-bottom:2px solid #000;"><th style="text-align:left;padding:8px 0;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">Property</th><th style="text-align:left;padding:8px 0;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">Value</th></tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;"><code>.filter-dropdown</code></td><td style="padding:10px 0;color:#898989;">Card wrapper — #FBFBFB, radius 2 px, shadow 0 2 2.5 rgba(0,0,0,.16)</td></tr>
+            <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;"><code>.filter-option</code></td><td style="padding:10px 0;color:#898989;">12 px, pill radius, hover bg rgba(0,0,0,0.05), 150 ms ease</td></tr>
+            <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;"><code>.filter-option.active</code></td><td style="padding:10px 0;color:#898989;">bg #fff, border-radius 2 px (rect)</td></tr>
+            <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;">Card background</td><td style="padding:10px 0;color:#898989;"><code>--ds-filter-dropdown-bg</code> · #FBFBFB</td></tr>
+            <tr><td style="padding:10px 0;">Gap between options</td><td style="padding:10px 0;color:#898989;">12 px</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ TIMEZONE ============ -->
   <section data-screen-label="Timezone" style="width: 100%; max-width: 1160px; border-radius: 16px; overflow: hidden; background: #fff; box-shadow: 0px 2px 12px rgba(0,0,0,0.08);">
     <div style="background: #E6E0E9; padding: 20px 40px;">
