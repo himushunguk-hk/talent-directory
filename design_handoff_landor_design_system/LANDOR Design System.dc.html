@@ -2060,6 +2060,7 @@
       width: 260px;
     }
     .ds-dd .dd-opt {
+      display: flex; align-items: center; gap: 8px;
       padding: 5px 8px; border-radius: 1000px; font-size: 12px;
       line-height: 13.8px; letter-spacing: 0.12px; color: #000;
       cursor: pointer; user-select: none;
@@ -2068,6 +2069,19 @@
     }
     .ds-dd .dd-opt:hover { background: rgba(0,0,0,0.05); }
     .ds-dd .dd-opt.sel { background: #fff; border-radius: 2px; font-weight: 600; }
+    .ds-dd .dd-cb {
+      width: 14px; height: 14px; border: 1.5px solid #B3B3B3; border-radius: 2px;
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+      transition: border-color 150ms ease, background 150ms ease;
+    }
+    .ds-dd .dd-opt.sel .dd-cb {
+      border-color: #0027D7; background: #0027D7;
+    }
+    .ds-dd .dd-opt.sel .dd-cb::after {
+      content: ''; display: block; width: 8px; height: 5px;
+      border-left: 1.5px solid #fff; border-bottom: 1.5px solid #fff;
+      transform: rotate(-45deg) translateY(-1px);
+    }
   </style>
 
   <section data-screen-label="Atom · Dropdown" style="width:100%;max-width:1160px;border-radius:40px 40px 16px 16px;overflow:hidden;background:#fff;">
@@ -2084,12 +2098,12 @@
         <div style="display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap;">
           <div class="ds-dd">
             <div class="dd-card">
-              <div class="dd-opt" onclick="this.classList.toggle('sel')">Creative Director</div>
-              <div class="dd-opt sel" onclick="this.classList.toggle('sel')">Design Director</div>
-              <div class="dd-opt" onclick="this.classList.toggle('sel')">Senior Designer</div>
-              <div class="dd-opt" onclick="this.classList.toggle('sel')">Midweight Designer</div>
-              <div class="dd-opt" onclick="this.classList.toggle('sel')">Junior Designer</div>
-              <div class="dd-opt" onclick="this.classList.toggle('sel')">3D Artist</div>
+              <div class="dd-opt" onclick="this.classList.toggle('sel')"><span class="dd-cb"></span>Creative Director</div>
+              <div class="dd-opt sel" onclick="this.classList.toggle('sel')"><span class="dd-cb"></span>Design Director</div>
+              <div class="dd-opt" onclick="this.classList.toggle('sel')"><span class="dd-cb"></span>Senior Designer</div>
+              <div class="dd-opt" onclick="this.classList.toggle('sel')"><span class="dd-cb"></span>Midweight Designer</div>
+              <div class="dd-opt" onclick="this.classList.toggle('sel')"><span class="dd-cb"></span>Junior Designer</div>
+              <div class="dd-opt" onclick="this.classList.toggle('sel')"><span class="dd-cb"></span>3D Artist</div>
             </div>
           </div>
 
@@ -2117,15 +2131,15 @@
         <div style="display:flex;gap:16px;flex-wrap:wrap;" class="ds-dd">
           <div style="flex:1;min-width:160px;border:1px solid #ECECEC;border-radius:12px;padding:20px;">
             <p style="margin:0 0 12px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#898989;">Default</p>
-            <div class="dd-opt" style="cursor:default;">Senior Designer</div>
+            <div class="dd-opt" style="cursor:default;"><span class="dd-cb"></span>Senior Designer</div>
           </div>
           <div style="flex:1;min-width:160px;border:1px solid #ECECEC;border-radius:12px;padding:20px;">
             <p style="margin:0 0 12px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#898989;">Hover</p>
-            <div class="dd-opt" style="background:rgba(0,0,0,0.05);cursor:default;">Senior Designer</div>
+            <div class="dd-opt" style="background:rgba(0,0,0,0.05);cursor:default;"><span class="dd-cb"></span>Senior Designer</div>
           </div>
           <div style="flex:1;min-width:160px;border:1px solid #ECECEC;border-radius:12px;padding:20px;">
             <p style="margin:0 0 12px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#898989;">Selected · Active</p>
-            <div class="dd-opt sel" style="cursor:default;">Senior Designer</div>
+            <div class="dd-opt sel" style="cursor:default;"><span class="dd-cb"></span>Senior Designer</div>
           </div>
         </div>
       </div>
@@ -2139,6 +2153,8 @@
             <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;"><code>.filter-dropdown</code></td><td style="padding:10px 0;color:#898989;">Card wrapper — #FBFBFB, radius 2 px, shadow 0 2 2.5 rgba(0,0,0,.16)</td></tr>
             <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;"><code>.filter-option</code></td><td style="padding:10px 0;color:#898989;">12 px, pill radius, hover bg rgba(0,0,0,0.05), 150 ms ease</td></tr>
             <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;"><code>.filter-option.active</code></td><td style="padding:10px 0;color:#898989;">bg #fff, border-radius 2 px (rect)</td></tr>
+            <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;"><code>.filter-checkbox</code></td><td style="padding:10px 0;color:#898989;">14×14 px box, border 1.5 px #B3B3B3, radius 2 px</td></tr>
+            <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;"><code>.filter-option.active .filter-checkbox</code></td><td style="padding:10px 0;color:#898989;">bg + border <code>--ds-interactive-default</code> #0027D7 · white checkmark via ::after</td></tr>
             <tr style="border-bottom:1px solid #ECECEC;"><td style="padding:10px 0;">Card background</td><td style="padding:10px 0;color:#898989;"><code>--ds-filter-dropdown-bg</code> · #FBFBFB</td></tr>
             <tr><td style="padding:10px 0;">Gap between options</td><td style="padding:10px 0;color:#898989;">12 px</td></tr>
           </tbody>

@@ -516,6 +516,7 @@ body { overflow-x: hidden; }
 .filter-option {
   display: flex;
   align-items: center;
+  gap: 8px;
   padding: 5px 8px;
   border-radius: var(--ds-radius-pill);
   font-size: 12px;
@@ -531,6 +532,32 @@ body { overflow-x: hidden; }
 .filter-option.active {
   background: var(--ds-bg-surface);
   border-radius: 2px;
+}
+
+/* Checkbox inside filter options */
+.filter-checkbox {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid #B3B3B3;
+  border-radius: 2px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+.filter-option.active .filter-checkbox {
+  border-color: var(--ds-interactive-default);
+  background: var(--ds-interactive-default);
+}
+.filter-option.active .filter-checkbox::after {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 5px;
+  border-left: 1.5px solid #fff;
+  border-bottom: 1.5px solid #fff;
+  transform: rotate(-45deg) translateY(-1px);
 }
 
 /* ============================================================
