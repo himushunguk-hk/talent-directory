@@ -1323,37 +1323,129 @@
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
     </div>
 
-    <!-- Filters -->
-    <div style="display:flex;flex-direction:column;gap:0;flex:1;min-height:0;overflow-y:auto;">
-      <div class="filters-header" style="margin-bottom:16px;">
-        <span class="filters-title">Filters <span style="color:var(--ds-interactive-default);font-weight:400;">(10)</span></span>
-        <button class="btn-tertiary">Reset all filters
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2H2a1 1 0 00-1 1v7a1 1 0 001 1h7a1 1 0 001-1V7M7 1h4m0 0v4m0-4L5 7"/></svg>
+    <!-- Filter Nav — Projects -->
+    <div class="filter-nav" id="filterNavProjects">
+
+      <div class="filter-nav-header">
+        <div class="filter-nav-title">
+          Filters <span class="filter-count" id="projFilterTotalCount">0</span>
+        </div>
+        <button class="btn-pill" id="projFilterResetBtn" onclick="resetFilters('filterNavProjects','projFilterTotalCount')">
+          RESET ALL
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
         </button>
       </div>
-      <div class="filter-list">
-        <div class="filter-item">
-          <span>Clients <span style="color:var(--ds-text-muted);">(1 selected)</span></span>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+
+      <div class="filter-groups">
+
+        <!-- CLIENT -->
+        <div class="filter-group" id="fp-client">
+          <button class="filter-group-header" onclick="toggleFilterGroup('fp-client')">
+            <span class="filter-group-label">Client <span class="filter-group-count" id="fp-client-count"></span></span>
+            <svg class="filter-group-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+          <div class="filter-group-body">
+            <div class="filter-tags" id="fp-client-tags"></div>
+            <input class="filter-search" type="text" placeholder="Search clients…" oninput="filterOptions('fp-client', this.value)" />
+            <div class="filter-dropdown" id="fp-client-dropdown">
+              <div class="filter-option" data-group="fp-client" data-value="Nike" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Nike</div>
+              <div class="filter-option" data-group="fp-client" data-value="Spotify" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Spotify</div>
+              <div class="filter-option" data-group="fp-client" data-value="Airbnb" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Airbnb</div>
+              <div class="filter-option" data-group="fp-client" data-value="Microsoft" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Microsoft</div>
+              <div class="filter-option" data-group="fp-client" data-value="Patagonia" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Patagonia</div>
+              <div class="filter-option" data-group="fp-client" data-value="Emirates" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Emirates</div>
+              <div class="filter-option" data-group="fp-client" data-value="Royal Canin" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Royal Canin</div>
+              <div class="filter-option" data-group="fp-client" data-value="TCCC" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>TCCC</div>
+              <div class="filter-option" data-group="fp-client" data-value="bp" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>bp</div>
+              <div class="filter-option" data-group="fp-client" data-value="Nestlé" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Nestlé</div>
+            </div>
+          </div>
         </div>
-        <div class="filter-item">
-          <span>Location <span style="color:var(--ds-text-muted);">(3 selected)</span></span>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+
+        <!-- LOCATION -->
+        <div class="filter-group" id="fp-location">
+          <button class="filter-group-header" onclick="toggleFilterGroup('fp-location')">
+            <span class="filter-group-label">Location <span class="filter-group-count" id="fp-location-count"></span></span>
+            <svg class="filter-group-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+          <div class="filter-group-body">
+            <div class="filter-tags" id="fp-location-tags"></div>
+            <input class="filter-search" type="text" placeholder="Search locations…" oninput="filterOptions('fp-location', this.value)" />
+            <div class="filter-dropdown" id="fp-location-dropdown">
+              <div class="filter-option" data-group="fp-location" data-value="London" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>London</div>
+              <div class="filter-option" data-group="fp-location" data-value="New York" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>New York</div>
+              <div class="filter-option" data-group="fp-location" data-value="Paris" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Paris</div>
+              <div class="filter-option" data-group="fp-location" data-value="Hamburg" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Hamburg</div>
+              <div class="filter-option" data-group="fp-location" data-value="Singapore" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Singapore</div>
+              <div class="filter-option" data-group="fp-location" data-value="Sydney" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Sydney</div>
+              <div class="filter-option" data-group="fp-location" data-value="Dubai" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Dubai</div>
+              <div class="filter-option" data-group="fp-location" data-value="Milan" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Milan</div>
+            </div>
+          </div>
         </div>
-        <div class="filter-item">
-          <span>Years <span style="color:var(--ds-text-muted);">(Selected)</span></span>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+
+        <!-- YEARS -->
+        <div class="filter-group" id="fp-years">
+          <button class="filter-group-header" onclick="toggleFilterGroup('fp-years')">
+            <span class="filter-group-label">Years <span class="filter-group-count" id="fp-years-count"></span></span>
+            <svg class="filter-group-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+          <div class="filter-group-body">
+            <div class="filter-tags" id="fp-years-tags"></div>
+            <div class="filter-dropdown" id="fp-years-dropdown">
+              <div class="filter-option" data-group="fp-years" data-value="2025" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>2025</div>
+              <div class="filter-option" data-group="fp-years" data-value="2024" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>2024</div>
+              <div class="filter-option" data-group="fp-years" data-value="2023" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>2023</div>
+              <div class="filter-option" data-group="fp-years" data-value="2022" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>2022</div>
+              <div class="filter-option" data-group="fp-years" data-value="2021" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>2021</div>
+            </div>
+          </div>
         </div>
-        <div class="filter-item">
-          <span>Type of project <span style="color:var(--ds-text-muted);">(3 selected)</span></span>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+
+        <!-- TYPE OF PROJECT -->
+        <div class="filter-group" id="fp-type">
+          <button class="filter-group-header" onclick="toggleFilterGroup('fp-type')">
+            <span class="filter-group-label">Type of project <span class="filter-group-count" id="fp-type-count"></span></span>
+            <svg class="filter-group-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+          <div class="filter-group-body">
+            <div class="filter-tags" id="fp-type-tags"></div>
+            <input class="filter-search" type="text" placeholder="Search types…" oninput="filterOptions('fp-type', this.value)" />
+            <div class="filter-dropdown" id="fp-type-dropdown">
+              <div class="filter-option" data-group="fp-type" data-value="Brand Identity" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Brand Identity</div>
+              <div class="filter-option" data-group="fp-type" data-value="Campaign" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Campaign</div>
+              <div class="filter-option" data-group="fp-type" data-value="Packaging" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Packaging</div>
+              <div class="filter-option" data-group="fp-type" data-value="Digital" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Digital</div>
+              <div class="filter-option" data-group="fp-type" data-value="Motion" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Motion</div>
+              <div class="filter-option" data-group="fp-type" data-value="Strategy" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Strategy</div>
+              <div class="filter-option" data-group="fp-type" data-value="Naming" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Naming</div>
+            </div>
+          </div>
         </div>
-        <div class="filter-item">
-          <span>Colours <span style="color:var(--ds-text-muted);">(2 selected)</span></span>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+
+        <!-- COLOUR -->
+        <div class="filter-group" id="fp-colour">
+          <button class="filter-group-header" onclick="toggleFilterGroup('fp-colour')">
+            <span class="filter-group-label">Colour <span class="filter-group-count" id="fp-colour-count"></span></span>
+            <svg class="filter-group-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+          <div class="filter-group-body">
+            <div class="filter-tags" id="fp-colour-tags"></div>
+            <div class="filter-dropdown filter-dropdown-colours" id="fp-colour-dropdown">
+              <div class="filter-option filter-option-colour" data-group="fp-colour" data-value="Black" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span><span class="colour-swatch" style="background:#000;"></span>Black</div>
+              <div class="filter-option filter-option-colour" data-group="fp-colour" data-value="White" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span><span class="colour-swatch" style="background:#fff;border:1px solid #ddd;"></span>White</div>
+              <div class="filter-option filter-option-colour" data-group="fp-colour" data-value="Ultramarine" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span><span class="colour-swatch" style="background:#0E1ADF;"></span>Ultramarine</div>
+              <div class="filter-option filter-option-colour" data-group="fp-colour" data-value="Volt" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span><span class="colour-swatch" style="background:#ECFD01;border:1px solid #ddd;"></span>Volt</div>
+              <div class="filter-option filter-option-colour" data-group="fp-colour" data-value="Red" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span><span class="colour-swatch" style="background:#E8452A;"></span>Red</div>
+              <div class="filter-option filter-option-colour" data-group="fp-colour" data-value="Green" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span><span class="colour-swatch" style="background:#3DB856;"></span>Green</div>
+              <div class="filter-option filter-option-colour" data-group="fp-colour" data-value="Yellow" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span><span class="colour-swatch" style="background:#F0C000;"></span>Yellow</div>
+              <div class="filter-option filter-option-colour" data-group="fp-colour" data-value="Pink" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span><span class="colour-swatch" style="background:#F4A7B9;"></span>Pink</div>
+            </div>
+          </div>
         </div>
+
       </div>
-    </div>
+    </div><!-- /filter-nav projects -->
 
     <!-- User pill -->
     <div class="user-pill">
@@ -1600,29 +1692,91 @@
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
     </div>
 
-    <!-- Filters -->
-    <div style="display:flex;flex-direction:column;gap:0;flex:1;min-height:0;overflow-y:auto;">
-      <div class="filters-header" style="margin-bottom:16px;">
-        <span class="filters-title">Filters <span style="color:var(--ds-interactive-default);font-weight:400;">(10)</span></span>
-        <button class="btn-tertiary">Reset all filters
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2H2a1 1 0 00-1 1v7a1 1 0 001 1h7a1 1 0 001-1V7M7 1h4m0 0v4m0-4L5 7"/></svg>
+    <!-- Filter Nav — Clients -->
+    <div class="filter-nav" id="filterNavClients">
+
+      <div class="filter-nav-header">
+        <div class="filter-nav-title">
+          Filters <span class="filter-count" id="clientFilterTotalCount">0</span>
+        </div>
+        <button class="btn-pill" id="clientFilterResetBtn" onclick="resetFilters('filterNavClients','clientFilterTotalCount')">
+          RESET ALL
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
         </button>
       </div>
-      <div class="filter-list">
-        <div class="filter-item">
-          <span>Location <span style="color:var(--ds-text-muted);">(3 selected)</span></span>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+
+      <div class="filter-groups">
+
+        <!-- LOCATION -->
+        <div class="filter-group" id="fc-location">
+          <button class="filter-group-header" onclick="toggleFilterGroup('fc-location')">
+            <span class="filter-group-label">Location <span class="filter-group-count" id="fc-location-count"></span></span>
+            <svg class="filter-group-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+          <div class="filter-group-body">
+            <div class="filter-tags" id="fc-location-tags"></div>
+            <input class="filter-search" type="text" placeholder="Search locations…" oninput="filterOptions('fc-location', this.value)" />
+            <div class="filter-dropdown" id="fc-location-dropdown">
+              <div class="filter-option" data-group="fc-location" data-value="London" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>London</div>
+              <div class="filter-option" data-group="fc-location" data-value="New York" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>New York</div>
+              <div class="filter-option" data-group="fc-location" data-value="Paris" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Paris</div>
+              <div class="filter-option" data-group="fc-location" data-value="Singapore" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Singapore</div>
+              <div class="filter-option" data-group="fc-location" data-value="Sydney" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Sydney</div>
+              <div class="filter-option" data-group="fc-location" data-value="Dubai" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Dubai</div>
+              <div class="filter-option" data-group="fc-location" data-value="Hamburg" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Hamburg</div>
+              <div class="filter-option" data-group="fc-location" data-value="Tokyo" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Tokyo</div>
+              <div class="filter-option" data-group="fc-location" data-value="Geneva" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Geneva</div>
+            </div>
+          </div>
         </div>
-        <div class="filter-item">
-          <span>Industry <span style="color:var(--ds-text-muted);">(2 selected)</span></span>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+
+        <!-- INDUSTRY -->
+        <div class="filter-group" id="fc-industry">
+          <button class="filter-group-header" onclick="toggleFilterGroup('fc-industry')">
+            <span class="filter-group-label">Industry <span class="filter-group-count" id="fc-industry-count"></span></span>
+            <svg class="filter-group-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+          <div class="filter-group-body">
+            <div class="filter-tags" id="fc-industry-tags"></div>
+            <input class="filter-search" type="text" placeholder="Search industries…" oninput="filterOptions('fc-industry', this.value)" />
+            <div class="filter-dropdown" id="fc-industry-dropdown">
+              <div class="filter-option" data-group="fc-industry" data-value="Fashion" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Fashion</div>
+              <div class="filter-option" data-group="fc-industry" data-value="Tech" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Tech</div>
+              <div class="filter-option" data-group="fc-industry" data-value="Culture" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Culture</div>
+              <div class="filter-option" data-group="fc-industry" data-value="Finance" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Finance</div>
+              <div class="filter-option" data-group="fc-industry" data-value="Health" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Health</div>
+              <div class="filter-option" data-group="fc-industry" data-value="Sustainability" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Sustainability</div>
+              <div class="filter-option" data-group="fc-industry" data-value="Food &amp; Beverage" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Food &amp; Beverage</div>
+              <div class="filter-option" data-group="fc-industry" data-value="Energy" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Energy</div>
+              <div class="filter-option" data-group="fc-industry" data-value="Pets" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Pets</div>
+              <div class="filter-option" data-group="fc-industry" data-value="Travel" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Travel</div>
+            </div>
+          </div>
         </div>
-        <div class="filter-item">
-          <span>Type of project <span style="color:var(--ds-text-muted);">(3 selected)</span></span>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+
+        <!-- TYPE OF PROJECT -->
+        <div class="filter-group" id="fc-type">
+          <button class="filter-group-header" onclick="toggleFilterGroup('fc-type')">
+            <span class="filter-group-label">Type of project <span class="filter-group-count" id="fc-type-count"></span></span>
+            <svg class="filter-group-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+          </button>
+          <div class="filter-group-body">
+            <div class="filter-tags" id="fc-type-tags"></div>
+            <input class="filter-search" type="text" placeholder="Search types…" oninput="filterOptions('fc-type', this.value)" />
+            <div class="filter-dropdown" id="fc-type-dropdown">
+              <div class="filter-option" data-group="fc-type" data-value="Brand Identity" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Brand Identity</div>
+              <div class="filter-option" data-group="fc-type" data-value="Campaign" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Campaign</div>
+              <div class="filter-option" data-group="fc-type" data-value="Packaging" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Packaging</div>
+              <div class="filter-option" data-group="fc-type" data-value="Digital" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Digital</div>
+              <div class="filter-option" data-group="fc-type" data-value="Motion" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Motion</div>
+              <div class="filter-option" data-group="fc-type" data-value="Strategy" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Strategy</div>
+              <div class="filter-option" data-group="fc-type" data-value="Naming" onclick="toggleFilterOption(this)"><span class="filter-checkbox"></span>Naming</div>
+            </div>
+          </div>
         </div>
+
       </div>
-    </div>
+    </div><!-- /filter-nav clients -->
 
     <!-- User pill -->
     <div class="user-pill">
@@ -1884,9 +2038,18 @@
 
   // Update the total "(N)" count in the filter nav header
   function updateFilterTotalCount() {
-    const total = document.querySelectorAll('#filterNav .filter-option.active').length;
-    const el = document.getElementById('filterTotalCount');
-    if (el) el.textContent = total;
+    // Talents
+    const t = document.querySelectorAll('#filterNav .filter-option.active').length;
+    const tel = document.getElementById('filterTotalCount');
+    if (tel) tel.textContent = t;
+    // Projects
+    const p = document.querySelectorAll('#filterNavProjects .filter-option.active').length;
+    const pel = document.getElementById('projFilterTotalCount');
+    if (pel) pel.textContent = p;
+    // Clients
+    const c = document.querySelectorAll('#filterNavClients .filter-option.active').length;
+    const cel = document.getElementById('clientFilterTotalCount');
+    if (cel) cel.textContent = c;
   }
 
   // Live search within a group's dropdown
@@ -1899,25 +2062,31 @@
     });
   }
 
-  // Reset all active filters across all groups
-  function resetAllFilters() {
-    document.querySelectorAll('#filterNav .filter-option.active').forEach(opt => {
+  // Reset filters within a specific filter-nav container
+  function resetFilters(navId, countId) {
+    const nav = document.getElementById(navId);
+    if (!nav) return;
+    nav.querySelectorAll('.filter-option.active').forEach(opt => {
       opt.classList.remove('active');
     });
-    const groups = ['fg-roles','fg-location','fg-skillset','fg-industry','fg-clients','fg-interests'];
-    groups.forEach(id => {
-      renderFilterTags(id);
-      updateFilterCount(id);
+    nav.querySelectorAll('.filter-group').forEach(group => {
+      renderFilterTags(group.id);
+      updateFilterCount(group.id);
     });
-    updateFilterTotalCount();
+    const el = document.getElementById(countId);
+    if (el) el.textContent = 0;
   }
 
-  // Init: all groups start collapsed (max-height:0 in CSS handles this)
-  // Tags rows start hidden — rendered on demand by renderFilterTags()
+  // Legacy: reset Talents filters (kept for backward compat)
+  function resetAllFilters() {
+    resetFilters('filterNav', 'filterTotalCount');
+  }
+
+  // Init: all groups start collapsed
   document.addEventListener('DOMContentLoaded', function () {
-    const groups = ['fg-roles','fg-location','fg-skillset','fg-industry','fg-clients','fg-interests'];
-    groups.forEach(id => {
-      const tagsEl = document.getElementById(id + '-tags');
+    const allGroups = document.querySelectorAll('.filter-group');
+    allGroups.forEach(group => {
+      const tagsEl = document.getElementById(group.id + '-tags');
       if (tagsEl) tagsEl.style.display = 'none';
     });
   });

@@ -571,6 +571,19 @@ body { overflow-x: hidden; }
   transform: rotate(-45deg) translateY(-1px);
 }
 
+/* Colour swatch — used in Projects colour filter */
+.filter-option-colour {
+  gap: 10px;
+}
+.colour-swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: inline-block;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.08);
+}
+
 /* ============================================================
    CLIENT CARD COMPONENT
    Usage:
