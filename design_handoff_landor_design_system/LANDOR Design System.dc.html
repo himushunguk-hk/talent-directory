@@ -1423,6 +1423,7 @@
       padding: 16px 12px; display: flex; flex-direction: column; gap: 12px;
     }
     .ds-filter-demo .fn-option {
+      display: flex; align-items: center; gap: 8px;
       padding: 5px 8px; border-radius: 1000px; font-size: 12px;
       line-height: 13.8px; letter-spacing: 0.12px; color: #000;
       cursor: pointer; user-select: none; transition: background 150ms ease;
@@ -1430,6 +1431,19 @@
     }
     .ds-filter-demo .fn-option:hover { background: rgba(0,0,0,0.05); }
     .ds-filter-demo .fn-option.active { background: #fff; border-radius: 2px; }
+    .ds-filter-demo .fn-cb {
+      width: 14px; height: 14px; border: 1.5px solid #B3B3B3; border-radius: 2px;
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+      transition: border-color 150ms ease, background 150ms ease;
+    }
+    .ds-filter-demo .fn-option.active .fn-cb {
+      border-color: #0027D7; background: #0027D7;
+    }
+    .ds-filter-demo .fn-option.active .fn-cb::after {
+      content: ''; display: block; width: 8px; height: 5px;
+      border-left: 1.5px solid #fff; border-bottom: 1.5px solid #fff;
+      transform: rotate(-45deg) translateY(-1px);
+    }
   </style>
 
   <section data-screen-label="Filter Sidebar" style="width: 100%; max-width: 1160px; border-radius: 40px 40px 16px 16px; overflow: hidden; background: #fff;">
@@ -1477,12 +1491,12 @@
                     <div class="fn-tags" id="ds-fg-roles-tags" style="display:none;"></div>
                     <input class="fn-search" type="text" placeholder="Search roles…" oninput="dsFnSearch('ds-fg-roles', this.value)" />
                     <div class="fn-dropdown" id="ds-fg-roles-dd">
-                      <div class="fn-option" data-group="ds-fg-roles" data-value="Creative Director" onclick="dsFnToggleOpt(this)">Creative Director</div>
-                      <div class="fn-option" data-group="ds-fg-roles" data-value="Design Director" onclick="dsFnToggleOpt(this)">Design Director</div>
-                      <div class="fn-option" data-group="ds-fg-roles" data-value="Senior Designer" onclick="dsFnToggleOpt(this)">Senior Designer</div>
-                      <div class="fn-option" data-group="ds-fg-roles" data-value="Midweight Designer" onclick="dsFnToggleOpt(this)">Midweight Designer</div>
-                      <div class="fn-option" data-group="ds-fg-roles" data-value="Junior Designer" onclick="dsFnToggleOpt(this)">Junior Designer</div>
-                      <div class="fn-option" data-group="ds-fg-roles" data-value="3D Artist" onclick="dsFnToggleOpt(this)">3D Artist</div>
+                      <div class="fn-option" data-group="ds-fg-roles" data-value="Creative Director" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>Creative Director</div>
+                      <div class="fn-option" data-group="ds-fg-roles" data-value="Design Director" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>Design Director</div>
+                      <div class="fn-option" data-group="ds-fg-roles" data-value="Senior Designer" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>Senior Designer</div>
+                      <div class="fn-option" data-group="ds-fg-roles" data-value="Midweight Designer" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>Midweight Designer</div>
+                      <div class="fn-option" data-group="ds-fg-roles" data-value="Junior Designer" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>Junior Designer</div>
+                      <div class="fn-option" data-group="ds-fg-roles" data-value="3D Artist" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>3D Artist</div>
                     </div>
                   </div>
                 </div>
@@ -1497,11 +1511,11 @@
                     <div class="fn-tags" id="ds-fg-location-tags" style="display:none;"></div>
                     <input class="fn-search" type="text" placeholder="Search locations…" oninput="dsFnSearch('ds-fg-location', this.value)" />
                     <div class="fn-dropdown" id="ds-fg-location-dd">
-                      <div class="fn-option" data-group="ds-fg-location" data-value="London" onclick="dsFnToggleOpt(this)">London</div>
-                      <div class="fn-option" data-group="ds-fg-location" data-value="New York" onclick="dsFnToggleOpt(this)">New York</div>
-                      <div class="fn-option" data-group="ds-fg-location" data-value="Paris" onclick="dsFnToggleOpt(this)">Paris</div>
-                      <div class="fn-option" data-group="ds-fg-location" data-value="Singapore" onclick="dsFnToggleOpt(this)">Singapore</div>
-                      <div class="fn-option" data-group="ds-fg-location" data-value="Sydney" onclick="dsFnToggleOpt(this)">Sydney</div>
+                      <div class="fn-option" data-group="ds-fg-location" data-value="London" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>London</div>
+                      <div class="fn-option" data-group="ds-fg-location" data-value="New York" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>New York</div>
+                      <div class="fn-option" data-group="ds-fg-location" data-value="Paris" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>Paris</div>
+                      <div class="fn-option" data-group="ds-fg-location" data-value="Singapore" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>Singapore</div>
+                      <div class="fn-option" data-group="ds-fg-location" data-value="Sydney" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>Sydney</div>
                     </div>
                   </div>
                 </div>
@@ -1516,11 +1530,11 @@
                     <div class="fn-tags" id="ds-fg-skillset-tags" style="display:none;"></div>
                     <input class="fn-search" type="text" placeholder="Search skillsets…" oninput="dsFnSearch('ds-fg-skillset', this.value)" />
                     <div class="fn-dropdown" id="ds-fg-skillset-dd">
-                      <div class="fn-option" data-group="ds-fg-skillset" data-value="Branding" onclick="dsFnToggleOpt(this)">Branding</div>
-                      <div class="fn-option" data-group="ds-fg-skillset" data-value="UX/UI" onclick="dsFnToggleOpt(this)">UX/UI</div>
-                      <div class="fn-option" data-group="ds-fg-skillset" data-value="Illustration" onclick="dsFnToggleOpt(this)">Illustration</div>
-                      <div class="fn-option" data-group="ds-fg-skillset" data-value="Motion" onclick="dsFnToggleOpt(this)">Motion</div>
-                      <div class="fn-option" data-group="ds-fg-skillset" data-value="Strategy" onclick="dsFnToggleOpt(this)">Strategy</div>
+                      <div class="fn-option" data-group="ds-fg-skillset" data-value="Branding" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>Branding</div>
+                      <div class="fn-option" data-group="ds-fg-skillset" data-value="UX/UI" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>UX/UI</div>
+                      <div class="fn-option" data-group="ds-fg-skillset" data-value="Illustration" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>Illustration</div>
+                      <div class="fn-option" data-group="ds-fg-skillset" data-value="Motion" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>Motion</div>
+                      <div class="fn-option" data-group="ds-fg-skillset" data-value="Strategy" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>Strategy</div>
                     </div>
                   </div>
                 </div>
@@ -1535,10 +1549,10 @@
                     <div class="fn-tags" id="ds-fg-industry-tags" style="display:none;"></div>
                     <input class="fn-search" type="text" placeholder="Search industries…" oninput="dsFnSearch('ds-fg-industry', this.value)" />
                     <div class="fn-dropdown" id="ds-fg-industry-dd">
-                      <div class="fn-option" data-group="ds-fg-industry" data-value="Fashion" onclick="dsFnToggleOpt(this)">Fashion</div>
-                      <div class="fn-option" data-group="ds-fg-industry" data-value="Tech" onclick="dsFnToggleOpt(this)">Tech</div>
-                      <div class="fn-option" data-group="ds-fg-industry" data-value="Culture" onclick="dsFnToggleOpt(this)">Culture</div>
-                      <div class="fn-option" data-group="ds-fg-industry" data-value="Sustainability" onclick="dsFnToggleOpt(this)">Sustainability</div>
+                      <div class="fn-option" data-group="ds-fg-industry" data-value="Fashion" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>Fashion</div>
+                      <div class="fn-option" data-group="ds-fg-industry" data-value="Tech" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>Tech</div>
+                      <div class="fn-option" data-group="ds-fg-industry" data-value="Culture" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>Culture</div>
+                      <div class="fn-option" data-group="ds-fg-industry" data-value="Sustainability" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>Sustainability</div>
                     </div>
                   </div>
                 </div>
@@ -1553,10 +1567,10 @@
                     <div class="fn-tags" id="ds-fg-clients-tags" style="display:none;"></div>
                     <input class="fn-search" type="text" placeholder="Search clients…" oninput="dsFnSearch('ds-fg-clients', this.value)" />
                     <div class="fn-dropdown" id="ds-fg-clients-dd">
-                      <div class="fn-option" data-group="ds-fg-clients" data-value="Nike" onclick="dsFnToggleOpt(this)">Nike</div>
-                      <div class="fn-option" data-group="ds-fg-clients" data-value="Spotify" onclick="dsFnToggleOpt(this)">Spotify</div>
-                      <div class="fn-option" data-group="ds-fg-clients" data-value="Airbnb" onclick="dsFnToggleOpt(this)">Airbnb</div>
-                      <div class="fn-option" data-group="ds-fg-clients" data-value="Microsoft" onclick="dsFnToggleOpt(this)">Microsoft</div>
+                      <div class="fn-option" data-group="ds-fg-clients" data-value="Nike" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>Nike</div>
+                      <div class="fn-option" data-group="ds-fg-clients" data-value="Spotify" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>Spotify</div>
+                      <div class="fn-option" data-group="ds-fg-clients" data-value="Airbnb" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>Airbnb</div>
+                      <div class="fn-option" data-group="ds-fg-clients" data-value="Microsoft" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>Microsoft</div>
                     </div>
                   </div>
                 </div>
@@ -1571,10 +1585,10 @@
                     <div class="fn-tags" id="ds-fg-interests-tags" style="display:none;"></div>
                     <input class="fn-search" type="text" placeholder="Search interests…" oninput="dsFnSearch('ds-fg-interests', this.value)" />
                     <div class="fn-dropdown" id="ds-fg-interests-dd">
-                      <div class="fn-option" data-group="ds-fg-interests" data-value="Typography" onclick="dsFnToggleOpt(this)">Typography</div>
-                      <div class="fn-option" data-group="ds-fg-interests" data-value="Photography" onclick="dsFnToggleOpt(this)">Photography</div>
-                      <div class="fn-option" data-group="ds-fg-interests" data-value="Animation" onclick="dsFnToggleOpt(this)">Animation</div>
-                      <div class="fn-option" data-group="ds-fg-interests" data-value="Music" onclick="dsFnToggleOpt(this)">Music</div>
+                      <div class="fn-option" data-group="ds-fg-interests" data-value="Typography" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>Typography</div>
+                      <div class="fn-option" data-group="ds-fg-interests" data-value="Photography" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>Photography</div>
+                      <div class="fn-option" data-group="ds-fg-interests" data-value="Animation" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>Animation</div>
+                      <div class="fn-option" data-group="ds-fg-interests" data-value="Music" onclick="dsFnToggleOpt(this)"><span class="fn-cb"></span>Music</div>
                     </div>
                   </div>
                 </div>
