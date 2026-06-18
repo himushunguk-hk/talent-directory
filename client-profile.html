@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Landor — Client</title>
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="components.css" />
+  <style>
+    :root { --sidebar-w: 280px; }
+
+    /* ══════════════════════════════════════════
+       SIDEBAR — client identity panel
+    ══════════════════════════════════════════ */
+    .sidebar {
+      width: var(--sidebar-w); flex-shrink: 0;
+      position: sticky; top: 0; height: calc(100vh - 42px);
+      display: flex; flex-direction: column;
+      background: var(--ds-bg-page);
+      overflow: hidden;
+    }
+
+    /* Header: logo + search — always on top */
+    .sidebar-header {
+      position: relative; z-index: 3;
+      padding: clamp(24px, 3vw, 40px) clamp(16px, 2.5vw, 28px) 0;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .sidebar-logo { width: min(160px, 80%); }
+    .sidebar-subtitle { color: var(--ds-text-secondary); }
+
+    /* Brand identity card — fills remaining sidebar height */
+    .brand-card {
+      flex: 1; margin: 20px clamp(12px, 2vw, 20px) 64px;
+      background: #fff; border-radius: var(--ds-radius-card);
+      box-shadow: var(--ds-shadow-card);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+    }
+    /* Client cover image (top portion, ~60% height) */
+    .brand-card-cover {
+      flex: 1; overflow: hidden; position: relative;
+    }
+    .brand-card-cover img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    /* No image fallback — coloured block with initials */
+    .brand-card-cover.no-image {
+      background: var(--ds-interactive-default);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .brand-card-cover.no-image span {
+      font-size: 48px; font-weight: 800; color: #fff;
+      text-transform: uppercase; letter-spacing: -0.02em;
+    }
+    /* Brand info bar at the bottom of the card */
+    .brand-card-info {
+      flex-shrink: 0;
+      padding: 16px 20px 20px;
+      border-top: 1px solid var(--neutral);
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .brand-name {
+      font-size: clamp(18px, 2vw, 22px); font-weight: 700;
+      line-height: 1.1; color: #000;
+    }
+    .brand-meta {
+      font-size: 12px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.05em; color: var(--muted);
+    }
+    .brand-since {
+      font-size: 12px; color: var(--ds-text-secondary);
+      margin-top: 6px;
+    }
+
+    /* User pill */
+    .user-pill {
+      position: absolute; bottom: 14px; left: 50%;
+      transform: translateX(-50%); z-index: 3;
+      background: rgba(255,255,255,0.92);
+      border: 0.5px solid rgba(219,209,200,0.6);
+      border-radius: 1000px; padding: 7px 10px;
+      display: flex; align-items: center; gap: 10px; white-space: nowrap;
+    }
+    .user-pill-inner { display: flex; align-items: center; gap: 6px; }
+    .user-avatar   { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; }
+    .user-name     { font-size: 12px; font-weight: 600; text-transform: uppercase; }
+    .settings-icon { width: 14px; height: 14px; }
+
+    /* ══════════════════════════════════════════
+       MAIN content
+    ══════════════════════════════════════════ */
+    .main {
+      flex: 1; min-width: 0; overflow-y: auto;
+      padding: clamp(24px, 3vw, 44px) clamp(20px, 3vw, 48px) 80px clamp(16px, 2vw, 24px);
+      display: flex; flex-direction: column; gap: clamp(28px, 3.5vw, 40px);
+    }
+
+    /* ── Action bar ── */
+    .action-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; flex-wrap: wrap;
+    }
+    .action-left  { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .action-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .role-tag {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: #2E2E2E; color: #fff; border-radius: 100px;
+      padding: 10px 16px; font-size: 13px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap;
+    }
+
+    /* ── Projects section ── */
+    .projects-section { display: flex; flex-direction: column; gap: 20px; }
+
+    /* Count + toolbar row */
+    .proj-toolbar {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 12px;
+    }
+    .proj-count {
+      font-size: clamp(20px, 2vw, 28px); font-weight: 700;
+    }
+    .proj-toolbar-actions {
+      display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+    }
+
+    /* Year group header */
+    .year-group { display: flex; flex-direction: column; gap: 16px; }
+    .year-header {
+      display: flex; align-items: baseline; gap: 10px;
+    }
+    .year-label {
+      font-size: clamp(18px, 2vw, 24px); font-weight: 700; line-height: 1.1;
+    }
+    .year-sub-count {
+      font-size: 14px; font-weight: 600;
+      color: var(--muted);
+    }
+
+    /* 2-column project grid */
+    .proj-grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* Project card (reuses existing project-card DS component + small overrides) */
+    .proj-grid-2col .project-card {
+      height: 380px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1100px) { :root { --sidebar-w: 240px; } }
+    @media (max-width: 860px)  {
+      .page { flex-direction: column; }
+      .sidebar { position: static; height: auto; width: 100%; }
+      .brand-card { margin-bottom: 20px; min-height: 300px; }
+    }
+    @media (max-width: 700px)  { .proj-grid-2col { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<!-- Timezone bar -->
+<div class="timezone-bar">
+  <div class="timezone-track">
+    <div class="tz-item"><span class="tz-city">Sydney</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Hamburg</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">London</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Tokyo</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Paris</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Los Angeles</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Mexico City</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Milan</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Geneva</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Sydney</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Hamburg</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">London</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Tokyo</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Paris</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Los Angeles</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Mexico City</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Milan</span><span class="tz-time">—</span></div>
+    <div class="tz-item"><span class="tz-city">Geneva</span><span class="tz-time">—</span></div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- ══ SIDEBAR — Client brand identity ══ -->
+  <aside class="sidebar" style="position:relative;">
+    <div class="sidebar-header">
+      <div class="sidebar-brand">
+        <img class="sidebar-logo"
+             src="https://www.figma.com/api/mcp/asset/f559b064-80fc-4b62-bc70-6f557d134bf5"
+             alt="Landor" />
+        <span class="sidebar-subtitle">Talent Directory</span>
+      </div>
+      <div class="search-bar">
+        <span>Search for a name, project..</span>
+        <img class="search-icon"
+             src="https://www.figma.com/api/mcp/asset/eb2e79d2-1e9f-45b1-8c31-b3d49dabfd96"
+             alt="Search" />
+      </div>
+    </div>
+
+    <!-- Brand identity card -->
+    <div class="brand-card">
+      <div class="brand-card-cover" id="brandCardCover">
+        <!-- Logo image if available, else initials fallback (set by JS) -->
+        <img class="client-logo-img" id="clientLogoImg"
+             src="https://www.figma.com/api/mcp/asset/be12409f-1854-4672-a7e2-0f3ce7ca5bf1"
+             alt="Nike" style="object-fit:contain; padding:24px; background:#f5f5f5;" />
+      </div>
+      <div class="brand-card-info">
+        <div class="brand-name client-brand-name">Nike</div>
+        <div class="brand-meta client-brand-industry">Fashion &amp; Sportswear</div>
+        <div class="brand-since client-brand-since">Landor client since 2019</div>
+      </div>
+    </div>
+
+    <!-- User pill -->
+    <div class="user-pill">
+      <div class="user-pill-inner">
+        <img class="user-avatar"
+             src="https://www.figma.com/api/mcp/asset/604ea8ee-429b-49f2-bbb2-22e15feaaed4"
+             alt="John D" />
+        <span class="user-name">John D.</span>
+      </div>
+      <img class="settings-icon"
+           src="https://www.figma.com/api/mcp/asset/db52f6a6-6d2a-49b2-ab06-d43076c3c517"
+           alt="Settings" />
+    </div>
+  </aside>
+
+  <!-- ══ MAIN ══ -->
+  <main class="main">
+
+    <!-- Nav -->
+    <nav class="top-nav" id="navClient">
+      <div class="nav-indicator" id="navClientIndicator"></div>
+      <a class="nav-item" href="index.html">Home</a>
+      <a class="nav-item" href="index.html#talents"><span>Talents</span><span class="count">2 324</span></a>
+      <a class="nav-item" href="index.html#projects"><span>Projects</span><span class="count">436</span></a>
+      <a class="nav-item active" href="index.html#clients"><span>Clients</span><span class="count">124</span></a>
+    </nav>
+
+    <!-- Action bar -->
+    <div class="action-bar">
+      <div class="action-left">
+        <a class="btn-back" href="javascript:history.back()">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 2L4 6.5l4.5 4.5"/></svg>
+          Back
+        </a>
+      </div>
+      <div class="action-right">
+        <span class="role-tag client-industry-tag">✦ Fashion</span>
+        <span class="role-tag client-region-tag">✦ Global</span>
+        <span class="role-tag client-type-tag">✦ Product Brand</span>
+        <button class="btn-primary client-edit-btn">Edit Client →</button>
+      </div>
+    </div>
+
+    <!-- ── Projects section ── -->
+    <div class="projects-section">
+
+      <!-- Count + toolbar -->
+      <div class="proj-toolbar">
+        <span class="proj-count"><span class="client-project-count">23</span> projects</span>
+        <div class="proj-toolbar-actions">
+          <button class="btn-secondary">Most recent ↓</button>
+          <button class="btn-primary">Add new project →</button>
+        </div>
+      </div>
+
+      <!-- Year group: 2024 -->
+      <div class="year-group">
+        <div class="year-header">
+          <span class="year-label">2024</span>
+          <span class="year-sub-count">8 projects</span>
+        </div>
+        <div class="proj-grid-2col">
+
+          <div class="project-card" style="background:#e8452a;">
+            <div class="project-card-bg project-card-bg-cover">
+              <img src="https://www.figma.com/api/mcp/asset/81548a12-c7cd-410e-a133-e1fbc5a7ac2f" alt="Enter the Bubbleverse" />
+            </div>
+            <div class="project-card-top">
+              <span></span>
+              <div class="people-tag">
+                <div class="people-avatars">
+                  <img src="https://www.figma.com/api/mcp/asset/604ea8ee-429b-49f2-bbb2-22e15feaaed4" alt="" />
+                </div>
+                <span class="people-count">5 people</span>
+              </div>
+            </div>
+            <div class="project-info">
+              <div class="project-title-block">
+                <div class="project-title">Enter the Bubbleverse</div>
+                <div class="project-meta"><span>Fashion</span><span class="dot-white"></span><span>2024</span></div>
+              </div>
+              <div class="project-details">
+                <div class="project-detail-row"><span class="label">Market</span><span class="value">Global</span></div>
+                <div class="project-detail-row"><span class="label">Skillset</span><span class="value">Brand Identity, Motion</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card" style="background:#3db856;">
+            <div class="project-card-bg project-card-bg-cover">
+              <img src="https://www.figma.com/api/mcp/asset/37ed6550-de68-4342-b2f5-ffe6c5d1ac01" alt="Swipe Rewards" />
+            </div>
+            <div class="project-card-top">
+              <span></span>
+              <div class="people-tag">
+                <div class="people-avatars">
+                  <img src="https://www.figma.com/api/mcp/asset/604ea8ee-429b-49f2-bbb2-22e15feaaed4" alt="" />
+                </div>
+                <span class="people-count">3 people</span>
+              </div>
+            </div>
+            <div class="project-info">
+              <div class="project-title-block">
+                <div class="project-title">Just Run</div>
+                <div class="project-meta"><span>Sport</span><span class="dot-white"></span><span>2024</span></div>
+              </div>
+              <div class="project-details">
+                <div class="project-detail-row"><span class="label">Market</span><span class="value">EMEA</span></div>
+                <div class="project-detail-row"><span class="label">Skillset</span><span class="value">Campaign, Photography</span></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Year group: 2023 -->
+      <div class="year-group">
+        <div class="year-header">
+          <span class="year-label">2023</span>
+          <span class="year-sub-count">15 projects</span>
+        </div>
+        <div class="proj-grid-2col">
+
+          <div class="project-card" style="background:#f0c000;">
+            <div class="project-card-bg project-card-bg-cover">
+              <img src="https://www.figma.com/api/mcp/asset/657f3faf-bc28-4b92-bb1c-7340cdb7ed05" alt="Social Gardens" />
+            </div>
+            <div class="project-card-top">
+              <span></span>
+              <div class="people-tag">
+                <div class="people-avatars">
+                  <img src="https://www.figma.com/api/mcp/asset/604ea8ee-429b-49f2-bbb2-22e15feaaed4" alt="" />
+                </div>
+                <span class="people-count">7 people</span>
+              </div>
+            </div>
+            <div class="project-info">
+              <div class="project-title-block">
+                <div class="project-title">Air Max Retro</div>
+                <div class="project-meta"><span>Footwear</span><span class="dot-white"></span><span>2023</span></div>
+              </div>
+              <div class="project-details">
+                <div class="project-detail-row"><span class="label">Market</span><span class="value">US, APAC</span></div>
+                <div class="project-detail-row"><span class="label">Skillset</span><span class="value">Brand Identity, Retail</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card" style="background:#111;">
+            <div class="project-card-bg project-card-bg-cover">
+              <img src="https://www.figma.com/api/mcp/asset/8bc284f7-098f-42b9-a63d-76ef9776342d" alt="Showcase" />
+            </div>
+            <div class="project-card-top">
+              <span></span>
+              <div class="people-tag">
+                <div class="people-avatars">
+                  <img src="https://www.figma.com/api/mcp/asset/604ea8ee-429b-49f2-bbb2-22e15feaaed4" alt="" />
+                </div>
+                <span class="people-count">4 people</span>
+              </div>
+            </div>
+            <div class="project-info">
+              <div class="project-title-block">
+                <div class="project-title">Showcase Attitude</div>
+                <div class="project-meta"><span>Sport</span><span class="dot-white"></span><span>2023</span></div>
+              </div>
+              <div class="project-details">
+                <div class="project-detail-row"><span class="label">Market</span><span class="value">Global</span></div>
+                <div class="project-detail-row"><span class="label">Skillset</span><span class="value">Naming, Strategy</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card" style="background:#232323;">
+            <div class="project-card-bg project-card-bg-cover">
+              <img src="https://www.figma.com/api/mcp/asset/b583cbd6-e702-4d70-8a58-025345ec14e3" alt="Identity" />
+            </div>
+            <div class="project-card-top">
+              <span></span>
+              <div class="people-tag">
+                <div class="people-avatars">
+                  <img src="https://www.figma.com/api/mcp/asset/604ea8ee-429b-49f2-bbb2-22e15feaaed4" alt="" />
+                </div>
+                <span class="people-count">6 people</span>
+              </div>
+            </div>
+            <div class="project-info">
+              <div class="project-title-block">
+                <div class="project-title">Heritage Pack</div>
+                <div class="project-meta"><span>Fashion</span><span class="dot-white"></span><span>2023</span></div>
+              </div>
+              <div class="project-details">
+                <div class="project-detail-row"><span class="label">Market</span><span class="value">EMEA</span></div>
+                <div class="project-detail-row"><span class="label">Skillset</span><span class="value">Packaging, Art Direction</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card" style="background:#e6e0e9;">
+            <div class="project-card-bg project-card-bg-cover">
+              <img src="https://www.figma.com/api/mcp/asset/be12409f-1854-4672-a7e2-0f3ce7ca5bf1" alt="Photography" />
+            </div>
+            <div class="project-card-top">
+              <span></span>
+              <div class="people-tag">
+                <div class="people-avatars">
+                  <img src="https://www.figma.com/api/mcp/asset/604ea8ee-429b-49f2-bbb2-22e15feaaed4" alt="" />
+                </div>
+                <span class="people-count">2 people</span>
+              </div>
+            </div>
+            <div class="project-info">
+              <div class="project-title-block">
+                <div class="project-title">Studio Shoot</div>
+                <div class="project-meta"><span>Photography</span><span class="dot-white"></span><span>2023</span></div>
+              </div>
+              <div class="project-details">
+                <div class="project-detail-row"><span class="label">Market</span><span class="value">Global</span></div>
+                <div class="project-detail-row"><span class="label">Skillset</span><span class="value">Photography, Retouching</span></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div><!-- /projects-section -->
+
+  </main>
+</div>
+
+<script>
+  /* ── Timezone clocks ── */
+  const cities = [
+    { name: 'Sydney', tz: 'Australia/Sydney' }, { name: 'Hamburg', tz: 'Europe/Berlin' },
+    { name: 'London', tz: 'Europe/London' },    { name: 'Tokyo', tz: 'Asia/Tokyo' },
+    { name: 'Paris', tz: 'Europe/Paris' },      { name: 'Los Angeles', tz: 'America/Los_Angeles' },
+    { name: 'Mexico City', tz: 'America/Mexico_City' }, { name: 'Milan', tz: 'Europe/Rome' },
+    { name: 'Geneva', tz: 'Europe/Zurich' },
+  ];
+  function fmtTime(tz) {
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: tz, hour: '2-digit', minute: '2-digit',
+      weekday: 'short', hour12: false
+    }).formatToParts(new Date());
+    const get = t => parts.find(p => p.type === t)?.value ?? '';
+    return `${get('hour')}:${get('minute')} ${get('weekday').toUpperCase()}`;
+  }
+  function updateClocks() {
+    document.querySelectorAll('.tz-item').forEach((el, i) => {
+      const c = cities[i % cities.length];
+      el.querySelector('.tz-city').textContent = c.name;
+      el.querySelector('.tz-time').textContent = fmtTime(c.tz);
+    });
+  }
+  updateClocks();
+  setInterval(updateClocks, 60000);
+
+  /* ── Nav indicator ── */
+  document.addEventListener('DOMContentLoaded', function () {
+    const nav = document.getElementById('navClient');
+    const ind = document.getElementById('navClientIndicator');
+    if (!nav || !ind) return;
+    const active = nav.querySelector('.nav-item.active');
+    if (!active) return;
+    ind.style.transition = 'none';
+    ind.style.left  = active.offsetLeft + 'px';
+    ind.style.width = active.offsetWidth + 'px';
+    requestAnimationFrame(() => { ind.style.transition = ''; });
+  });
+
+  /* ── Supabase — load client data ── */
+  const SB_URL = 'https://iynxaaxpjtlwhhjfaolc.supabase.co';
+  const SB_KEY = 'sb_publishable_99PXDwxMUeJG0t_K7K76Jw_TKfnzI5s';
+
+  function setText(sel, val) {
+    const el = document.querySelector(sel);
+    if (el && val != null) el.textContent = val;
+  }
+
+  async function loadClient() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    if (!id) return; // no id = keep static placeholder
+
+    const res  = await fetch(`${SB_URL}/rest/v1/clients?id=eq.${id}&select=*&limit=1`, {
+      headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` }
+    });
+    const data = await res.json();
+    if (!Array.isArray(data) || !data[0]) return;
+    const c = data[0];
+
+    // Sidebar brand card
+    if (c.logo_url) {
+      const img = document.getElementById('clientLogoImg');
+      if (img) { img.src = c.logo_url; img.alt = c.name; }
+    }
+    setText('.client-brand-name',     c.name);
+    setText('.client-brand-industry', c.industry);
+    if (c.since_year) setText('.client-brand-since', `Landor client since ${c.since_year}`);
+
+    // Action bar tags
+    setText('.client-industry-tag', `✦ ${c.industry ?? ''}`);
+    setText('.client-region-tag',   `✦ ${c.region ?? ''}`);
+    setText('.client-type-tag',     `✦ ${c.brand_type ?? ''}`);
+
+    // Projects count
+    if (c.project_count != null) setText('.client-project-count', c.project_count);
+
+    // Page title
+    document.title = `${c.name} — Landor Talent Directory`;
+  }
+
+  loadClient();
+</script>
+</body>
+</html>
